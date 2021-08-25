@@ -13,10 +13,12 @@ namespace Map
        public MapNode bottomRoom;
        public bool visited;
        public bool isNodeVisible;
+       public Vector3 position;    
 
 
        public MapNode(GameObject node) {
            this.node = node;
+           this.position = node.transform.position;
            this.visited = false;
            this.isNodeVisible = true;
        }
