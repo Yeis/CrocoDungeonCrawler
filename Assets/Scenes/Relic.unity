@@ -197,6 +197,60 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &313649460
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 313649462}
+  - component: {fileID: 313649461}
+  m_Layer: 0
+  m_Name: DifficultyController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &313649461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 313649460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5847e635a1cfa44faf5d95d88c1c05c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  easyMinRange: 6
+  easyMaxRange: 9
+  mediumMinRange: 5
+  mediumMaxRange: 7
+  hardMinRange: 3
+  hardMaxRange: 6
+  mediumColorShiftPercentage: 10
+  hardColorShiftPercentage: 20
+  relic: {fileID: 2128830456}
+  crocoCounterText: {fileID: 1917277812}
+  roomDifficulty: 3
+--- !u!4 &313649462
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 313649460}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.165528, y: -0.27671364, z: 125.23984}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1299258908
 GameObject:
   m_ObjectHideFlags: 0
@@ -227,6 +281,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   relic: {fileID: 2128830456}
+  difficulty: {fileID: 313649460}
 --- !u!4 &1299258910
 Transform:
   m_ObjectHideFlags: 0
