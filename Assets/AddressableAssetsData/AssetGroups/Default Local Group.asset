@@ -16,7 +16,11 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: c5ad7fc0d3909314fb189bbeea565d4d
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 9334cf839aca14649add16b95dd48243
+    m_Address: Assets/Assets/Images/Relic/Gems_sprite.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: e6de75ac47dbeb04389a6c42b7999348, type: 2}
   m_SchemaSet:
