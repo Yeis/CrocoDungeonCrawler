@@ -9,8 +9,6 @@ using TMPro;
 public class InputController : MonoBehaviour {
     public RelicInputs controls;
     public GameObject relic;
-    public TMP_InputField inputField;
-
     private RelicController relicController;
 
     void Awake() {
@@ -25,7 +23,7 @@ public class InputController : MonoBehaviour {
         try {
             var gemPair = relicController.gemDictionary.Where(x => control == x.Value.symbol).First();
             if (isPressing) {
-                inputField.text += gemPair.Value.gemColor + gemPair.Value.direction.ToString();
+                relicController.killCroco();
             }
 
             relicController.gemInteraction(gemPair, isPressing);
