@@ -3,24 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
-using UnityEngine.UI;
-using System.Linq;
 
 public class RelicController : MonoBehaviour {
-    public RoomDifficulty roomDifficulty;
     public Dictionary<GameObject, Gem> gemDictionary = new Dictionary<GameObject, Gem>();
-
-    public TMP_Text crocoCounterText;
+    public List<GameObject> gemObjects;
+    public List<InputControl> currentSymbols;
+    public Sprite[] gemSprites;
 
     /// Control order - [0]North, [1]West, [2]South, [3]East 
     private List<Gem> gems;
-    private List<GameObject> gemObjects;
-    private List<InputControl> currentSymbols;
     private Keyboard keyboard;
-    public Sprite[] gemSprites;
-
-    private int crocoCounter = 0;
-    private int shiftCounter = 0;
 
     void Awake() {
         keyboard = Keyboard.current;
@@ -51,12 +43,10 @@ public class RelicController : MonoBehaviour {
         gemDictionary.Add(gemObjects[1], gems[1]);
         gemDictionary.Add(gemObjects[2], gems[2]);
         gemDictionary.Add(gemObjects[3], gems[3]);
-
-        crocoCounterText.text = crocoCounter.ToString();
     }
 
     void Start() {
-        setUpGems();
+        updateGems();
     }
 
     public void gemInteraction(KeyValuePair<GameObject, Gem> gemPair, bool isPressing) {
@@ -79,48 +69,7 @@ public class RelicController : MonoBehaviour {
         gemPair.Key.GetComponent<SpriteRenderer>().sprite = gemSprites[((int)gemSelected)];
     }
 
-    public void killCroco() {
-        crocoCounter += 1;
-        crocoCounterText.text = crocoCounter.ToString();
-
-        shiftCounter += 1;
-        switch (roomDifficulty) {
-            case RoomDifficulty.veryEasy:
-                if (shiftCounter == 5) {
-                    var gemToUpdate = Random.Range(0, 4);
-                    var currentGem = gemObjects[gemToUpdate];
-                    var newSymbol = getUniqueRandomAlphaInput();
-
-                    gemDictionary[currentGem].symbol = newSymbol;
-                    currentSymbols[gemToUpdate] = newSymbol;
-                    shiftCounter = 0;
-                }
-                break;
-            default: break;
-        }
-        setUpGems();
-    }
-
-    /// Private
-    void OnSymbolSwitchClick() {
-        gemDictionary[gemObjects[0]].symbol = keyboard.jKey;
-        gemDictionary[gemObjects[1]].symbol = keyboard.kKey;
-        gemDictionary[gemObjects[2]].symbol = keyboard.lKey;
-        gemDictionary[gemObjects[3]].symbol = keyboard.semicolonKey;
-
-        setUpGems();
-    }
-
-    void OnColorSwitchClick() {
-        gemDictionary[gemObjects[0]].gemColor = GemColor.pink;
-        gemDictionary[gemObjects[1]].gemColor = GemColor.orange;
-        gemDictionary[gemObjects[2]].gemColor = GemColor.green;
-        gemDictionary[gemObjects[3]].gemColor = GemColor.blue;
-
-        setUpGems();
-    }
-
-    private void setUpGems() {
+    public void updateGems() {
         foreach (var gemPair in gemDictionary) {
             var gemTextObject = gemPair.Key.transform.Find("GemText");
 
@@ -129,12 +78,5 @@ public class RelicController : MonoBehaviour {
 
             gemPair.Key.GetComponent<SpriteRenderer>().sprite = gemSprites[((int)gemPair.Value.gemColor)];
         }
-    }
-
-    private InputControl getUniqueRandomAlphaInput() {
-        var exclusiveSymbols = RelicSymbols.alphaInputs().Where(x => !currentSymbols.Contains(x));
-        var index = Random.Range(0, exclusiveSymbols.Count());
-
-        return exclusiveSymbols.ToArray()[index];
     }
 }
