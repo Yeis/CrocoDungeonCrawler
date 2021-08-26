@@ -256,6 +256,46 @@ PrefabInstance:
       propertyPath: crocoCounterText
       value: 
       objectReference: {fileID: 1917277812}
+    - target: {fileID: 207031475108578999, guid: 6d7af830be155d74bbb9ee244100bd0f, type: 3}
+      propertyPath: gemSprites.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 207031475108578999, guid: 6d7af830be155d74bbb9ee244100bd0f, type: 3}
+      propertyPath: gemSprites.Array.data[0]
+      value: 
+      objectReference: {fileID: 1806204610120755422, guid: 9334cf839aca14649add16b95dd48243, type: 3}
+    - target: {fileID: 207031475108578999, guid: 6d7af830be155d74bbb9ee244100bd0f, type: 3}
+      propertyPath: gemSprites.Array.data[1]
+      value: 
+      objectReference: {fileID: -8869498045582418597, guid: 9334cf839aca14649add16b95dd48243, type: 3}
+    - target: {fileID: 207031475108578999, guid: 6d7af830be155d74bbb9ee244100bd0f, type: 3}
+      propertyPath: gemSprites.Array.data[2]
+      value: 
+      objectReference: {fileID: -3126602701491889064, guid: 9334cf839aca14649add16b95dd48243, type: 3}
+    - target: {fileID: 207031475108578999, guid: 6d7af830be155d74bbb9ee244100bd0f, type: 3}
+      propertyPath: gemSprites.Array.data[3]
+      value: 
+      objectReference: {fileID: -6113580037042305262, guid: 9334cf839aca14649add16b95dd48243, type: 3}
+    - target: {fileID: 207031475108578999, guid: 6d7af830be155d74bbb9ee244100bd0f, type: 3}
+      propertyPath: gemSprites.Array.data[4]
+      value: 
+      objectReference: {fileID: 5355314644752119230, guid: 9334cf839aca14649add16b95dd48243, type: 3}
+    - target: {fileID: 207031475108578999, guid: 6d7af830be155d74bbb9ee244100bd0f, type: 3}
+      propertyPath: gemSprites.Array.data[5]
+      value: 
+      objectReference: {fileID: -5622607432053716238, guid: 9334cf839aca14649add16b95dd48243, type: 3}
+    - target: {fileID: 207031475108578999, guid: 6d7af830be155d74bbb9ee244100bd0f, type: 3}
+      propertyPath: gemSprites.Array.data[6]
+      value: 
+      objectReference: {fileID: 3862223031630435348, guid: 9334cf839aca14649add16b95dd48243, type: 3}
+    - target: {fileID: 207031475108578999, guid: 6d7af830be155d74bbb9ee244100bd0f, type: 3}
+      propertyPath: gemSprites.Array.data[7]
+      value: 
+      objectReference: {fileID: -7461748508681591711, guid: 9334cf839aca14649add16b95dd48243, type: 3}
+    - target: {fileID: 207031475108578999, guid: 6d7af830be155d74bbb9ee244100bd0f, type: 3}
+      propertyPath: gemSprites.Array.data[8]
+      value: 
+      objectReference: {fileID: 7508915159848897513, guid: 9334cf839aca14649add16b95dd48243, type: 3}
     - target: {fileID: 5590580829038508840, guid: 6d7af830be155d74bbb9ee244100bd0f, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

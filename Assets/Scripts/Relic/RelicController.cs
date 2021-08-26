@@ -5,8 +5,6 @@ using UnityEngine.InputSystem;
 using TMPro;
 using UnityEngine.UI;
 using System.Linq;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class RelicController : MonoBehaviour {
     public RoomDifficulty roomDifficulty;
@@ -19,16 +17,13 @@ public class RelicController : MonoBehaviour {
     private List<GameObject> gemObjects;
     private List<InputControl> currentSymbols;
     private Keyboard keyboard;
-    private Sprite[] gemSprites;
+    public Sprite[] gemSprites;
 
     private int crocoCounter = 0;
     private int shiftCounter = 0;
 
     void Awake() {
         keyboard = Keyboard.current;
-
-        AsyncOperationHandle<Sprite[]> spriteHandle = Addressables.LoadAssetAsync<Sprite[]>("Assets/Assets/Images/Relic/Gems_sprite.png");
-        spriteHandle.Completed += LoadSpritesWhenReady;
 
         // Default keys WASD
         currentSymbols = new List<InputControl> {
@@ -60,7 +55,9 @@ public class RelicController : MonoBehaviour {
         crocoCounterText.text = crocoCounter.ToString();
     }
 
-    void Start() { }
+    void Start() {
+        setUpGems();
+    }
 
     public void gemInteraction(KeyValuePair<GameObject, Gem> gemPair, bool isPressing) {
         GemColor gemSelected;
@@ -121,15 +118,6 @@ public class RelicController : MonoBehaviour {
         gemDictionary[gemObjects[3]].gemColor = GemColor.blue;
 
         setUpGems();
-    }
-
-
-    private void LoadSpritesWhenReady(AsyncOperationHandle<Sprite[]> handle) {
-        if (handle.Status == AsyncOperationStatus.Succeeded) {
-            gemSprites = handle.Result;
-
-            setUpGems();
-        }
     }
 
     private void setUpGems() {
