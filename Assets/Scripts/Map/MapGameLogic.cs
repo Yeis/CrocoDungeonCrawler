@@ -18,7 +18,7 @@ namespace Map
 
         //This list is only used to calculate distance between rooms to fill with right piece
         private List<MapNode> rooms;
-        private MapNode characterPositionNode;
+        public MapNode characterPositionNode;
         private MapNode bossPositionNode;
         // Start is called before the first frame update
         void Start()
