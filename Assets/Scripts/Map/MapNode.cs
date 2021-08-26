@@ -13,6 +13,8 @@ namespace Map
        public MapNode bottomRoom;
        public bool visited;
        public bool isNodeVisible;
+       public bool isCharacterInRoom;
+       public bool isBossInRoom;
        public Vector3 position;    
 
 
@@ -21,6 +23,18 @@ namespace Map
            this.position = node.transform.position;
            this.visited = false;
            this.isNodeVisible = true;
+           this.isCharacterInRoom = false;
+           this.isBossInRoom = false;
+       }
+
+       public void VisitRoom() {
+           this.visited = true;
+           this.node.GetComponent<SpriteRenderer>().color = Color.green;
+       }
+
+       public void UnvisitRoom(){
+           this.visited = false;
+           this.node.GetComponent<SpriteRenderer>().color = Color.white;
        }
     }
 }

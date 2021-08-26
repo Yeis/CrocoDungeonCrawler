@@ -19,6 +19,7 @@ namespace Map
         //This list is only used to calculate distance between rooms to fill with right piece
         private List<MapNode> rooms;
         private MapNode characterPositionNode;
+        private MapNode bossPositionNode;
         // Start is called before the first frame update
         void Start()
         {
@@ -30,6 +31,7 @@ namespace Map
 
             GenerateMap();
             SetupPlayerInMap();
+            SetupBossInMap();
         }
 
         //Player in map functions
@@ -37,38 +39,72 @@ namespace Map
             characterPositionNode = GetRandomRoom();
             //Make it Appear 
             characterPositionNode.node.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = characterSprite;
-
+            characterPositionNode.isCharacterInRoom = true;
         }
         public void MovePlayerLeft() {
             if(characterPositionNode.leftRoom != null) {
                 characterPositionNode.node.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = null;
+                characterPositionNode.isCharacterInRoom = false;
+                characterPositionNode.VisitRoom();
+                //Update properties in new Node
                 characterPositionNode = characterPositionNode.leftRoom;
-            characterPositionNode.node.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = characterSprite;
-
+                characterPositionNode.node.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = characterSprite;
+                characterPositionNode.isCharacterInRoom = true;
             }
         }
 
         public void MovePlayerRight() {
             if(characterPositionNode.rightRoom != null) {
                 characterPositionNode.node.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = null;
+                characterPositionNode.isCharacterInRoom = false;
+                characterPositionNode.VisitRoom();
+                //Update properties in new Node
                 characterPositionNode = characterPositionNode.rightRoom;
                 characterPositionNode.node.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = characterSprite;
+                characterPositionNode.isCharacterInRoom = true;
             }
         }
         public void MovePlayerTop() {
             if(characterPositionNode.topRoom != null) {
                 characterPositionNode.node.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = null;
+                characterPositionNode.isCharacterInRoom = false;
+                characterPositionNode.VisitRoom();
+                //Update properties in new Node
                 characterPositionNode = characterPositionNode.topRoom;
                 characterPositionNode.node.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = characterSprite;
+                characterPositionNode.isCharacterInRoom = true;
             }
         }
         public void MovePlayerBottom() {
             if(characterPositionNode.bottomRoom != null) {
                 characterPositionNode.node.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = null;
+                characterPositionNode.isCharacterInRoom = false;
+                characterPositionNode.VisitRoom();
+                //Update properties in new Node
                 characterPositionNode = characterPositionNode.bottomRoom;
                 characterPositionNode.node.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = characterSprite;
+                characterPositionNode.isCharacterInRoom = true;
             }
         }
+
+        //Boss room function
+        public void SetupBossInMap() {
+            //Keep looking until we find an empty room for the boss
+            int adjacentRoomCounter;
+            do {
+                adjacentRoomCounter = 0;
+                bossPositionNode = GetRandomRoom();
+                if(bossPositionNode.leftRoom != null) adjacentRoomCounter++;
+                if(bossPositionNode.topRoom != null) adjacentRoomCounter++;
+                if(bossPositionNode.bottomRoom != null) adjacentRoomCounter++;
+                if(bossPositionNode.rightRoom != null) adjacentRoomCounter++;
+
+            } while(bossPositionNode.isCharacterInRoom || adjacentRoomCounter > 1);
+       
+            bossPositionNode.isBossInRoom = true;
+            bossPositionNode.node.GetComponent<SpriteRenderer>().color = Color.blue;
+        }
+
         //Map Functions
         private void GenerateMap() {
             //Generate Open Rooms
@@ -231,7 +267,6 @@ namespace Map
                     //Create room at top of current
                     else {
                         GameObject topRoom = Instantiate(templates.B, new Vector3(currentNode.node.transform.position.x, currentNode.node.transform.position.y + 0.5f, currentNode.node.transform.position.z), Quaternion.identity);
-                        topRoom.GetComponent<SpriteRenderer>().color = Color.green;
                         MapNode topMapNode = new MapNode(topRoom);
                         currentNode.topRoom = topMapNode;
                         topMapNode.bottomRoom = currentNode;
@@ -245,7 +280,6 @@ namespace Map
                     //Create room at top of current
                     else {
                         GameObject bottomRoom = Instantiate(templates.T, new Vector3(currentNode.node.transform.position.x, currentNode.node.transform.position.y - 0.5f, currentNode.node.transform.position.z), Quaternion.identity);
-                        bottomRoom.GetComponent<SpriteRenderer>().color = Color.green;
                         MapNode bottomMapNode = new MapNode(bottomRoom);
                         currentNode.bottomRoom = bottomMapNode;
                         bottomMapNode.topRoom = currentNode;
@@ -259,7 +293,6 @@ namespace Map
                     //Create room at top of current
                     else {
                         GameObject leftRoom = Instantiate(templates.R, new Vector3(currentNode.node.transform.position.x - 0.5f, currentNode.node.transform.position.y, currentNode.node.transform.position.z), Quaternion.identity);
-                        leftRoom.GetComponent<SpriteRenderer>().color = Color.green;
                         MapNode leftMapNode = new MapNode(leftRoom);
                         currentNode.leftRoom = leftMapNode;
                         leftMapNode.rightRoom = currentNode;
@@ -273,7 +306,6 @@ namespace Map
                     //Create room at top of current
                     else {
                         GameObject rightRoom = Instantiate(templates.L, new Vector3(currentNode.node.transform.position.x + 0.5f, currentNode.node.transform.position.y, currentNode.node.transform.position.z), Quaternion.identity);
-                        rightRoom.GetComponent<SpriteRenderer>().color = Color.green;
                         MapNode rightMapNode = new MapNode(rightRoom);
                         currentNode.rightRoom = rightMapNode;
                         rightMapNode.leftRoom = currentNode;
