@@ -4,25 +4,25 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
 using UnityEngine.UI;
-
+using System.Linq;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class RelicController : MonoBehaviour {
-    private Keyboard keyboard;
+    public RoomDifficulty roomDifficulty;
+    public Dictionary<GameObject, Gem> gemDictionary = new Dictionary<GameObject, Gem>();
+
+    public TMP_Text crocoCounterText;
 
     /// Control order - [0]North, [1]West, [2]South, [3]East 
     private List<Gem> gems;
-    public Button symbolSwitch, colorSwitch;
-
-    private GameObject gemNorth;
-    private GameObject gemWest;
-    private GameObject gemSouth;
-    private GameObject gemEast;
-
+    private List<GameObject> gemObjects;
+    private List<InputControl> currentSymbols;
+    private Keyboard keyboard;
     private Sprite[] gemSprites;
 
-    public Dictionary<GameObject, Gem> gemDictionary = new Dictionary<GameObject, Gem>();
+    private int crocoCounter = 0;
+    private int shiftCounter = 0;
 
     void Awake() {
         keyboard = Keyboard.current;
@@ -31,46 +31,36 @@ public class RelicController : MonoBehaviour {
         spriteHandle.Completed += LoadSpritesWhenReady;
 
         // Default keys WASD
-        gems = new List<Gem> {
-            new Gem(keyboard.wKey, GemColor.blue, GemDirection.north),
-            new Gem(keyboard.aKey, GemColor.pink, GemDirection.west),
-            new Gem(keyboard.sKey, GemColor.orange, GemDirection.south),
-            new Gem(keyboard.dKey, GemColor.green, GemDirection.east),
+        currentSymbols = new List<InputControl> {
+            keyboard.wKey,
+            keyboard.aKey,
+            keyboard.sKey,
+            keyboard.dKey
         };
 
-        gemNorth = transform.Find("IndicatorGemNorth").gameObject;
-        gemWest = transform.Find("IndicatorGemWest").gameObject;
-        gemSouth = transform.Find("IndicatorGemSouth").gameObject;
-        gemEast = transform.Find("IndicatorGemEast").gameObject;
+        gems = new List<Gem> {
+            new Gem(currentSymbols[0], GemColor.blue, GemDirection.north),
+            new Gem(currentSymbols[1], GemColor.pink, GemDirection.west),
+            new Gem(currentSymbols[2], GemColor.orange, GemDirection.south),
+            new Gem(currentSymbols[3], GemColor.green, GemDirection.east),
+        };
 
-        gemDictionary.Add(gemNorth, gems[0]);
-        gemDictionary.Add(gemWest, gems[1]);
-        gemDictionary.Add(gemSouth, gems[2]);
-        gemDictionary.Add(gemEast, gems[3]);
+        gemObjects = new List<GameObject> {
+            transform.Find("IndicatorGemNorth").gameObject,
+            transform.Find("IndicatorGemWest").gameObject,
+            transform.Find("IndicatorGemSouth").gameObject,
+            transform.Find("IndicatorGemEast").gameObject
+        };
 
-        symbolSwitch.onClick.AddListener(OnSymbolSwitchClick);
-        colorSwitch.onClick.AddListener(OnColorSwitchClick);
+        gemDictionary.Add(gemObjects[0], gems[0]);
+        gemDictionary.Add(gemObjects[1], gems[1]);
+        gemDictionary.Add(gemObjects[2], gems[2]);
+        gemDictionary.Add(gemObjects[3], gems[3]);
+
+        crocoCounterText.text = crocoCounter.ToString();
     }
 
     void Start() { }
-
-    void OnSymbolSwitchClick() {
-        gemDictionary[gemNorth].symbol = keyboard.jKey;
-        gemDictionary[gemWest].symbol = keyboard.kKey;
-        gemDictionary[gemSouth].symbol = keyboard.lKey;
-        gemDictionary[gemEast].symbol = keyboard.semicolonKey;
-
-        setUpGems();
-    }
-
-    void OnColorSwitchClick() {
-        gemDictionary[gemNorth].gemColor = GemColor.pink;
-        gemDictionary[gemWest].gemColor = GemColor.orange;
-        gemDictionary[gemSouth].gemColor = GemColor.green;
-        gemDictionary[gemEast].gemColor = GemColor.blue;
-
-        setUpGems();
-    }
 
     public void gemInteraction(KeyValuePair<GameObject, Gem> gemPair, bool isPressing) {
         GemColor gemSelected;
@@ -92,6 +82,48 @@ public class RelicController : MonoBehaviour {
         gemPair.Key.GetComponent<SpriteRenderer>().sprite = gemSprites[((int)gemSelected)];
     }
 
+    public void killCroco() {
+        crocoCounter += 1;
+        crocoCounterText.text = crocoCounter.ToString();
+
+        shiftCounter += 1;
+        switch (roomDifficulty) {
+            case RoomDifficulty.veryEasy:
+                if (shiftCounter == 5) {
+                    var gemToUpdate = Random.Range(0, 4);
+                    var currentGem = gemObjects[gemToUpdate];
+                    var newSymbol = getUniqueRandomAlphaInput();
+
+                    gemDictionary[currentGem].symbol = newSymbol;
+                    currentSymbols[gemToUpdate] = newSymbol;
+                    shiftCounter = 0;
+                }
+                break;
+            default: break;
+        }
+        setUpGems();
+    }
+
+    /// Private
+    void OnSymbolSwitchClick() {
+        gemDictionary[gemObjects[0]].symbol = keyboard.jKey;
+        gemDictionary[gemObjects[1]].symbol = keyboard.kKey;
+        gemDictionary[gemObjects[2]].symbol = keyboard.lKey;
+        gemDictionary[gemObjects[3]].symbol = keyboard.semicolonKey;
+
+        setUpGems();
+    }
+
+    void OnColorSwitchClick() {
+        gemDictionary[gemObjects[0]].gemColor = GemColor.pink;
+        gemDictionary[gemObjects[1]].gemColor = GemColor.orange;
+        gemDictionary[gemObjects[2]].gemColor = GemColor.green;
+        gemDictionary[gemObjects[3]].gemColor = GemColor.blue;
+
+        setUpGems();
+    }
+
+
     private void LoadSpritesWhenReady(AsyncOperationHandle<Sprite[]> handle) {
         if (handle.Status == AsyncOperationStatus.Succeeded) {
             gemSprites = handle.Result;
@@ -110,32 +142,11 @@ public class RelicController : MonoBehaviour {
             gemPair.Key.GetComponent<SpriteRenderer>().sprite = gemSprites[((int)gemPair.Value.gemColor)];
         }
     }
-}
 
-public class Gem {
-    public InputControl symbol;
-    public GemColor gemColor;
-    public GemDirection direction;
+    private InputControl getUniqueRandomAlphaInput() {
+        var exclusiveSymbols = RelicSymbols.alphaInputs().Where(x => !currentSymbols.Contains(x));
+        var index = Random.Range(0, exclusiveSymbols.Count());
 
-    public Gem(InputControl symbol, GemColor gemColor, GemDirection direction) {
-        this.symbol = symbol;
-        this.gemColor = gemColor;
-        this.direction = direction;
+        return exclusiveSymbols.ToArray()[index];
     }
-}
-
-public enum GemColor {
-    blue = 0,
-    blueSelected = 1,
-    disabled = 2,
-    green = 3,
-    greenSelected = 4,
-    orange = 5,
-    orangeSelected = 6,
-    pink = 7,
-    pinkSelected = 8
-}
-
-public enum GemDirection {
-    north = 0, west = 1, south = 2, east = 3
 }
