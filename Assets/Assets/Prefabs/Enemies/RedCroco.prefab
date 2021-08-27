@@ -184,7 +184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.001
-  color: Red
+  color: 7
   isMoving: 0
   hasAttack: 0
 --- !u!61 &8095801202097003586

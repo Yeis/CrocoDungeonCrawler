@@ -10,8 +10,11 @@ public class InputController : MonoBehaviour {
     public RelicInputs controls;
     public GameObject relic;
     public GameObject difficulty;
+    public GameObject playerObject;
+
     private RelicController relicController;
     private DifficultyController difficultyController;
+    private Player player;
 
     void Awake() {
         controls = new RelicInputs();
@@ -20,16 +23,24 @@ public class InputController : MonoBehaviour {
 
         relicController = relic.GetComponent<RelicController>();
         difficultyController = difficulty.GetComponent<DifficultyController>();
+        player = playerObject.GetComponent<Player>();
     }
 
     void SymbolInteraction(InputControl control, bool isPressing) {
         try {
             var gemPair = relicController.gemDictionary.Where(x => control == x.Value.symbol).First();
-            if (isPressing) {
+            var lockedEnemy = player.lockedEnemy.GetComponent<Enemy>();
+            var isMistake = false;
+
+            if (isPressing && lockedEnemy.color == gemPair.Value.gemColor) {
                 difficultyController.killCroco();
+                player.Attack();
+            } else {
+                isMistake = true;
+                print("horaDeLaPenalizacion");
             }
 
-            relicController.gemInteraction(gemPair, isPressing);
+            relicController.gemInteraction(gemPair, isPressing, isMistake);
         } catch {
             if (isPressing) {
                 print("horaDeLaPenalizacion");

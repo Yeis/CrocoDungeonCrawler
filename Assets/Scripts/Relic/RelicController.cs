@@ -10,6 +10,11 @@ public class RelicController : MonoBehaviour {
     public List<InputControl> currentSymbols;
     public Sprite[] gemSprites;
 
+    public TMP_Text northGemText;
+    public TMP_Text westGemText;
+    public TMP_Text southGemText;
+    public TMP_Text eastGemText;
+
     /// Control order - [0]North, [1]West, [2]South, [3]East 
     private List<Gem> gems;
     private Keyboard keyboard;
@@ -49,20 +54,20 @@ public class RelicController : MonoBehaviour {
         updateGems();
     }
 
-    public void gemInteraction(KeyValuePair<GameObject, Gem> gemPair, bool isPressing) {
+    public void gemInteraction(KeyValuePair<GameObject, Gem> gemPair, bool isPressing, bool isMistake) {
         GemColor gemSelected;
         switch (gemPair.Value.gemColor) {
             case GemColor.blue:
-                gemSelected = isPressing ? GemColor.blueSelected : GemColor.blue;
+                gemSelected = isPressing ? isMistake ? GemColor.disabled : GemColor.blueSelected : GemColor.blue;
                 break;
             case GemColor.green:
-                gemSelected = isPressing ? GemColor.greenSelected : GemColor.green;
+                gemSelected = isPressing ? isMistake ? GemColor.disabled : GemColor.greenSelected : GemColor.green;
                 break;
             case GemColor.orange:
-                gemSelected = isPressing ? GemColor.orangeSelected : GemColor.orange;
+                gemSelected = isPressing ? isMistake ? GemColor.disabled : GemColor.orangeSelected : GemColor.orange;
                 break;
             case GemColor.pink:
-                gemSelected = isPressing ? GemColor.pinkSelected : GemColor.pink;
+                gemSelected = isPressing ? isMistake ? GemColor.disabled : GemColor.pinkSelected : GemColor.pink;
                 break;
             default: gemSelected = GemColor.disabled; break;
         }
@@ -71,11 +76,27 @@ public class RelicController : MonoBehaviour {
 
     public void updateGems() {
         foreach (var gemPair in gemDictionary) {
-            var gemTextObject = gemPair.Key.transform.Find("GemText");
+            TMP_Text gemLabel;
+            switch (gemPair.Value.direction) {
+                case GemDirection.north:
+                    gemLabel = northGemText;
+                    break;
+                case GemDirection.west:
+                    gemLabel = westGemText;
+                    break;
+                case GemDirection.south:
+                    gemLabel = southGemText;
+                    break;
+                case GemDirection.east:
+                    gemLabel = eastGemText;
+                    break;
+                default:
+                    // should never happen
+                    gemLabel = northGemText;
+                    break;
+            }
 
-            var gemLabel = gemTextObject.GetComponent<TMP_Text>();
             gemLabel.text = gemPair.Value.symbol.displayName;
-
             gemPair.Key.GetComponent<SpriteRenderer>().sprite = gemSprites[((int)gemPair.Value.gemColor)];
         }
     }
