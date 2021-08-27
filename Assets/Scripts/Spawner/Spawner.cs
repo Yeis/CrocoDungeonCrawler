@@ -23,6 +23,15 @@ public class Spawner : MonoBehaviour {
 
     private bool canSpawn = true;
 
+    public void stopEncounter() {
+        canSpawn = false;
+
+        foreach (var enemy in GameObject.FindGameObjectsWithTag("Enemy")) {
+            // TODO: Enemy die animation
+            Destroy(enemy);
+        }
+    }
+
     private void Update() {
         currentWave = waves[currentWaveno];
         spawnWave();
