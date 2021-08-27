@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1984084778335268374
 RectTransform:
   m_ObjectHideFlags: 0
@@ -33,10 +33,10 @@ RectTransform:
   m_Father: {fileID: 1984084779956636320}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 126.8937, y: 11.8502}
-  m_SizeDelta: {x: 106.4279, y: 23.7004}
+  m_AnchorMin: {x: 0.69488275, y: 0.615}
+  m_AnchorMax: {x: 0.9355309, y: 0.669}
+  m_AnchoredPosition: {x: -0.1000061, y: 1.1000061}
+  m_SizeDelta: {x: -1.5451965, y: 0.020095825}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1984084778335268375
 CanvasRenderer:
@@ -93,7 +93,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 13.3
+  m_fontSize: 24.95
   m_fontSizeBase: 9.9
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -209,7 +209,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1984084778398783575
 RectTransform:
   m_ObjectHideFlags: 0
@@ -224,10 +224,10 @@ RectTransform:
   m_Father: {fileID: 1984084779956636320}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0000071526, y: -20.9}
-  m_SizeDelta: {x: 135.6503, y: 23.7004}
+  m_AnchorMin: {x: 0.43511733, y: 0.536}
+  m_AnchorMax: {x: 0.5663519, y: 0.5793353}
+  m_AnchoredPosition: {x: -0.5180054, y: 0.7325096}
+  m_SizeDelta: {x: -3.2532043, y: -1.4650002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1984084778398784424
 CanvasRenderer:
@@ -284,14 +284,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18.95
-  m_fontSizeBase: 14.75
+  m_fontSize: 20.55
+  m_fontSizeBase: 10
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 18
+  m_fontSizeMin: 10
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -370,6 +370,30 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: Map.MapGameLogic, Assembly-CSharp
+        m_MethodName: MovePlayerTop
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: RoomDifficultyManager, Assembly-CSharp
+        m_MethodName: updateRoomCounterAndDifficulty
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1984084779481931088}
         m_TargetAssemblyTypeName: TextScript, Assembly-CSharp
         m_MethodName: NextRoom
@@ -449,7 +473,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 159.6, y: -122.8}
+  m_AnchoredPosition: {x: 161.2, y: -112.1}
   m_SizeDelta: {x: 61.845, y: 24.6575}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1984084778539317589
@@ -623,7 +647,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1984084778718668200
 RectTransform:
   m_ObjectHideFlags: 0
@@ -638,10 +662,10 @@ RectTransform:
   m_Father: {fileID: 1984084779956636320}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 99.7, y: -61.8}
-  m_SizeDelta: {x: 135.6503, y: 23.7004}
+  m_AnchorMin: {x: 0.58876544, y: 0.47300002}
+  m_AnchorMax: {x: 0.69488275, y: 0.521}
+  m_AnchoredPosition: {x: 0.46398926, y: 1.2462006}
+  m_SizeDelta: {x: -0.2630005, y: -3.3896008}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1984084778718668201
 CanvasRenderer:
@@ -698,14 +722,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18.95
+  m_fontSize: 21.35
   m_fontSizeBase: 14.75
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 18
+  m_fontSizeMin: 10
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -784,6 +808,30 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: Map.MapGameLogic, Assembly-CSharp
+        m_MethodName: MovePlayerRight
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: RoomDifficultyManager, Assembly-CSharp
+        m_MethodName: updateRoomCounterAndDifficulty
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1984084779481931088}
         m_TargetAssemblyTypeName: TextScript, Assembly-CSharp
         m_MethodName: NextRoom
@@ -828,10 +876,10 @@ RectTransform:
   m_Father: {fileID: 1984084779956636320}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3.0538, y: 81.0448}
-  m_SizeDelta: {x: 354.11, y: 91.9104}
+  m_AnchorMin: {x: 0.065000005, y: 0.69500005}
+  m_AnchorMax: {x: 0.93100005, y: 0.92333335}
+  m_AnchoredPosition: {x: -0.72387695, y: 0.46844482}
+  m_SizeDelta: {x: -1.445404, y: -0.93688965}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1984084778951193501
 CanvasRenderer:
@@ -861,7 +909,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: ewe ewe ewe ewe ewe ewe ewe ewe ewe ewe ewe ewe ewe ewe ewe ewe ewe ewe
+    ewe ewe ewe ewe ewe ewe ewe ewe ewe ewe ewe ewe ewe ewe ewe ewe ewe ewe ewe ewe
+    ewe ewe ewe ewe ewe ewe ewe ewe ewe ewe
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0dfa73b04ab55a241a6187cfdebe6a05, type: 2}
   m_sharedMaterial: {fileID: 2509198070334813415, guid: 0dfa73b04ab55a241a6187cfdebe6a05, type: 2}
@@ -888,15 +938,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14.6
-  m_fontSizeBase: 14.6
+  m_fontSize: 20.9
+  m_fontSizeBase: 18
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 10
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -948,7 +998,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1984084779469243735
 RectTransform:
   m_ObjectHideFlags: 0
@@ -963,10 +1013,10 @@ RectTransform:
   m_Father: {fileID: 1984084779956636320}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -100.7, y: -61.8}
-  m_SizeDelta: {x: 135.6503, y: 23.7004}
+  m_AnchorMin: {x: 0.3152961, y: 0.47300002}
+  m_AnchorMax: {x: 0.41153073, y: 0.521}
+  m_AnchoredPosition: {x: -4.2, y: 1.2462}
+  m_SizeDelta: {x: 7.886101, y: 0.383}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1984084779469243560
 CanvasRenderer:
@@ -1023,14 +1073,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18.95
+  m_fontSize: 22.05
   m_fontSizeBase: 14.75
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 18
+  m_fontSizeMin: 10
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -1109,6 +1159,30 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: Map.MapGameLogic, Assembly-CSharp
+        m_MethodName: MovePlayerLeft
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: RoomDifficultyManager, Assembly-CSharp
+        m_MethodName: updateRoomCounterAndDifficulty
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1984084779481931088}
         m_TargetAssemblyTypeName: TextScript, Assembly-CSharp
         m_MethodName: NextRoom
@@ -1131,6 +1205,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1984084779481931089}
   - component: {fileID: 1984084779481931088}
+  - component: {fileID: 564816990}
   m_Layer: 0
   m_Name: DialogueManager
   m_TagString: Untagged
@@ -1165,10 +1240,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textDisplay: {fileID: 1984084778951193502}
-  sentences:
-  - pls work
-  - tengo suenio
-  - i h8 dis
   textSpeed: 0.02
   continueButton: {fileID: 1984084778335268458}
   northButton: {fileID: 1984084778398784427}
@@ -1177,6 +1248,104 @@ MonoBehaviour:
   westButton: {fileID: 1984084779469243563}
   mapGameLogic: {fileID: 0}
   tempCombatButton: {fileID: 1984084778539317417}
+  roomDifficultyManagerObject: {fileID: 0}
+  roomType: 0
+--- !u!82 &564816990
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1984084779481931090}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1984084779731449483
 GameObject:
   m_ObjectHideFlags: 0
@@ -1195,7 +1364,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1984084779731449527
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1210,10 +1379,10 @@ RectTransform:
   m_Father: {fileID: 1984084779956636320}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0000071526, y: -101.5}
-  m_SizeDelta: {x: 135.6503, y: 23.7004}
+  m_AnchorMin: {x: 0.43511733, y: 0.395}
+  m_AnchorMax: {x: 0.55964804, y: 0.455}
+  m_AnchoredPosition: {x: -0.013801575, y: 2.5}
+  m_SizeDelta: {x: 1.1016998, y: -4.6947002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1984084779731449480
 CanvasRenderer:
@@ -1270,14 +1439,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18.95
+  m_fontSize: 21
   m_fontSizeBase: 14.75
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 18
+  m_fontSizeMin: 10
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -1356,6 +1525,30 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: Map.MapGameLogic, Assembly-CSharp
+        m_MethodName: MovePlayerBottom
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: RoomDifficultyManager, Assembly-CSharp
+        m_MethodName: updateRoomCounterAndDifficulty
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1984084779481931088}
         m_TargetAssemblyTypeName: TextScript, Assembly-CSharp
         m_MethodName: NextRoom
