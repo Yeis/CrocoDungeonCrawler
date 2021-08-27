@@ -36,8 +36,11 @@ public class Spawner : MonoBehaviour {
     void spawnWave() {
         if (canSpawn && nextSpawntime < Time.time) {
             GameObject Enemy = currentWave.typeOfEnemies[Random.Range(0, currentWave.typeOfEnemies.Length)];
-            Transform randomPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-            Instantiate(Enemy, randomPoint.position, Quaternion.identity);
+            int random = Random.Range(0, spawnPoints.Length);
+            Transform randomPoint = spawnPoints[random];
+            GameObject newEnemy = Instantiate(Enemy, randomPoint.position, Quaternion.identity);
+            newEnemy.GetComponent<SpriteRenderer>().sortingOrder = randomPoint.gameObject.GetComponent<SpawnPoint>().spriteLayer;
+            newEnemy.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sortingOrder = randomPoint.gameObject.GetComponent<SpawnPoint>().spriteLayer;
             currentWave.noOfEnemies--;
             nextSpawntime = Time.time + currentWave.spawnInterval;
             if (currentWave.noOfEnemies == 0) {
