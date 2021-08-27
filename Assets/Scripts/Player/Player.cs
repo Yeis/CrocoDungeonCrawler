@@ -40,8 +40,22 @@ public class Player : MonoBehaviour {
         this.healthPoints = this.healthPoints - damage;
     }
 
-    public void Attack() {
-        animator.SetTrigger("Attack");
+    public void Attack(GemColor attackColor) {
+        switch (attackColor) {
+            case GemColor.blue:
+                animator.SetTrigger("AttackBlue");
+                break;
+            case GemColor.orange:
+                animator.SetTrigger("AttackOrange");
+                break;
+            case GemColor.green:
+                animator.SetTrigger("AttackGreen");
+                break;
+            case GemColor.pink:
+                animator.SetTrigger("AttackPink");
+                break;
+        }
+
         if (lockedEnemy != null) {
             Destroy(lockedEnemy);
             lockedEnemy = null;

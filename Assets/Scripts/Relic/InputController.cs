@@ -33,8 +33,8 @@ public class InputController : MonoBehaviour {
             var isMistake = false;
 
             if (isPressing && lockedEnemy.color == gemPair.Value.gemColor) {
+                player.Attack(gemPair.Value.gemColor);
                 difficultyController.killCroco();
-                player.Attack();
             } else {
                 isMistake = true;
                 print("horaDeLaPenalizacion");
