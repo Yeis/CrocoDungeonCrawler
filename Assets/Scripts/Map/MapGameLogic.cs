@@ -12,15 +12,23 @@ namespace Map
         public Sprite characterSprite;
         
         private RoomTemplates templates;
-        private int currentAmountOfRooms;
+        public int currentAmountOfRooms;
         private int random;
         private Queue<MapNode> queue;
+
+        //Room Difficulty 
+        public GameObject roomDifficultyManagerObject;
+        private RoomDifficultyManager roomDifficultyManager;
 
         //This list is only used to calculate distance between rooms to fill with right piece
         private List<MapNode> rooms;
         public MapNode characterPositionNode;
         private MapNode bossPositionNode;
-        // Start is called before the first frame update
+        
+        void Awake() {
+            roomDifficultyManager = roomDifficultyManagerObject.GetComponent<RoomDifficultyManager>();
+        }
+        
         void Start()
         {
             templates = GameObject.FindGameObjectWithTag("RoomsTemplates").GetComponent<RoomTemplates>();
@@ -32,6 +40,7 @@ namespace Map
             GenerateMap();
             SetupPlayerInMap();
             SetupBossInMap();
+            roomDifficultyManager.generateDifficultyArray();
         }
 
         //Player in map functions
