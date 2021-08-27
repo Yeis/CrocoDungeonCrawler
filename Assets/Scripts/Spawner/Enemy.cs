@@ -7,10 +7,14 @@ public class Enemy : MonoBehaviour {
     public GemColor color;
     public bool isMoving;
     public bool hasAttack;
+    public bool isAttacking = false;
+
+    public Animator anim;
 
     // Start is called before the first frame update
     void Start() {
         isMoving = true;
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -18,6 +22,12 @@ public class Enemy : MonoBehaviour {
         if (isMoving) {
             float frameSpeed = speed * Time.deltaTime;
             gameObject.transform.position = new Vector3(gameObject.transform.position.x - speed, gameObject.transform.position.y, gameObject.transform.position.z);
+        }
+
+        if(isAttacking){
+            anim.SetBool("isAttacking", true);
+        } else {
+            anim.SetBool("isAttacking", false);
         }
     }
 
@@ -33,6 +43,7 @@ public class Enemy : MonoBehaviour {
         yield return new WaitForSeconds(1.0f);
         isMoving = true;
     }
+    
 
     void OnBecameInvisible() {
         Destroy(gameObject);

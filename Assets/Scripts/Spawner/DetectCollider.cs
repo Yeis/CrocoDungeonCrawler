@@ -20,7 +20,7 @@ public class DetectCollider : MonoBehaviour
         if(other.gameObject.tag == "Enemy") 
         {
            Enemy enemy = other.gameObject.GetComponent<Enemy>();
-           enemy.TriggerAttack();
+           enemy.isAttacking = true;
         }
     }
 }
