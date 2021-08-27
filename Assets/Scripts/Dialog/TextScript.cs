@@ -7,10 +7,11 @@ using System.IO;
 
 public class TextScript : MonoBehaviour {
 
+    public GameObject dialogUI;
     public TextMeshProUGUI textDisplay;
     private string[] easyDialogs = Directory.GetFiles("Assets/Assets/Texts/EasyTexts", "*.txt");
     private string[] mediumDialogs = Directory.GetFiles("Assets/Assets/Texts/MediumTexts", "*.txt");
-    private string[] hardDialogs = Directory.GetFiles("Assets/Assets/Texts/HardTexts", "*.txt");
+    private string[] postCombatDialogs = Directory.GetFiles("Assets/Assets/Texts/PostCombatTexts", "*.txt");
     private string[] specialDialogs = Directory.GetFiles("Assets/Assets/Texts/SpecialTexts", "*.txt");
     private List<string> sentences = new List<string>();
     private int index;
@@ -25,7 +26,9 @@ public class TextScript : MonoBehaviour {
     private MapGameLogic mapController;
     private AudioSource source;
 
-    public GameObject tempCombatButton;
+    public GameObject startCombatButton;
+    public GameObject tempEndCombatButton;
+    private bool postCombatStatus = false;
 
     //Room Difficulty 
     public GameObject roomDifficultyManagerObject;
@@ -45,13 +48,26 @@ public class TextScript : MonoBehaviour {
     }
 
     void Update() {
+        // if(!postCombatStatus){
+        //     if(textDisplay.text == sentences[index]) {
+        //         if(index == sentences.Count - 1) {
+        //             startCombatButton.SetActive(true);
+        //         } else {
+        //             continueButton.SetActive(true);
+        //         }
+        //     }
+        // } else {
+            
+        // }
 
         if(textDisplay.text == sentences[index]) {
-            if(index == sentences.Count - 1) {
+            if(postCombatStatus){
                 northButton.SetActive(mapController.characterPositionNode.topRoom != null);
                 eastButton.SetActive(mapController.characterPositionNode.rightRoom != null);
                 westButton.SetActive(mapController.characterPositionNode.leftRoom != null);
                 southButton.SetActive(mapController.characterPositionNode.bottomRoom != null);
+            } else if(index == sentences.Count - 1) {
+                startCombatButton.SetActive(true);            
             } else {
                 continueButton.SetActive(true);
             }
@@ -84,6 +100,7 @@ public class TextScript : MonoBehaviour {
     }
 
     public void NextRoom() {
+        postCombatStatus = false;
         northButton.SetActive(false);
         eastButton.SetActive(false);
         westButton.SetActive(false);
@@ -94,29 +111,33 @@ public class TextScript : MonoBehaviour {
         if(mapController.characterPositionNode.characterVisited) {
             sentences.Clear();
             readTextFile("Assets/Assets/Texts/SpecialTexts/visitedRoomDialog.txt");
+            postCombatStatus = true;
+            StartCoroutine(Type());
         } else if(mapController.characterPositionNode.isBossInRoom){ 
             sentences.Clear();
             //TODO: check if room is open or closed
             readTextFile("Assets/Assets/Texts/SpecialTexts/bossRoomOpenText.txt");
+            StartCoroutine(Type());
         } else {
-            // mocking combat
-            tempCombatButton.SetActive(true);
-
             switch (roomDifficultyManager.difficultyLevel)
             {
                 case RoomType.easyRoom:
                     sentences.Clear();
                     readRandomFrom(easyDialogs);
+                    StartCoroutine(Type());
                     return;
                 
                 case RoomType.mediumRoom:
                     sentences.Clear();
                     readRandomFrom(mediumDialogs);
+                    StartCoroutine(Type());
                     return;
 
                 case RoomType.eventRoom:
                     sentences.Clear();
                     readTextFile("Assets/Assets/Texts/SpecialTexts/eventRoomText.txt");
+                    postCombatStatus = true;
+                    StartCoroutine(Type());
                     return;
 
                 default:
@@ -124,8 +145,7 @@ public class TextScript : MonoBehaviour {
             }
         }
 
-        // mocking combat
-        tempCombatButton.SetActive(true);
+        startCombatButton.SetActive(true);
 
     }
 
@@ -137,7 +157,29 @@ public class TextScript : MonoBehaviour {
 
     private void mockCombat() {
         StartCoroutine(Type());
-        tempCombatButton.SetActive(false);
+        startCombatButton.SetActive(false);
+    }
+
+    public void prepCloseUI() {
+        // northButton.SetActive(mapController.characterPositionNode.topRoom != null);
+        // eastButton.SetActive(mapController.characterPositionNode.rightRoom != null);
+        // westButton.SetActive(mapController.characterPositionNode.leftRoom != null);
+        // southButton.SetActive(mapController.characterPositionNode.bottomRoom != null);
+        startCombatButton.SetActive(false);
+        dialogUI.SetActive(false);
+        tempEndCombatButton.SetActive(true);
+    }
+
+    public void reopenUI() {
+        tempEndCombatButton.SetActive(false);
+        startCombatButton.SetActive(false);
+        dialogUI.SetActive(true);
+        postCombatStatus = true;
+        sentences.Clear();
+        textDisplay.text = "";
+        index = 0;
+        readRandomFrom(postCombatDialogs);
+        StartCoroutine(Type());
     }
 
     IEnumerator Type() {

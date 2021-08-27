@@ -50,7 +50,6 @@ public class RoomDifficultyManager : MonoBehaviour
         {
             randy = Random.Range(0, 2);
             if(randy == 1 && numberOfCurrentEvents < eventRoomQuantity) {
-                // difficulty means event room
                 difficultyArray.Add(RoomType.eventRoom);
                 numberOfCurrentEvents++;
             } else {
