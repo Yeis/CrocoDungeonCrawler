@@ -17,7 +17,6 @@ public class DifficultyController : MonoBehaviour {
     public int hardColorShiftPercentage = 20;
 
     public GameObject relic;
-    public TMP_Text crocoCounterText;
     public RoomDifficulty roomDifficulty;
 
     private int shiftCounter = 0;
@@ -30,7 +29,6 @@ public class DifficultyController : MonoBehaviour {
 
     void Awake() {
         relicController = relic.GetComponent<RelicController>();
-        crocoCounterText.text = crocoCounter.ToString();
 
         easyDifficultyLimit = Random.Range(easyMinRange, easyMaxRange + 1);
         mediumDifficultyLimit = Random.Range(mediumMinRange, mediumMaxRange + 1);
@@ -39,7 +37,6 @@ public class DifficultyController : MonoBehaviour {
 
     public void killCroco() {
         crocoCounter += 1;
-        crocoCounterText.text = crocoCounter.ToString();
 
         shiftCounter += 1;
         switch (roomDifficulty) {
