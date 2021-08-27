@@ -26,10 +26,15 @@ public class TextScript : MonoBehaviour {
     private AudioSource source;
 
     public GameObject tempCombatButton;
-    public int tempDifficulty;
+
+    //Room Difficulty 
+    public GameObject roomDifficultyManagerObject;
+    private RoomDifficultyManager roomDifficultyManager;
+    public RoomType roomType;
 
     void Awake() {
         mapController = mapGameLogic.GetComponent<MapGameLogic>();
+        roomDifficultyManager = roomDifficultyManagerObject.GetComponent<RoomDifficultyManager>();
     }
 
     void Start() {
@@ -89,31 +94,29 @@ public class TextScript : MonoBehaviour {
         if(mapController.characterPositionNode.characterVisited) {
             sentences.Clear();
             readTextFile("Assets/Assets/Texts/SpecialTexts/visitedRoomDialog.txt");
+        } else if(mapController.characterPositionNode.isBossInRoom){ 
+            sentences.Clear();
+            //TODO: check if room is open or closed
+            readTextFile("Assets/Assets/Texts/SpecialTexts/bossRoomOpenText.txt");
         } else {
-
             // mocking combat
             tempCombatButton.SetActive(true);
 
-            switch (tempDifficulty)
+            switch (roomDifficultyManager.difficultyLevel)
             {
-                case 0:
+                case RoomType.easyRoom:
                     sentences.Clear();
                     readRandomFrom(easyDialogs);
                     return;
                 
-                case 1:
+                case RoomType.mediumRoom:
                     sentences.Clear();
                     readRandomFrom(mediumDialogs);
                     return;
 
-                case 2:
+                case RoomType.eventRoom:
                     sentences.Clear();
-                    readRandomFrom(hardDialogs);
-                    return;
-
-                case 3:
-                    sentences.Clear();
-                    readTextFile("Assets/Assets/Texts/SpecialTexts/bossRoomOpenText.txt");
+                    readTextFile("Assets/Assets/Texts/SpecialTexts/eventRoomText.txt");
                     return;
 
                 default:
