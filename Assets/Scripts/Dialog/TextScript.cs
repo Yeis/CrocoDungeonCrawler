@@ -8,6 +8,10 @@ using System.IO;
 public class TextScript : MonoBehaviour {
 
     public TextMeshProUGUI textDisplay;
+    private string[] easyDialogs = Directory.GetFiles("Assets/Assets/Texts/EasyTexts", "*.txt");
+    private string[] mediumDialogs = Directory.GetFiles("Assets/Assets/Texts/MediumTexts", "*.txt");
+    private string[] hardDialogs = Directory.GetFiles("Assets/Assets/Texts/HardTexts", "*.txt");
+    private string[] specialDialogs = Directory.GetFiles("Assets/Assets/Texts/SpecialTexts", "*.txt");
     private List<string> sentences = new List<string>();
     private int index;
     public float textSpeed = 0.02f;
@@ -22,15 +26,14 @@ public class TextScript : MonoBehaviour {
     private AudioSource source;
 
     public GameObject tempCombatButton;
+    public int tempDifficulty;
 
     void Awake() {
         mapController = mapGameLogic.GetComponent<MapGameLogic>();
     }
 
     void Start() {
-        // TODO: Populate string[] with room dialog
-
-        readTextFile("Assets/Assets/Texts/testDialogFile.txt");
+        readTextFile("Assets/Assets/Texts/SpecialTexts/initRoomText.txt");
 
         source = GetComponent<AudioSource>();
         StartCoroutine(Type());
@@ -85,19 +88,51 @@ public class TextScript : MonoBehaviour {
 
         if(mapController.characterPositionNode.characterVisited) {
             sentences.Clear();
-            readTextFile("Assets/Assets/Texts/visitedRoomDialog.txt");
+            readTextFile("Assets/Assets/Texts/SpecialTexts/visitedRoomDialog.txt");
         } else {
-            sentences.Clear();
-            //TODO: Populate sentences list with appropiate room
-            //eg. readTextFile(characterPositionNode.descriptionDialogPath);
-            sentences.Add("ok this is a new room but I dont know wtf to say rn stg fr fr lol");
+
+            // mocking combat
+            tempCombatButton.SetActive(true);
+
+            switch (tempDifficulty)
+            {
+                case 0:
+                    sentences.Clear();
+                    readRandomFrom(easyDialogs);
+                    return;
+                
+                case 1:
+                    sentences.Clear();
+                    readRandomFrom(mediumDialogs);
+                    return;
+
+                case 2:
+                    sentences.Clear();
+                    readRandomFrom(hardDialogs);
+                    return;
+
+                case 3:
+                    sentences.Clear();
+                    readTextFile("Assets/Assets/Texts/SpecialTexts/bossRoomOpenText.txt");
+                    return;
+
+                default:
+                    return;
+            }
         }
 
         // mocking combat
         tempCombatButton.SetActive(true);
+
     }
 
-    public void mockCombat() {
+    private void readRandomFrom(string[] dialogList) {
+        int randy = Random.Range(0, 5);
+        sentences.Clear();
+        readTextFile(dialogList[randy]);
+    }
+
+    private void mockCombat() {
         StartCoroutine(Type());
         tempCombatButton.SetActive(false);
     }
