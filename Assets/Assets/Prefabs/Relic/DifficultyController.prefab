@@ -51,6 +51,9 @@ MonoBehaviour:
   hardMaxRange: 6
   mediumColorShiftPercentage: 10
   hardColorShiftPercentage: 20
+  requiredNumberOfCrocos: 30
   relic: {fileID: 0}
+  roomDifficulty: 4
   crocoCounterText: {fileID: 0}
-  roomDifficulty: 3
+  requiredNumberOfCrocosText: {fileID: 0}
+  spawner: {fileID: 0}

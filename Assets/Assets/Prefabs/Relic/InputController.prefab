@@ -45,3 +45,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   relic: {fileID: 0}
   difficulty: {fileID: 0}
+  playerObject: {fileID: 0}
