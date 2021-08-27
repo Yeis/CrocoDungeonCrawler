@@ -15,9 +15,13 @@ public class DifficultyController : MonoBehaviour {
     public int hardMaxRange = 6;
     public int mediumColorShiftPercentage = 10;
     public int hardColorShiftPercentage = 20;
+    public int requiredNumberOfCrocos = 30;
 
     public GameObject relic;
     public RoomDifficulty roomDifficulty;
+    public TMP_Text crocoCounterText;
+    public TMP_Text requiredNumberOfCrocosText;
+    public GameObject spawner;
 
     private int shiftCounter = 0;
     private int crocoCounter = 0;
@@ -25,18 +29,31 @@ public class DifficultyController : MonoBehaviour {
     private int easyDifficultyLimit;
     private int mediumDifficultyLimit;
     private int hardDifficultyLimit;
+    private Spawner spawnerController;
 
 
     void Awake() {
         relicController = relic.GetComponent<RelicController>();
+        spawnerController = spawner.GetComponent<Spawner>();
 
         easyDifficultyLimit = Random.Range(easyMinRange, easyMaxRange + 1);
         mediumDifficultyLimit = Random.Range(mediumMinRange, mediumMaxRange + 1);
         hardDifficultyLimit = Random.Range(hardMinRange, hardMaxRange + 1);
     }
 
+    void Start() {
+        crocoCounterText.text = crocoCounter.ToString("00");
+        requiredNumberOfCrocosText.text = requiredNumberOfCrocos.ToString("00");
+    }
+
     public void killCroco() {
         crocoCounter += 1;
+        crocoCounterText.text = crocoCounter.ToString("00");
+
+        if (crocoCounter == requiredNumberOfCrocos) {
+            endEncounter(true);
+            return;
+        }
 
         shiftCounter += 1;
         switch (roomDifficulty) {
@@ -73,6 +90,21 @@ public class DifficultyController : MonoBehaviour {
             default: break;
         }
         relicController.updateGems();
+    }
+
+    public void triggerGameOver() {
+        endEncounter(false);
+    }
+
+    /// --- Private methods---
+
+    private void endEncounter(bool hasWon) {
+        if (hasWon) {
+            spawnerController.stopEncounter();
+            // TODO: conectar dialog manager, avanzar de estado 
+        } else {
+            // TODO: Game over 
+        }
     }
 
     private void gemShift(int numberOfGems, bool includeNums, bool includeSymbolsAndNums) {
