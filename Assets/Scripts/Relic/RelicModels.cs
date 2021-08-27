@@ -71,7 +71,6 @@ public static class RelicSymbols {
 
     public static List<InputControl> numericInputs() {
         return new List<InputControl> {
-            keyboard.digit0Key,
             keyboard.digit1Key,
             keyboard.digit2Key,
             keyboard.digit3Key,
