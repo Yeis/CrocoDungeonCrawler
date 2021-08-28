@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
-    public int healthPoints = 100;
+    public float healthPoints = 100;
+    public GameObject hpMask;
     public Sprite lockSprite;
     private Animator animator;
 
@@ -38,6 +40,12 @@ public class Player : MonoBehaviour {
 
     public void TakeDamage(int damage) {
         this.healthPoints = this.healthPoints - damage;
+        hpMask.transform.localPosition = new Vector3(Mathf.Lerp(0.1284f,0.66f, healthPoints/ 100f), hpMask.transform.localPosition.y, hpMask.transform.localPosition.z);
+    }
+
+    public void AddHealth(int healthPoints) {
+        this.healthPoints = this.healthPoints + healthPoints;
+        hpMask.transform.localPosition = new Vector3(Mathf.Lerp(0.1284f,0.66f, healthPoints/ 100), hpMask.transform.localPosition.y, hpMask.transform.localPosition.z);
     }
 
     public void Attack(GemColor attackColor) {
