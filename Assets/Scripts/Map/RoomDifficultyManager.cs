@@ -31,6 +31,8 @@ public class RoomDifficultyManager : MonoBehaviour
         if(!mapController.characterPositionNode.characterVisited && !mapController.characterPositionNode.isBossInRoom){
             roomCounter++;
             difficultyLevel = difficultyArray[roomCounter-1];
+        } else if(mapController.characterPositionNode.isBossInRoom){
+            difficultyLevel = RoomType.bossRoom;
         }
     }
 

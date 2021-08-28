@@ -20,6 +20,9 @@ public class DifficultyController : MonoBehaviour {
     public TMP_Text crocoCounterText;
     public TMP_Text requiredNumberOfCrocosText;
     public GameObject transitioner;
+    public GameObject easyBackground;
+    public GameObject mediumBackground;
+    public GameObject bossBackground;
 
     private int shiftCounter = 0;
     private int crocoCounter = 0;
@@ -43,6 +46,25 @@ public class DifficultyController : MonoBehaviour {
     public void startEncounter(int requiredCrocos, RoomDifficulty difficulty) {
         requiredNumberOfCrocos = requiredCrocos;
         roomDifficulty = difficulty;
+
+        switch(roomDifficulty) {
+            case RoomDifficulty.veryEasy:
+            case RoomDifficulty.easy:
+                easyBackground.SetActive(true);
+                mediumBackground.SetActive(false);
+                bossBackground.SetActive(false);
+                break;
+            case RoomDifficulty.medium:
+                easyBackground.SetActive(false);
+                mediumBackground.SetActive(true);
+                bossBackground.SetActive(false);
+                break;
+            case RoomDifficulty.hard:
+                easyBackground.SetActive(false);
+                mediumBackground.SetActive(false);
+                bossBackground.SetActive(true);
+                break;
+        }
 
         crocoCounterText.text = crocoCounter.ToString("00");
         requiredNumberOfCrocosText.text = requiredNumberOfCrocos.ToString("00");
