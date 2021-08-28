@@ -135,13 +135,13 @@ namespace Map
             //Generate Open Rooms
             queue.Enqueue(rootNode);
             rooms.Add(rootNode);
-            while (currentAmountOfRooms < minAmountOfRooms) {
+            while (currentAmountOfRooms < minAmountOfRooms || queue.Count > 0) {
                 MapNode mapNode = queue.Dequeue();
                 Room currentRoom =  mapNode.node.GetComponent<Room>();
-                if(currentAmountOfRooms < minAmountOfRooms && currentRoom.hasTopDoor && mapNode.topRoom == null) {
+                if(currentRoom.hasTopDoor && mapNode.topRoom == null) {
                     MapNode blockingRoom =  getBlockingRoom(new Vector3(mapNode.node.transform.position.x, mapNode.node.transform.position.y + 0.5f, mapNode.node.transform.position.z));
                     //Regular logic there is no blockingRoom
-                    if(blockingRoom == null) {
+                    if(currentAmountOfRooms < minAmountOfRooms && blockingRoom == null) {
                         random = Random.Range(0, templates.bottomRooms.Length);
                         GameObject topRoom = Instantiate(templates.bottomRooms[random], new Vector3(mapNode.node.transform.position.x, mapNode.node.transform.position.y + 0.5f, mapNode.node.transform.position.z), Quaternion.identity);
                         topRoom.transform.parent = parentTransform;
@@ -153,7 +153,7 @@ namespace Map
                         rooms.Add(topMapNode);
                     } 
                     //There is an already blockingRoom that we need to update
-                    else {
+                    else if(blockingRoom != null)  {
                         currentRoom.hasTopDoor = false;
                         if(mapNode.leftRoom != null) {
                             GameObject leftRoom = Instantiate(templates.L, mapNode.node.transform.position, Quaternion.identity);
@@ -171,12 +171,12 @@ namespace Map
                             Destroy(mapNode.node);
                             mapNode.node = topRoom;
                         }
-                        mapNode.node.GetComponent<SpriteRenderer>().color = Color.red;
+                        // mapNode.node.GetComponent<SpriteRenderer>().color = Color.red;
                     }
                 }
-                if(currentAmountOfRooms < minAmountOfRooms && currentRoom.hasBottomDoor && mapNode.bottomRoom == null) {
+                if( currentRoom.hasBottomDoor && mapNode.bottomRoom == null) {
                     MapNode blockingRoom =  getBlockingRoom(new Vector3(mapNode.node.transform.position.x, mapNode.node.transform.position.y - 0.5f, mapNode.node.transform.position.z));
-                    if(blockingRoom == null) {
+                    if(currentAmountOfRooms < minAmountOfRooms && blockingRoom == null) {
                         random = Random.Range(0, templates.topRooms.Length);
                         GameObject bottomRoom = Instantiate(templates.topRooms[random], new Vector3(mapNode.node.transform.position.x, mapNode.node.transform.position.y - 0.5f, mapNode.node.transform.position.z), Quaternion.identity);
                         bottomRoom.transform.parent = parentTransform;
@@ -188,7 +188,7 @@ namespace Map
                         rooms.Add(bottomMapNode);                   
                     }
                     //There is an already blockingRoom that we need to update
-                    else {
+                    else if(blockingRoom != null)  {
                         currentRoom.hasBottomDoor = false;
                         if(mapNode.leftRoom != null) {
                             GameObject leftRoom = Instantiate(templates.L, mapNode.node.transform.position, Quaternion.identity);
@@ -206,12 +206,12 @@ namespace Map
                             Destroy(mapNode.node);
                             mapNode.node = bottomRoom;
                         }
-                        mapNode.node.GetComponent<SpriteRenderer>().color = Color.red;
+                        // mapNode.node.GetComponent<SpriteRenderer>().color = Color.red;
                     }
                 } 
-                if(currentAmountOfRooms < minAmountOfRooms && currentRoom.hasRightDoor && mapNode.rightRoom == null) {
+                if(currentRoom.hasRightDoor && mapNode.rightRoom == null) {
                     MapNode blockingRoom = getBlockingRoom(new Vector3(mapNode.node.transform.position.x + 0.5f, mapNode.node.transform.position.y, mapNode.node.transform.position.z));
-                    if(blockingRoom == null) {
+                    if(currentAmountOfRooms < minAmountOfRooms && blockingRoom == null) {
                         random = Random.Range(0, templates.leftRooms.Length);
                         GameObject rightRoom = Instantiate(templates.leftRooms[random], new Vector3(mapNode.node.transform.position.x + 0.5f, mapNode.node.transform.position.y, mapNode.node.transform.position.z), Quaternion.identity);
                         rightRoom.transform.parent = parentTransform;
@@ -223,7 +223,7 @@ namespace Map
                         rooms.Add(rightMapNode);
                     }
                     //There is an already blockingRoom that we need to update
-                    else {
+                    else if(blockingRoom != null)  {
                         currentRoom.hasRightDoor = false;
                         if(mapNode.topRoom != null) {
                             GameObject topRoom = Instantiate(templates.T, mapNode.node.transform.position, Quaternion.identity);
@@ -241,12 +241,12 @@ namespace Map
                             Destroy(mapNode.node);
                             mapNode.node = bottomRoom;
                         }
-                        mapNode.node.GetComponent<SpriteRenderer>().color = Color.red;
+                        // mapNode.node.GetComponent<SpriteRenderer>().color = Color.red;
                     }
                 } 
-                if(currentAmountOfRooms < minAmountOfRooms && currentRoom.hasLeftDoor && mapNode.leftRoom == null) {
+                if(currentRoom.hasLeftDoor && mapNode.leftRoom == null) {
                     MapNode blockingRoom = getBlockingRoom(new Vector3(mapNode.node.transform.position.x - 0.5f, mapNode.node.transform.position.y, mapNode.node.transform.position.z));
-                    if(blockingRoom == null) {
+                    if(currentAmountOfRooms < minAmountOfRooms && blockingRoom == null) {
                         random = Random.Range(0, templates.rightRooms.Length);
                         GameObject leftRoom = Instantiate(templates.rightRooms[random], new Vector3(mapNode.node.transform.position.x - 0.5f, mapNode.node.transform.position.y, mapNode.node.transform.position.z), Quaternion.identity);
                         leftRoom.transform.parent = parentTransform;
@@ -258,7 +258,7 @@ namespace Map
                         rooms.Add(leftMapNode);
                     }
                     //There is an already blockingRoom that we need to update
-                    else {
+                    else if(blockingRoom != null)  {
                         currentRoom.hasLeftDoor = false;
                         if(mapNode.topRoom != null) {
                             GameObject topRoom = Instantiate(templates.T, mapNode.node.transform.position, Quaternion.identity);
@@ -276,14 +276,13 @@ namespace Map
                             Destroy(mapNode.node);
                             mapNode.node = bottomRoom;
                         }
-                        mapNode.node.GetComponent<SpriteRenderer>().color = Color.red;
+                        // mapNode.node.GetComponent<SpriteRenderer>().color = Color.red;
                     }
                 } 
             }
 
             //After creating simple map we need to cover all the holes 
             FillMapPieces();
-            print("Amount of Rooms: " + rooms.Count);
         }
 
         private MapNode getBlockingRoom(Vector3 atPosition) {
@@ -294,7 +293,7 @@ namespace Map
             return null;
         }
         //Find spaces where rooms are missing and fill them with closed paths
-        private void FillMapPieces() {
+        public void FillMapPieces() {
             Stack<MapNode> stack = new Stack<MapNode>();
             stack.Push(rootNode);
 
@@ -313,6 +312,7 @@ namespace Map
                         currentNode.topRoom = topMapNode;
                         topMapNode.bottomRoom = currentNode;
                         rooms.Add(topMapNode);
+                        // topRoom.GetComponent<SpriteRenderer>().color = Color.yellow; 
                     }
                 }
                 if(currentRoom.hasBottomDoor) {
@@ -327,6 +327,7 @@ namespace Map
                         currentNode.bottomRoom = bottomMapNode;
                         bottomMapNode.topRoom = currentNode;
                         rooms.Add(bottomMapNode);
+                        // bottomRoom.GetComponent<SpriteRenderer>().color = Color.yellow; 
                     }
                 }
                  if(currentRoom.hasLeftDoor) {
@@ -341,6 +342,7 @@ namespace Map
                         currentNode.leftRoom = leftMapNode;
                         leftMapNode.rightRoom = currentNode;
                         rooms.Add(leftMapNode);
+                        // leftRoom.GetComponent<SpriteRenderer>().color = Color.yellow; 
                     }
                 }
                  if(currentRoom.hasRightDoor) {
@@ -354,7 +356,8 @@ namespace Map
                         MapNode rightMapNode = new MapNode(rightRoom);
                         currentNode.rightRoom = rightMapNode;
                         rightMapNode.leftRoom = currentNode;
-                        rooms.Add(rightMapNode); 
+                        rooms.Add(rightMapNode);
+                        // rightRoom.GetComponent<SpriteRenderer>().color = Color.yellow; 
                     }
                 }
                 currentNode.visited = true;

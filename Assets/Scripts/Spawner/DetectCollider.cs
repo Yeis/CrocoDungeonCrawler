@@ -11,7 +11,8 @@ public class DetectCollider : MonoBehaviour
         {
            Enemy enemy = other.gameObject.GetComponent<Enemy>();
            enemy.isAttacking = true;
-           player.TakeDamage(enemy.damage);
+           other.gameObject.tag = "PostAttackEnemy";
+          player.TakeDamage(enemy.damage);
         }
     }
 
