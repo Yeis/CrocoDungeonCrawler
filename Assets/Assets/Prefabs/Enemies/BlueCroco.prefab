@@ -101,9 +101,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.001
-  color: Blue
+  color: 0
   isMoving: 0
   hasAttack: 0
+  isAttacking: 0
+  newMarker: {fileID: 21300000, guid: 578e0ca744e14604abef33a8cee35e3d, type: 3}
+  anim: {fileID: 0}
 --- !u!61 &8970085368605027599
 BoxCollider2D:
   m_ObjectHideFlags: 0
