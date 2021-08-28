@@ -153,7 +153,7 @@ public class TextScript : MonoBehaviour {
             }
         }
 
-        startCombatButton.SetActive(true);
+        //startCombatButton.SetActive(true);
 
     }
 
