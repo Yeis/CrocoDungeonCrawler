@@ -4,23 +4,22 @@ using UnityEngine;
 
 public class DetectCollider : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public Animator anim;
     private void OnTriggerEnter2D(Collider2D other) 
     {
         if(other.gameObject.tag == "Enemy") 
         {
            Enemy enemy = other.gameObject.GetComponent<Enemy>();
            enemy.isAttacking = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other) 
+    {
+        if(other.gameObject.tag == "Enemy") 
+        {
+           Enemy enemy = other.gameObject.GetComponent<Enemy>();
+           enemy.isAttacking = false;
         }
     }
 }
