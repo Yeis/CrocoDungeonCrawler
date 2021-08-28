@@ -5,9 +5,8 @@ using UnityEngine;
 public class Player : MonoBehaviour {
     public int healthPoints = 100;
     public Sprite lockSprite;
-    private Animator animator;
-
     public GameObject lockedEnemy;
+    private Animator animator;
 
     // Start is called before the first frame update
     void Start() {

@@ -1,4 +1,4 @@
-using System.Collections;
+    using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -27,9 +27,7 @@ public class Enemy : MonoBehaviour {
             gameObject.transform.position = new Vector3(gameObject.transform.position.x - slide, gameObject.transform.position.y, gameObject.transform.position.z);
             anim.SetBool("isAttacking", true);
             StartCoroutine("Attack");
-        } else {
-            anim.SetBool("isAttacking", false);
-        }
+        } 
 
     }
 
