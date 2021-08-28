@@ -23,7 +23,8 @@ public class Player : MonoBehaviour {
 
     private void LockEnemy() {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        if (enemies.Length > 0 && lockedEnemy == null) {
+        if ((enemies.Length > 0 && lockedEnemy == null) ||(lockedEnemy != null && lockedEnemy.tag != "Enemy")) {
+            if(lockedEnemy != null) lockedEnemy.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = null;
             lockedEnemy = enemies[0];
             lockedEnemy.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = lockSprite;
         }

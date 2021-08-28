@@ -9,11 +9,10 @@ public class Enemy : MonoBehaviour {
     public bool isAttacking = false;
     public int damage = 10;
     public float slide = 0.0037f;
-    public int damage = 10;
-    public float slide = 0.0037f;
 
     public Animator anim;
 
+    public bool hasAttack = false;
     // Start is called before the first frame update
     void Start() {
         isMoving = true;
@@ -34,10 +33,6 @@ public class Enemy : MonoBehaviour {
             anim.SetBool("isAttacking", false);
         }
 
-    }
-
-    public void TriggerAttack() {
-        //Funcion triggerea attack animation
     }
 
     private IEnumerator Attack() {
