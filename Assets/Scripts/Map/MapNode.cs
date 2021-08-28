@@ -31,12 +31,12 @@ namespace Map
 
        public void VisitRoom() {
            this.characterVisited = true;
-           this.node.GetComponent<SpriteRenderer>().color = Color.green;
+           this.node.GetComponent<SpriteRenderer>().color = new Color(96.0f / 255f, 44.0f / 255f, 44.0f/ 255f, 1.0f);
        }
 
        public void UnvisitRoom(){
            this.characterVisited = false;
-           this.node.GetComponent<SpriteRenderer>().color = Color.white;
+           this.node.GetComponent<SpriteRenderer>().color = new Color(192.0f / 255f, 148.0f/ 255f, 115.0f/ 255f,  1.0f);
        }
     }
 }

@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
-    public int healthPoints = 100;
+    public float healthPoints = 100;
+    public GameObject hpMask;
     public Sprite lockSprite;
     public GameObject lockedEnemy;
     private Animator animator;
@@ -20,7 +22,8 @@ public class Player : MonoBehaviour {
 
     private void LockEnemy() {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        if (enemies.Length > 0 && lockedEnemy == null) {
+        if ((enemies.Length > 0 && lockedEnemy == null) ||(lockedEnemy != null && lockedEnemy.tag != "Enemy")) {
+            if(lockedEnemy != null) lockedEnemy.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = null;
             lockedEnemy = enemies[0];
             lockedEnemy.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = lockSprite;
         }
@@ -37,10 +40,30 @@ public class Player : MonoBehaviour {
 
     public void TakeDamage(int damage) {
         this.healthPoints = this.healthPoints - damage;
+        hpMask.transform.localPosition = new Vector3(Mathf.Lerp(0.1284f,0.66f, healthPoints/ 100f), hpMask.transform.localPosition.y, hpMask.transform.localPosition.z);
     }
 
-    public void Attack() {
-        animator.SetTrigger("Attack");
+    public void AddHealth(int healthPoints) {
+        this.healthPoints = this.healthPoints + healthPoints;
+        hpMask.transform.localPosition = new Vector3(Mathf.Lerp(0.1284f,0.66f, healthPoints/ 100), hpMask.transform.localPosition.y, hpMask.transform.localPosition.z);
+    }
+
+    public void Attack(GemColor attackColor) {
+        switch (attackColor) {
+            case GemColor.blue:
+                animator.SetTrigger("AttackBlue");
+                break;
+            case GemColor.orange:
+                animator.SetTrigger("AttackOrange");
+                break;
+            case GemColor.green:
+                animator.SetTrigger("AttackGreen");
+                break;
+            case GemColor.pink:
+                animator.SetTrigger("AttackPink");
+                break;
+        }
+
         if (lockedEnemy != null) {
             Destroy(lockedEnemy);
             lockedEnemy = null;

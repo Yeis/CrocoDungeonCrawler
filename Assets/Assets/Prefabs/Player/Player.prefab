@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthPoints: 100
+  hpMask: {fileID: 0}
   lockSprite: {fileID: 21300000, guid: c1e673d291dc07c4e9c617c0926d8463, type: 3}
   lockedEnemy: {fileID: 0}
 --- !u!212 &7205523933118227525
@@ -88,7 +89,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 6
   m_Sprite: {fileID: 4216705331314206822, guid: d5fa470c12043254896fb35783008903, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

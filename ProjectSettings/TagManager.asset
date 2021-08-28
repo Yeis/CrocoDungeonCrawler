@@ -9,6 +9,7 @@ TagManager:
   - MapGameLogic
   - Room
   - Enemy
+  - PostAttackEnemy
   layers:
   - Default
   - TransparentFX

@@ -20,11 +20,20 @@ public class Spawner : MonoBehaviour {
     private Wave currentWave;
     private int currentWaveno;
     private float nextSpawntime;
+    public bool isInCombat = false;
 
     private bool canSpawn = true;
 
+    public void startEncounter(int noOfEnemiesToSpawn) {
+        // set how many crocos to spawn
+        currentWaveno = 0;
+        waves[currentWaveno].noOfEnemies = noOfEnemiesToSpawn;
+
+        isInCombat = true;
+    }
+
     public void stopEncounter() {
-        canSpawn = false;
+        isInCombat = false;
 
         foreach (var enemy in GameObject.FindGameObjectsWithTag("Enemy")) {
             // TODO: Enemy die animation
@@ -33,12 +42,14 @@ public class Spawner : MonoBehaviour {
     }
 
     private void Update() {
-        currentWave = waves[currentWaveno];
-        spawnWave();
-        GameObject[] totalEnemies = GameObject.FindGameObjectsWithTag("Enemy");
-        if (totalEnemies.Length == 0 && !canSpawn && currentWaveno + 1 != waves.Length) {
-            currentWaveno++;
-            canSpawn = true;
+        if (isInCombat) {
+            currentWave = waves[currentWaveno];
+            spawnWave();
+            GameObject[] totalEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+            if (totalEnemies.Length == 0 && !canSpawn && currentWaveno + 1 != waves.Length) {
+                currentWaveno++;
+                canSpawn = true;
+            }
         }
     }
 

@@ -22,12 +22,12 @@ public class RelicController : MonoBehaviour {
     void Awake() {
         keyboard = Keyboard.current;
 
-        // Default keys WASD
+        // Default keys EMPTY
         currentSymbols = new List<InputControl> {
-            keyboard.wKey,
-            keyboard.aKey,
-            keyboard.sKey,
-            keyboard.dKey
+            keyboard.oem1Key,
+            keyboard.oem1Key,
+            keyboard.oem1Key,
+            keyboard.oem1Key
         };
 
         gems = new List<Gem> {
@@ -51,6 +51,41 @@ public class RelicController : MonoBehaviour {
     }
 
     void Start() {
+        updateGems();
+    }
+
+    public void setUpForCombat() {
+        gems[0].symbol = keyboard.wKey;
+        gems[1].symbol = keyboard.aKey;
+        gems[2].symbol = keyboard.sKey;
+        gems[3].symbol = keyboard.dKey;
+
+        updateGems();
+    }
+
+    public void setUpForDialog() {
+        foreach (var gemPair in gemDictionary) {
+            GemColor gemColor;
+
+            switch (gemPair.Value.direction) {
+                case GemDirection.north:
+                    gemColor = GemColor.blue;
+                    break;
+                case GemDirection.west:
+                    gemColor = GemColor.green;
+                    break;
+                case GemDirection.south:
+                    gemColor = GemColor.orange;
+                    break;
+                case GemDirection.east:
+                    gemColor = GemColor.pink;
+                    break;
+                default: gemColor = GemColor.disabled; break;
+            }
+            gemPair.Value.symbol = keyboard.oem1Key;
+            gemPair.Key.GetComponent<SpriteRenderer>().sprite = gemSprites[((int)gemColor)];
+        }
+
         updateGems();
     }
 
@@ -96,7 +131,7 @@ public class RelicController : MonoBehaviour {
                     break;
             }
 
-            gemLabel.text = gemPair.Value.symbol.displayName;
+            gemLabel.text = gemPair.Value.symbol == keyboard.oem1Key ? "" : gemPair.Value.symbol.displayName;
             gemPair.Key.GetComponent<SpriteRenderer>().sprite = gemSprites[((int)gemPair.Value.gemColor)];
         }
     }

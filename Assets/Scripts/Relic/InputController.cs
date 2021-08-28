@@ -15,6 +15,7 @@ public class InputController : MonoBehaviour {
     private RelicController relicController;
     private DifficultyController difficultyController;
     private Player player;
+    private bool isInCombat = false;
 
     void Awake() {
         controls = new RelicInputs();
@@ -27,25 +28,31 @@ public class InputController : MonoBehaviour {
     }
 
     void SymbolInteraction(InputControl control, bool isPressing) {
-        try {
-            var gemPair = relicController.gemDictionary.Where(x => control == x.Value.symbol).First();
-            var lockedEnemy = player.lockedEnemy.GetComponent<Enemy>();
-            var isMistake = false;
+        if (isInCombat) {
+            try {
+                var gemPair = relicController.gemDictionary.Where(x => control == x.Value.symbol).First();
+                var lockedEnemy = player.lockedEnemy.GetComponent<Enemy>();
+                var isMistake = false;
 
-            if (isPressing && lockedEnemy.color == gemPair.Value.gemColor) {
-                difficultyController.killCroco();
-                player.Attack();
-            } else {
-                isMistake = true;
-                print("horaDeLaPenalizacion");
+                if (isPressing && lockedEnemy.color == gemPair.Value.gemColor) {
+                    player.Attack(gemPair.Value.gemColor);
+                    difficultyController.killCroco();
+                } else if (isPressing) {
+                    isMistake = true;
+                    print("horaDeLaPenalizacion");
+                }
+
+                relicController.gemInteraction(gemPair, isPressing, isMistake);
+            } catch {
+                if (isPressing) {
+                    print("horaDeLaPenalizacion");
+                }
             }
 
-            relicController.gemInteraction(gemPair, isPressing, isMistake);
-        } catch {
-            if (isPressing) {
-                print("horaDeLaPenalizacion");
-            }
         }
+    }
+    public void setIsInCombat(bool startedCombat) {
+        isInCombat = startedCombat;
     }
 
     private void OnEnable() {
@@ -54,6 +61,5 @@ public class InputController : MonoBehaviour {
 
     private void OnDisable() {
         controls.Disable();
-
     }
 }

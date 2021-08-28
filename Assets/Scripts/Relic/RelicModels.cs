@@ -32,7 +32,7 @@ public enum GemDirection {
 }
 
 public enum RoomDifficulty {
-    veryEasy = 1, easy = 2, medium = 3, hard = 4
+    veryEasy = 1, easy = 2, medium = 3, hard = 4, inactive
 }
 
 public static class RelicSymbols {
@@ -71,7 +71,6 @@ public static class RelicSymbols {
 
     public static List<InputControl> numericInputs() {
         return new List<InputControl> {
-            keyboard.digit0Key,
             keyboard.digit1Key,
             keyboard.digit2Key,
             keyboard.digit3Key,

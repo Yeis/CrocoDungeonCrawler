@@ -6,7 +6,7 @@ using Map;
 public class RoomDifficultyManager : MonoBehaviour
 {
     
-    private int roomCounter = 0;
+    public int roomCounter = 0;
     public RoomType difficultyLevel = RoomType.tutorial;
     public List<RoomType> difficultyArray = new List<RoomType>();
     public GameObject mapGameLogic;
@@ -31,6 +31,8 @@ public class RoomDifficultyManager : MonoBehaviour
         if(!mapController.characterPositionNode.characterVisited && !mapController.characterPositionNode.isBossInRoom){
             roomCounter++;
             difficultyLevel = difficultyArray[roomCounter-1];
+        } else if(mapController.characterPositionNode.isBossInRoom){
+            difficultyLevel = RoomType.bossRoom;
         }
     }
 
@@ -50,7 +52,6 @@ public class RoomDifficultyManager : MonoBehaviour
         {
             randy = Random.Range(0, 2);
             if(randy == 1 && numberOfCurrentEvents < eventRoomQuantity) {
-                // difficulty means event room
                 difficultyArray.Add(RoomType.eventRoom);
                 numberOfCurrentEvents++;
             } else {
