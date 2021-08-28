@@ -15,13 +15,11 @@ public class DifficultyController : MonoBehaviour {
     public int hardMaxRange = 6;
     public int mediumColorShiftPercentage = 10;
     public int hardColorShiftPercentage = 20;
-    public int requiredNumberOfCrocos = 30;
 
     public GameObject relic;
-    public RoomDifficulty roomDifficulty;
     public TMP_Text crocoCounterText;
     public TMP_Text requiredNumberOfCrocosText;
-    public GameObject spawner;
+    public GameObject transitioner;
 
     private int shiftCounter = 0;
     private int crocoCounter = 0;
@@ -29,19 +27,23 @@ public class DifficultyController : MonoBehaviour {
     private int easyDifficultyLimit;
     private int mediumDifficultyLimit;
     private int hardDifficultyLimit;
-    private Spawner spawnerController;
-
+    private TransitionController transitionController;
+    private int requiredNumberOfCrocos = 0;
+    private RoomDifficulty roomDifficulty;
 
     void Awake() {
         relicController = relic.GetComponent<RelicController>();
-        spawnerController = spawner.GetComponent<Spawner>();
+        transitionController = transitioner.GetComponent<TransitionController>();
 
         easyDifficultyLimit = Random.Range(easyMinRange, easyMaxRange + 1);
         mediumDifficultyLimit = Random.Range(mediumMinRange, mediumMaxRange + 1);
         hardDifficultyLimit = Random.Range(hardMinRange, hardMaxRange + 1);
     }
 
-    void Start() {
+    public void startEncounter(int requiredCrocos, RoomDifficulty difficulty) {
+        requiredNumberOfCrocos = requiredCrocos;
+        roomDifficulty = difficulty;
+
         crocoCounterText.text = crocoCounter.ToString("00");
         requiredNumberOfCrocosText.text = requiredNumberOfCrocos.ToString("00");
     }
@@ -99,9 +101,15 @@ public class DifficultyController : MonoBehaviour {
     /// --- Private methods---
 
     private void endEncounter(bool hasWon) {
+        requiredNumberOfCrocos = 0;
+        crocoCounter = 0;
+        roomDifficulty = RoomDifficulty.inactive;
+
+        crocoCounterText.text = crocoCounter.ToString("00");
+        requiredNumberOfCrocosText.text = requiredNumberOfCrocos.ToString("00");
+
         if (hasWon) {
-            spawnerController.stopEncounter();
-            // TODO: conectar dialog manager, avanzar de estado 
+            transitionController.endEncounter();
         } else {
             // TODO: Game over 
         }
