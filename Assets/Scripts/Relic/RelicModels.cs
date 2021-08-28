@@ -32,7 +32,7 @@ public enum GemDirection {
 }
 
 public enum RoomDifficulty {
-    veryEasy = 1, easy = 2, medium = 3, hard = 4
+    veryEasy = 1, easy = 2, medium = 3, hard = 4, inactive
 }
 
 public static class RelicSymbols {

@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using Map;
 using System.IO;
+using UnityEngine.UI;
 
 public class TextScript : MonoBehaviour {
 
@@ -21,14 +22,15 @@ public class TextScript : MonoBehaviour {
     public GameObject eastButton;
     public GameObject southButton;
     public GameObject westButton;
+    public GameObject transitionObject;
 
     public GameObject mapGameLogic;
     private MapGameLogic mapController;
     private AudioSource source;
 
     public GameObject startCombatButton;
-    public GameObject tempEndCombatButton;
     private bool postCombatStatus = false;
+    private TransitionController transitionController;
 
     //Room Difficulty 
     public GameObject roomDifficultyManagerObject;
@@ -38,6 +40,13 @@ public class TextScript : MonoBehaviour {
     void Awake() {
         mapController = mapGameLogic.GetComponent<MapGameLogic>();
         roomDifficultyManager = roomDifficultyManagerObject.GetComponent<RoomDifficultyManager>();
+
+        transitionController = transitionObject.GetComponent<TransitionController>();
+        startCombatButton.GetComponent<Button>().onClick.AddListener(startCombat);
+    }
+
+    void startCombat() {
+        transitionController.startEncounter(roomDifficultyManager.difficultyLevel);
     }
 
     void Start() {
@@ -57,17 +66,17 @@ public class TextScript : MonoBehaviour {
         //         }
         //     }
         // } else {
-            
+
         // }
 
-        if(textDisplay.text == sentences[index]) {
-            if(postCombatStatus){
+        if (textDisplay.text == sentences[index]) {
+            if (postCombatStatus) {
                 northButton.SetActive(mapController.characterPositionNode.topRoom != null);
                 eastButton.SetActive(mapController.characterPositionNode.rightRoom != null);
                 westButton.SetActive(mapController.characterPositionNode.leftRoom != null);
                 southButton.SetActive(mapController.characterPositionNode.bottomRoom != null);
-            } else if(index == sentences.Count - 1) {
-                startCombatButton.SetActive(true);            
+            } else if (index == sentences.Count - 1) {
+                startCombatButton.SetActive(true);
             } else {
                 continueButton.SetActive(true);
             }
@@ -77,23 +86,23 @@ public class TextScript : MonoBehaviour {
     private void readTextFile(string file_path) {
         StreamReader input_stream = new StreamReader(file_path);
 
-        while(!input_stream.EndOfStream) {
+        while (!input_stream.EndOfStream) {
             string input_line = input_stream.ReadLine();
             sentences.Add(input_line);
         }
 
-        input_stream.Close();  
+        input_stream.Close();
     }
 
     public void NextSentence() {
         source.Play();
         continueButton.SetActive(false);
 
-        if(index < sentences.Count - 1) {
+        if (index < sentences.Count - 1) {
             index++;
             textDisplay.text = "";
             StartCoroutine(Type());
-        } else { 
+        } else {
             textDisplay.text = "";
             continueButton.SetActive(false);
         }
@@ -108,25 +117,24 @@ public class TextScript : MonoBehaviour {
         textDisplay.text = "";
         index = 0;
 
-        if(mapController.characterPositionNode.characterVisited) {
+        if (mapController.characterPositionNode.characterVisited) {
             sentences.Clear();
             readTextFile("Assets/Assets/Texts/SpecialTexts/visitedRoomDialog.txt");
             postCombatStatus = true;
             StartCoroutine(Type());
-        } else if(mapController.characterPositionNode.isBossInRoom){ 
+        } else if (mapController.characterPositionNode.isBossInRoom) {
             sentences.Clear();
             //TODO: check if room is open or closed
             readTextFile("Assets/Assets/Texts/SpecialTexts/bossRoomOpenText.txt");
             StartCoroutine(Type());
         } else {
-            switch (roomDifficultyManager.difficultyLevel)
-            {
+            switch (roomDifficultyManager.difficultyLevel) {
                 case RoomType.easyRoom:
                     sentences.Clear();
                     readRandomFrom(easyDialogs);
                     StartCoroutine(Type());
                     return;
-                
+
                 case RoomType.mediumRoom:
                     sentences.Clear();
                     readRandomFrom(mediumDialogs);
@@ -167,11 +175,9 @@ public class TextScript : MonoBehaviour {
         // southButton.SetActive(mapController.characterPositionNode.bottomRoom != null);
         startCombatButton.SetActive(false);
         dialogUI.SetActive(false);
-        tempEndCombatButton.SetActive(true);
     }
 
     public void reopenUI() {
-        tempEndCombatButton.SetActive(false);
         startCombatButton.SetActive(false);
         dialogUI.SetActive(true);
         postCombatStatus = true;
@@ -183,7 +189,7 @@ public class TextScript : MonoBehaviour {
     }
 
     IEnumerator Type() {
-        foreach(char letter in sentences[index].ToCharArray()) {
+        foreach (char letter in sentences[index].ToCharArray()) {
             textDisplay.text += letter;
             yield return new WaitForSeconds(textSpeed);
         }
