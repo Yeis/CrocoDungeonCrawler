@@ -23,6 +23,12 @@ public class TransitionController : MonoBehaviour {
     private InputController inputController;
     private TextScript textController;
 
+    public int maxNumberOfCrocoSpawn = 100;
+    public int requiredCrocosTutorial = 15;
+    public int requiredCrocosEasy = 30;
+    public int requiredCrocosMedium = 40;
+    public int requiredCrocosBoss = 50;
+
     public void Awake() {
         spawner = spawnerObject.GetComponent<Spawner>();
         relicController = relicObject.GetComponent<RelicController>();
@@ -33,25 +39,24 @@ public class TransitionController : MonoBehaviour {
 
     // TODO: agregar dificultad como parametro 
     public void startEncounter(RoomType roomType) {
-        var maxNumberOfCrocoSpawn = 100;
         var requiredCrocos = 0;
         var roomDifficulty = RoomDifficulty.inactive;
 
         switch (roomType) {
             case RoomType.tutorial:
-                requiredCrocos = 15;
+                requiredCrocos = requiredCrocosTutorial;
                 roomDifficulty = RoomDifficulty.veryEasy;
                 break;
             case RoomType.easyRoom:
-                requiredCrocos = 30;
+                requiredCrocos = requiredCrocosEasy;
                 roomDifficulty = RoomDifficulty.easy;
                 break;
             case RoomType.mediumRoom:
-                requiredCrocos = 40;
+                requiredCrocos = requiredCrocosMedium;
                 roomDifficulty = RoomDifficulty.medium;
                 break;
             case RoomType.bossRoom:
-                requiredCrocos = 50;
+                requiredCrocos = requiredCrocosBoss;
                 roomDifficulty = RoomDifficulty.hard;
                 break;
         }
