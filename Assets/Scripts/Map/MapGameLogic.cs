@@ -9,7 +9,6 @@ namespace Map
     {
         public int minAmountOfRooms = 10;
         public MapNode rootNode;
-        public Sprite characterSprite;
         
         private RoomTemplates templates;
         public int currentAmountOfRooms;
@@ -47,51 +46,51 @@ namespace Map
         private void SetupPlayerInMap() {
             characterPositionNode = GetRandomRoom();
             //Make it Appear 
-            characterPositionNode.node.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = characterSprite;
+            characterPositionNode.node.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().enabled = true;
             characterPositionNode.isCharacterInRoom = true;
         }
         public void MovePlayerLeft() {
             if(characterPositionNode.leftRoom != null) {
-                characterPositionNode.node.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = null;
+                characterPositionNode.node.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().enabled = false;
                 characterPositionNode.isCharacterInRoom = false;
                 characterPositionNode.VisitRoom();
                 //Update properties in new Node
                 characterPositionNode = characterPositionNode.leftRoom;
-                characterPositionNode.node.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = characterSprite;
+            characterPositionNode.node.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().enabled = true;
                 characterPositionNode.isCharacterInRoom = true;
             }
         }
 
         public void MovePlayerRight() {
             if(characterPositionNode.rightRoom != null) {
-                characterPositionNode.node.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = null;
+                characterPositionNode.node.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().enabled = false;
                 characterPositionNode.isCharacterInRoom = false;
                 characterPositionNode.VisitRoom();
                 //Update properties in new Node
                 characterPositionNode = characterPositionNode.rightRoom;
-                characterPositionNode.node.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = characterSprite;
+            characterPositionNode.node.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().enabled = true;
                 characterPositionNode.isCharacterInRoom = true;
             }
         }
         public void MovePlayerTop() {
             if(characterPositionNode.topRoom != null) {
-                characterPositionNode.node.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = null;
+                characterPositionNode.node.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().enabled = false;
                 characterPositionNode.isCharacterInRoom = false;
                 characterPositionNode.VisitRoom();
                 //Update properties in new Node
                 characterPositionNode = characterPositionNode.topRoom;
-                characterPositionNode.node.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = characterSprite;
+            characterPositionNode.node.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().enabled = true;
                 characterPositionNode.isCharacterInRoom = true;
             }
         }
         public void MovePlayerBottom() {
             if(characterPositionNode.bottomRoom != null) {
-                characterPositionNode.node.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = null;
+                characterPositionNode.node.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().enabled = false;
                 characterPositionNode.isCharacterInRoom = false;
                 characterPositionNode.VisitRoom();
                 //Update properties in new Node
                 characterPositionNode = characterPositionNode.bottomRoom;
-                characterPositionNode.node.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = characterSprite;
+                characterPositionNode.node.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().enabled = true;
                 characterPositionNode.isCharacterInRoom = true;
             }
         }
@@ -111,7 +110,8 @@ namespace Map
             } while(bossPositionNode.isCharacterInRoom || adjacentRoomCounter > 1);
        
             bossPositionNode.isBossInRoom = true;
-            bossPositionNode.node.GetComponent<SpriteRenderer>().color = Color.blue;
+            bossPositionNode.node.GetComponent<SpriteRenderer>().color = new Color(155.0f/ 255f, 42.0f/ 255f, 42.0f /255f, 1.0f);
+            // bossPositionNode.node.GetComponent<SpriteRenderer>().color = Color.blue;
         }
 
         //Map Functions
@@ -119,10 +119,10 @@ namespace Map
             //Generate Open Rooms
             queue.Enqueue(rootNode);
             rooms.Add(rootNode);
-            while (queue.Count > 0 && currentAmountOfRooms < minAmountOfRooms) {
+            while (currentAmountOfRooms < minAmountOfRooms) {
                 MapNode mapNode = queue.Dequeue();
                 Room currentRoom =  mapNode.node.GetComponent<Room>();
-                if(currentRoom.hasTopDoor && mapNode.topRoom == null) {
+                if(currentAmountOfRooms < minAmountOfRooms && currentRoom.hasTopDoor && mapNode.topRoom == null) {
                     MapNode blockingRoom =  getBlockingRoom(new Vector3(mapNode.node.transform.position.x, mapNode.node.transform.position.y + 0.5f, mapNode.node.transform.position.z));
                     //Regular logic there is no blockingRoom
                     if(blockingRoom == null) {
@@ -154,7 +154,7 @@ namespace Map
                         mapNode.node.GetComponent<SpriteRenderer>().color = Color.red;
                     }
                 }
-                if(currentRoom.hasBottomDoor && mapNode.bottomRoom == null) {
+                if(currentAmountOfRooms < minAmountOfRooms && currentRoom.hasBottomDoor && mapNode.bottomRoom == null) {
                     MapNode blockingRoom =  getBlockingRoom(new Vector3(mapNode.node.transform.position.x, mapNode.node.transform.position.y - 0.5f, mapNode.node.transform.position.z));
                     if(blockingRoom == null) {
                         random = Random.Range(0, templates.topRooms.Length);
@@ -185,7 +185,7 @@ namespace Map
                         mapNode.node.GetComponent<SpriteRenderer>().color = Color.red;
                     }
                 } 
-                if(currentRoom.hasRightDoor && mapNode.rightRoom == null) {
+                if(currentAmountOfRooms < minAmountOfRooms && currentRoom.hasRightDoor && mapNode.rightRoom == null) {
                     MapNode blockingRoom = getBlockingRoom(new Vector3(mapNode.node.transform.position.x + 0.5f, mapNode.node.transform.position.y, mapNode.node.transform.position.z));
                     if(blockingRoom == null) {
                         random = Random.Range(0, templates.leftRooms.Length);
@@ -216,7 +216,7 @@ namespace Map
                         mapNode.node.GetComponent<SpriteRenderer>().color = Color.red;
                     }
                 } 
-                if(currentRoom.hasLeftDoor && mapNode.leftRoom == null) {
+                if(currentAmountOfRooms < minAmountOfRooms && currentRoom.hasLeftDoor && mapNode.leftRoom == null) {
                     MapNode blockingRoom = getBlockingRoom(new Vector3(mapNode.node.transform.position.x - 0.5f, mapNode.node.transform.position.y, mapNode.node.transform.position.z));
                     if(blockingRoom == null) {
                         random = Random.Range(0, templates.rightRooms.Length);
