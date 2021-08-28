@@ -6,9 +6,7 @@ public class Enemy : MonoBehaviour {
     public float speed;
     public GemColor color;
     public bool isMoving;
-    // public bool hasAttack;
     public bool isAttacking = false;
-    public Sprite newMarker;
 
     public Animator anim;
 
@@ -32,7 +30,6 @@ public class Enemy : MonoBehaviour {
             anim.SetBool("isAttacking", false);
         }
 
-        // this.gameObject.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = newMarker;
     }
 
     public void TriggerAttack() {
