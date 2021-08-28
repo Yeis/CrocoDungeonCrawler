@@ -32,7 +32,7 @@ public class Enemy : MonoBehaviour {
             anim.SetBool("isAttacking", false);
         }
 
-        this.gameObject.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = newMarker;
+        // this.gameObject.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = newMarker;
     }
 
     public void TriggerAttack() {
