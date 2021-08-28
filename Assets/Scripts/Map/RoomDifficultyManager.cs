@@ -6,7 +6,7 @@ using Map;
 public class RoomDifficultyManager : MonoBehaviour
 {
     
-    private int roomCounter = 0;
+    public int roomCounter = 0;
     public RoomType difficultyLevel = RoomType.tutorial;
     public List<RoomType> difficultyArray = new List<RoomType>();
     public GameObject mapGameLogic;

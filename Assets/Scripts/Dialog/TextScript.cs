@@ -117,7 +117,7 @@ public class TextScript : MonoBehaviour {
         textDisplay.text = "";
         index = 0;
 
-        if (mapController.characterPositionNode.characterVisited) {
+        if (mapController.characterPositionNode.characterVisited && !mapController.characterPositionNode.isBossInRoom) {
             sentences.Clear();
             readTextFile("Assets/Assets/Texts/SpecialTexts/visitedRoomDialog.txt");
             postCombatStatus = true;
@@ -125,8 +125,17 @@ public class TextScript : MonoBehaviour {
         } else if (mapController.characterPositionNode.isBossInRoom) {
             sentences.Clear();
             //TODO: check if room is open or closed
-            readTextFile("Assets/Assets/Texts/SpecialTexts/bossRoomOpenText.txt");
-            StartCoroutine(Type());
+
+            if(roomDifficultyManager.roomCounter >= 2){
+                readTextFile("Assets/Assets/Texts/SpecialTexts/bossRoomOpenText.txt");
+                StartCoroutine(Type());
+            } else {
+                readTextFile("Assets/Assets/Texts/SpecialTexts/bossRoomClosedText.txt");
+                postCombatStatus = true;
+                StartCoroutine(Type());
+            }
+
+            
         } else {
             switch (roomDifficultyManager.difficultyLevel) {
                 case RoomType.easyRoom:
