@@ -9,6 +9,9 @@ namespace Map
     {
         public int minAmountOfRooms = 10;
         public MapNode rootNode;
+        public Transform parentTransform;
+        public GameObject mapCamera;
+
         
         private RoomTemplates templates;
         public int currentAmountOfRooms;
@@ -31,7 +34,8 @@ namespace Map
         void Start()
         {
             templates = GameObject.FindGameObjectWithTag("RoomsTemplates").GetComponent<RoomTemplates>();
-            rootNode = new MapNode(Instantiate(templates.TRBL, transform.position, Quaternion.identity));
+            rootNode = new MapNode(Instantiate(templates.TRBL, parentTransform.position, Quaternion.identity));
+            rootNode.node.transform.parent = parentTransform;
             currentAmountOfRooms = 1; 
             queue = new Queue<MapNode>();
             rooms = new List<MapNode>();
@@ -48,6 +52,9 @@ namespace Map
             //Make it Appear 
             characterPositionNode.node.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().enabled = true;
             characterPositionNode.isCharacterInRoom = true;
+            mapCamera.transform.parent = characterPositionNode.node.transform;
+            mapCamera.transform.localPosition = new Vector3(0f,0f,-1f);
+
         }
         public void MovePlayerLeft() {
             if(characterPositionNode.leftRoom != null) {
@@ -56,8 +63,10 @@ namespace Map
                 characterPositionNode.VisitRoom();
                 //Update properties in new Node
                 characterPositionNode = characterPositionNode.leftRoom;
-            characterPositionNode.node.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().enabled = true;
+                characterPositionNode.node.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().enabled = true;
                 characterPositionNode.isCharacterInRoom = true;
+                mapCamera.transform.parent = characterPositionNode.node.transform;
+                mapCamera.transform.localPosition = new Vector3(0f,0f,-1f);
             }
         }
 
@@ -68,8 +77,10 @@ namespace Map
                 characterPositionNode.VisitRoom();
                 //Update properties in new Node
                 characterPositionNode = characterPositionNode.rightRoom;
-            characterPositionNode.node.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().enabled = true;
+                characterPositionNode.node.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().enabled = true;
                 characterPositionNode.isCharacterInRoom = true;
+                mapCamera.transform.parent = characterPositionNode.node.transform;
+                mapCamera.transform.localPosition = new Vector3(0f,0f,-1f);
             }
         }
         public void MovePlayerTop() {
@@ -79,8 +90,10 @@ namespace Map
                 characterPositionNode.VisitRoom();
                 //Update properties in new Node
                 characterPositionNode = characterPositionNode.topRoom;
-            characterPositionNode.node.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().enabled = true;
+                characterPositionNode.node.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().enabled = true;
                 characterPositionNode.isCharacterInRoom = true;
+                mapCamera.transform.parent = characterPositionNode.node.transform;
+                mapCamera.transform.localPosition = new Vector3(0f,0f,-1f);
             }
         }
         public void MovePlayerBottom() {
@@ -92,6 +105,9 @@ namespace Map
                 characterPositionNode = characterPositionNode.bottomRoom;
                 characterPositionNode.node.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().enabled = true;
                 characterPositionNode.isCharacterInRoom = true;
+                mapCamera.transform.parent = characterPositionNode.node.transform;
+                mapCamera.transform.localPosition = new Vector3(0f,0f,-1f);
+
             }
         }
 
@@ -128,6 +144,7 @@ namespace Map
                     if(blockingRoom == null) {
                         random = Random.Range(0, templates.bottomRooms.Length);
                         GameObject topRoom = Instantiate(templates.bottomRooms[random], new Vector3(mapNode.node.transform.position.x, mapNode.node.transform.position.y + 0.5f, mapNode.node.transform.position.z), Quaternion.identity);
+                        topRoom.transform.parent = parentTransform;
                         MapNode topMapNode = new MapNode(topRoom);
                         topMapNode.bottomRoom = mapNode;
                         mapNode.topRoom = topMapNode;
@@ -140,14 +157,17 @@ namespace Map
                         currentRoom.hasTopDoor = false;
                         if(mapNode.leftRoom != null) {
                             GameObject leftRoom = Instantiate(templates.L, mapNode.node.transform.position, Quaternion.identity);
+                            leftRoom.transform.parent = parentTransform;
                             Destroy(mapNode.node);
                             mapNode.node = leftRoom;
                         } else if(mapNode.rightRoom != null) {
                             GameObject rightRoom = Instantiate(templates.R, mapNode.node.transform.position, Quaternion.identity);
+                            rightRoom.transform.parent = parentTransform;
                             Destroy(mapNode.node);
                             mapNode.node = rightRoom;
                         } else if(mapNode.topRoom != null) {
                             GameObject topRoom = Instantiate(templates.T, mapNode.node.transform.position, Quaternion.identity);
+                            topRoom.transform.parent = parentTransform;
                             Destroy(mapNode.node);
                             mapNode.node = topRoom;
                         }
@@ -159,6 +179,7 @@ namespace Map
                     if(blockingRoom == null) {
                         random = Random.Range(0, templates.topRooms.Length);
                         GameObject bottomRoom = Instantiate(templates.topRooms[random], new Vector3(mapNode.node.transform.position.x, mapNode.node.transform.position.y - 0.5f, mapNode.node.transform.position.z), Quaternion.identity);
+                        bottomRoom.transform.parent = parentTransform;
                         MapNode bottomMapNode = new MapNode(bottomRoom);
                         bottomMapNode.topRoom = mapNode;
                         mapNode.bottomRoom = bottomMapNode;
@@ -171,14 +192,17 @@ namespace Map
                         currentRoom.hasBottomDoor = false;
                         if(mapNode.leftRoom != null) {
                             GameObject leftRoom = Instantiate(templates.L, mapNode.node.transform.position, Quaternion.identity);
+                            leftRoom.transform.parent = parentTransform;
                             Destroy(mapNode.node);
                             mapNode.node = leftRoom;
                         } else if(mapNode.rightRoom != null) {
                             GameObject rightRoom = Instantiate(templates.R, mapNode.node.transform.position, Quaternion.identity);
+                            rightRoom.transform.parent = parentTransform;
                             Destroy(mapNode.node);
                             mapNode.node = rightRoom;
                         } else if(mapNode.bottomRoom != null) {
                             GameObject bottomRoom = Instantiate(templates.B, mapNode.node.transform.position, Quaternion.identity);
+                            bottomRoom.transform.parent = parentTransform;
                             Destroy(mapNode.node);
                             mapNode.node = bottomRoom;
                         }
@@ -190,6 +214,7 @@ namespace Map
                     if(blockingRoom == null) {
                         random = Random.Range(0, templates.leftRooms.Length);
                         GameObject rightRoom = Instantiate(templates.leftRooms[random], new Vector3(mapNode.node.transform.position.x + 0.5f, mapNode.node.transform.position.y, mapNode.node.transform.position.z), Quaternion.identity);
+                        rightRoom.transform.parent = parentTransform;
                         MapNode rightMapNode =  new MapNode(rightRoom);
                         rightMapNode.leftRoom = mapNode;
                         mapNode.rightRoom = rightMapNode; 
@@ -202,14 +227,17 @@ namespace Map
                         currentRoom.hasRightDoor = false;
                         if(mapNode.topRoom != null) {
                             GameObject topRoom = Instantiate(templates.T, mapNode.node.transform.position, Quaternion.identity);
+                            topRoom.transform.parent = parentTransform;
                             Destroy(mapNode.node);
                             mapNode.node = topRoom;
                         } else if(mapNode.rightRoom != null) {
                             GameObject rightRoom = Instantiate(templates.R, mapNode.node.transform.position, Quaternion.identity);
+                            rightRoom.transform.parent = parentTransform;
                             Destroy(mapNode.node);
                             mapNode.node = rightRoom;
                         } else if(mapNode.bottomRoom != null) {
                             GameObject bottomRoom = Instantiate(templates.B, mapNode.node.transform.position, Quaternion.identity);
+                            bottomRoom.transform.parent = parentTransform;
                             Destroy(mapNode.node);
                             mapNode.node = bottomRoom;
                         }
@@ -221,6 +249,7 @@ namespace Map
                     if(blockingRoom == null) {
                         random = Random.Range(0, templates.rightRooms.Length);
                         GameObject leftRoom = Instantiate(templates.rightRooms[random], new Vector3(mapNode.node.transform.position.x - 0.5f, mapNode.node.transform.position.y, mapNode.node.transform.position.z), Quaternion.identity);
+                        leftRoom.transform.parent = parentTransform;
                         MapNode leftMapNode = new MapNode(leftRoom);
                         leftMapNode.rightRoom = mapNode;
                         mapNode.leftRoom = leftMapNode;
@@ -233,14 +262,17 @@ namespace Map
                         currentRoom.hasLeftDoor = false;
                         if(mapNode.topRoom != null) {
                             GameObject topRoom = Instantiate(templates.T, mapNode.node.transform.position, Quaternion.identity);
+                            topRoom.transform.parent = parentTransform;
                             Destroy(mapNode.node);
                             mapNode.node = topRoom;
                         } else if(mapNode.leftRoom != null) {
                             GameObject leftRoom = Instantiate(templates.L, mapNode.node.transform.position, Quaternion.identity);
+                            leftRoom.transform.parent = parentTransform;
                             Destroy(mapNode.node);
                             mapNode.node = leftRoom;
                         } else if(mapNode.bottomRoom != null) {
                             GameObject bottomRoom = Instantiate(templates.B, mapNode.node.transform.position, Quaternion.identity);
+                            bottomRoom.transform.parent = parentTransform;
                             Destroy(mapNode.node);
                             mapNode.node = bottomRoom;
                         }
@@ -276,6 +308,7 @@ namespace Map
                     //Create room at top of current
                     else {
                         GameObject topRoom = Instantiate(templates.B, new Vector3(currentNode.node.transform.position.x, currentNode.node.transform.position.y + 0.5f, currentNode.node.transform.position.z), Quaternion.identity);
+                        topRoom.transform.parent = parentTransform;
                         MapNode topMapNode = new MapNode(topRoom);
                         currentNode.topRoom = topMapNode;
                         topMapNode.bottomRoom = currentNode;
@@ -289,6 +322,7 @@ namespace Map
                     //Create room at top of current
                     else {
                         GameObject bottomRoom = Instantiate(templates.T, new Vector3(currentNode.node.transform.position.x, currentNode.node.transform.position.y - 0.5f, currentNode.node.transform.position.z), Quaternion.identity);
+                        bottomRoom.transform.parent = parentTransform;
                         MapNode bottomMapNode = new MapNode(bottomRoom);
                         currentNode.bottomRoom = bottomMapNode;
                         bottomMapNode.topRoom = currentNode;
@@ -302,6 +336,7 @@ namespace Map
                     //Create room at top of current
                     else {
                         GameObject leftRoom = Instantiate(templates.R, new Vector3(currentNode.node.transform.position.x - 0.5f, currentNode.node.transform.position.y, currentNode.node.transform.position.z), Quaternion.identity);
+                        leftRoom.transform.parent = parentTransform;
                         MapNode leftMapNode = new MapNode(leftRoom);
                         currentNode.leftRoom = leftMapNode;
                         leftMapNode.rightRoom = currentNode;
@@ -315,6 +350,7 @@ namespace Map
                     //Create room at top of current
                     else {
                         GameObject rightRoom = Instantiate(templates.L, new Vector3(currentNode.node.transform.position.x + 0.5f, currentNode.node.transform.position.y, currentNode.node.transform.position.z), Quaternion.identity);
+                        rightRoom.transform.parent = parentTransform;
                         MapNode rightMapNode = new MapNode(rightRoom);
                         currentNode.rightRoom = rightMapNode;
                         rightMapNode.leftRoom = currentNode;
