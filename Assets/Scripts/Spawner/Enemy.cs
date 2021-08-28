@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour {
     public GemColor color;
     public bool isMoving;
     public bool isAttacking = false;
+    public int damage = 10;
 
     public Animator anim;
 

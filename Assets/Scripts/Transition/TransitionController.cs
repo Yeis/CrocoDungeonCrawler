@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class TransitionController : MonoBehaviour {
@@ -12,6 +13,8 @@ public class TransitionController : MonoBehaviour {
     public GameObject crocoCounterObject;
     public TMP_Text crocoCounterText;
     public TMP_Text remainingCrocoText;
+    public TMP_Text hpLabel;
+    public GameObject hpBar;
     public GameObject textObject;
 
     private Spawner spawner;
@@ -61,6 +64,8 @@ public class TransitionController : MonoBehaviour {
         crocoCounterObject.SetActive(true);
         crocoCounterText.gameObject.SetActive(true);
         remainingCrocoText.gameObject.SetActive(true);
+        hpBar.SetActive(true);
+        hpLabel.gameObject.SetActive(true);
     }
 
     public void endEncounter() {
@@ -71,7 +76,8 @@ public class TransitionController : MonoBehaviour {
         crocoCounterObject.SetActive(false);
         crocoCounterText.gameObject.SetActive(false);
         remainingCrocoText.gameObject.SetActive(false);
-
+        hpBar.SetActive(false);
+        hpLabel.gameObject.SetActive(false);
         textController.reopenUI();
     }
 }

@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class DetectCollider : MonoBehaviour
 {
-    public Animator anim;
+    public Player player;
     private void OnTriggerEnter2D(Collider2D other) 
     {
         if(other.gameObject.tag == "Enemy") 
         {
            Enemy enemy = other.gameObject.GetComponent<Enemy>();
            enemy.isAttacking = true;
+           player.TakeDamage(enemy.damage);
         }
     }
 
