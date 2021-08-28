@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour {
     public int damage = 10;
     public float slide = 0.0037f;
     public int damage = 10;
+    public float slide = 0.0037f;
 
     public Animator anim;
 
