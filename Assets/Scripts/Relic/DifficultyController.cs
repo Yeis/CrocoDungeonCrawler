@@ -47,7 +47,7 @@ public class DifficultyController : MonoBehaviour {
         requiredNumberOfCrocos = requiredCrocos;
         roomDifficulty = difficulty;
 
-        switch(roomDifficulty) {
+        switch (roomDifficulty) {
             case RoomDifficulty.veryEasy:
             case RoomDifficulty.easy:
                 easyBackground.SetActive(true);

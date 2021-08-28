@@ -55,10 +55,14 @@ public class RelicController : MonoBehaviour {
     }
 
     public void setUpForCombat() {
-        gems[0].symbol = keyboard.wKey;
-        gems[1].symbol = keyboard.aKey;
-        gems[2].symbol = keyboard.sKey;
-        gems[3].symbol = keyboard.dKey;
+        currentSymbols[0] = keyboard.wKey;
+        currentSymbols[1] = keyboard.aKey;
+        currentSymbols[2] = keyboard.sKey;
+        currentSymbols[3] = keyboard.dKey;
+
+        for (int i = 0; i < 4; i++) {
+            gems[i].symbol = currentSymbols[i];
+        }
 
         updateGems();
     }
