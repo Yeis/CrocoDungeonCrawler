@@ -261,7 +261,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7cfb19127d5550944818b2e39d000b40, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0bf5936a3587a074bbcbea8c762dffc3, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -373,7 +373,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fb0f1ef91682ad42ba3c2920750504c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newButtonImg: {fileID: 21300000, guid: 2318f94b2d9b0c341acba6adf7fc76d4, type: 3}
+  newButtonImg: {fileID: 21300000, guid: 8aa4114b44f56564687712dcf6524909, type: 3}
   button: {fileID: 139980855}
 --- !u!1001 &1677613450
 PrefabInstance:
