@@ -14,6 +14,10 @@ public class Gem {
         this.gemColor = gemColor;
         this.direction = direction;
     }
+
+    public Gem(GemColor color) {
+        this.gemColor = color;
+    }
 }
 
 public enum GemColor {
@@ -26,7 +30,7 @@ public enum GemColor {
     orangeSelected = 6,
     pink = 7,
     pinkSelected = 8,
-    unknown = 9
+    broken = 9
 }
 
 public enum GemDirection {

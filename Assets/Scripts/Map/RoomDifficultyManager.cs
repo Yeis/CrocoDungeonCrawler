@@ -3,39 +3,41 @@ using System.Collections.Generic;
 using UnityEngine;
 using Map;
 
-public class RoomDifficultyManager : MonoBehaviour
-{
-    
+public class RoomDifficultyManager : MonoBehaviour {
+
     public int roomCounter = 0;
+    public int requiredRoomsToFightBoss;
     public RoomType difficultyLevel = RoomType.tutorial;
     public List<RoomType> difficultyArray = new List<RoomType>();
     public GameObject mapGameLogic;
+
     private MapGameLogic mapController;
 
     void Awake() {
         mapController = mapGameLogic.GetComponent<MapGameLogic>();
     }
 
-    void Start()
-    {
+    void Start() {
 
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
+    void Update() {
+
     }
 
     public void updateRoomCounterAndDifficulty() {
-        if(!mapController.characterPositionNode.characterVisited && !mapController.characterPositionNode.isBossInRoom){
+        if (!mapController.characterPositionNode.characterVisited && !mapController.characterPositionNode.isBossInRoom) {
             roomCounter++;
-            difficultyLevel = difficultyArray[roomCounter-1];
-        } else if(mapController.characterPositionNode.isBossInRoom){
+            difficultyLevel = difficultyArray[roomCounter - 1];
+        } else if (mapController.characterPositionNode.isBossInRoom) {
             difficultyLevel = RoomType.bossRoom;
         }
     }
 
+    public bool isReadyForBossRoom() {
+        return roomCounter >= requiredRoomsToFightBoss;
+    }
 
     public List<RoomType> generateDifficultyArray() {
         //rooms without root or bossroom AND after first 2 rooms
@@ -44,19 +46,23 @@ public class RoomDifficultyManager : MonoBehaviour
         difficultyArray.Add(RoomType.easyRoom);
         difficultyArray.Add(RoomType.mediumRoom);
 
-        float eventRoomQuantity = Mathf.Floor(normalRooms/3); 
+        float eventRoomQuantity = Mathf.Floor(normalRooms / 3);
         int randy = 0;
-        int numberOfCurrentEvents = 0; 
+        int numberOfCurrentEvents = 0;
 
-        for (int i = 0; i < normalRooms; i++)
-        {
+        for (int i = 0; i < normalRooms; i++) {
             randy = Random.Range(0, 2);
-            if(randy == 1 && numberOfCurrentEvents < eventRoomQuantity) {
+            if (randy == 1 && numberOfCurrentEvents < eventRoomQuantity) {
                 difficultyArray.Add(RoomType.eventRoom);
                 numberOfCurrentEvents++;
             } else {
                 difficultyArray.Add(RoomType.mediumRoom);
             }
+        }
+
+        // DEBUG
+        for (int i = 0; i < difficultyArray.Count; i++) {
+            difficultyArray[i] = RoomType.bossRoom;
         }
 
         return difficultyArray;

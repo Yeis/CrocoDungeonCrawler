@@ -27,7 +27,14 @@ public class DifficultyController : MonoBehaviour {
     public GameObject easyBackground;
     public GameObject mediumBackground;
     public GameObject bossBackground;
+    public GameObject bossObject;
+    public GameObject easyBossWaveObject;
+    public GameObject mediumBossWaveObject;
+    public GameObject hardBossWaveObject;
+    public GameObject inputObject;
+    public GameObject spawnerObject;
 
+    private InputController inputController;
     private int shiftCounter = 0;
     private int crocoCounter = 0;
     private RelicController relicController;
@@ -37,10 +44,22 @@ public class DifficultyController : MonoBehaviour {
     private TransitionController transitionController;
     private int requiredNumberOfCrocos = 0;
     private RoomDifficulty roomDifficulty;
+    private bool isInBossEncounter = false;
+
+    private Dictionary<GameObject, Gem> vulnerabilityGems = new Dictionary<GameObject, Gem>();
+    private List<GameObject> vulterabilityGemObjects = new List<GameObject>();
+    private int vulnerabilityGemCounter = 0;
+    private GameObject bossComboObject;
+    private Spawner spawnerController;
+
+
+    public Gem targetedGem;
 
     void Awake() {
+        spawnerController = spawnerObject.GetComponent<Spawner>();
         relicController = relic.GetComponent<RelicController>();
         transitionController = transitioner.GetComponent<TransitionController>();
+        inputController = inputObject.GetComponent<InputController>();
 
         easyDifficultyLimit = Random.Range(easyMinRange, easyMaxRange + 1);
         mediumDifficultyLimit = Random.Range(mediumMinRange, mediumMaxRange + 1);
@@ -67,6 +86,10 @@ public class DifficultyController : MonoBehaviour {
                 easyBackground.SetActive(false);
                 mediumBackground.SetActive(false);
                 bossBackground.SetActive(true);
+
+                // ACTIVATE BOSS BATTLE
+                bossObject.SetActive(true);
+                isInBossEncounter = true;
                 break;
         }
 
@@ -75,12 +98,14 @@ public class DifficultyController : MonoBehaviour {
     }
 
     public void killCroco(KeyValuePair<GameObject, Gem> gemPair) {
-        crocoCounter += 1;
-        crocoCounterText.text = crocoCounter.ToString("00");
+        if (!isInBossEncounter) {
+            crocoCounter += 1;
+            crocoCounterText.text = crocoCounter.ToString("00");
 
-        if (crocoCounter == requiredNumberOfCrocos) {
-            endEncounter(true);
-            return;
+            if (crocoCounter == requiredNumberOfCrocos) {
+                endEncounter(true);
+                return;
+            }
         }
 
         shiftCounter += 1;
@@ -140,11 +165,106 @@ public class DifficultyController : MonoBehaviour {
         StartCoroutine(relicController.penalizeGem(gemPair, penaltyTime));
     }
 
+    public void displayBossComboSequence(BossWave bossWave) {
+        inputController.isBossVulnerable = true;
+
+        bossComboObject = easyBossWaveObject;
+        switch (bossWave) {
+            case BossWave.easyWave:
+                easyBossWaveObject.SetActive(true);
+                bossComboObject = easyBossWaveObject;
+                break;
+            case BossWave.mediumWave:
+                mediumBossWaveObject.SetActive(true);
+                bossComboObject = mediumBossWaveObject;
+                break;
+            case BossWave.hardWave:
+                hardBossWaveObject.SetActive(true);
+                bossComboObject = hardBossWaveObject;
+                break;
+        }
+
+
+        foreach (Transform child in bossComboObject.transform)
+            vulterabilityGemObjects.Add(child.gameObject);
+
+        List<GemColor> gemColorList = new List<GemColor>() { GemColor.blue, GemColor.green, GemColor.orange, GemColor.pink };
+        var randy = new System.Random();
+
+        for (int i = 0; i < vulterabilityGemObjects.Count; i++) {
+            var randomGem = new Gem(gemColorList[randy.Next(0, 4)]);
+            vulnerabilityGems[vulterabilityGemObjects[i]] = randomGem;
+        }
+
+        foreach (var gem in vulnerabilityGems) {
+            updateGem(gem, false);
+        }
+
+        inputController.targetedVulnerableGem = vulnerabilityGems.First();
+    }
+
+    public void updateGem(KeyValuePair<GameObject, Gem> gemPair, bool destroyed) {
+        if (destroyed) {
+            gemPair.Key.GetComponent<SpriteRenderer>().sprite = relicController.gemSprites[((int)GemColor.broken)];
+        } else {
+            gemPair.Key.GetComponent<SpriteRenderer>().sprite = relicController.gemSprites[((int)gemPair.Value.gemColor)];
+        }
+    }
+
+    public void attackVulnerabilityGem() {
+        updateGem(vulnerabilityGems.ElementAt(vulnerabilityGemCounter), true);
+
+        vulnerabilityGemCounter += 1;
+
+        switch (spawnerController.currentBossWave) {
+            case BossWave.easyWave:
+                if (vulnerabilityGemCounter >= 3) {
+                    spawnerController.advanceBossWave();
+                    hideVulnerabilityCombo();
+                    return;
+                }
+                break;
+
+            case BossWave.mediumWave:
+                if (vulnerabilityGemCounter >= 4) {
+                    spawnerController.advanceBossWave();
+                    hideVulnerabilityCombo();
+                    return;
+
+                }
+
+                break;
+            case BossWave.hardWave:
+                if (vulnerabilityGemCounter >= 5) {
+                    print("we did it boys");
+                    hideVulnerabilityCombo();
+                    return;
+                }
+
+                break;
+        }
+
+        inputController.targetedVulnerableGem = vulnerabilityGems.ElementAt(vulnerabilityGemCounter);
+
+    }
+
+    public void hideVulnerabilityCombo() {
+        vulnerabilityGems.Clear();
+        vulterabilityGemObjects.Clear();
+        bossComboObject.SetActive(false);
+        vulnerabilityGemCounter = 0;
+        inputController.isBossVulnerable = false;
+    }
+
     public void triggerGameOver() {
         endEncounter(false);
     }
 
     /// --- Private methods---
+
+    private void setVulnerabilityGem() {
+
+    }
 
     private void endEncounter(bool hasWon) {
         requiredNumberOfCrocos = 0;
@@ -158,31 +278,6 @@ public class DifficultyController : MonoBehaviour {
             transitionController.endEncounter();
         } else {
             // TODO: Game over 
-        }
-    }
-
-    private void gemShift(int numberOfGems, bool includeNums, bool includeSymbolsAndNums) {
-        var exclude = new HashSet<int>();
-        var gemsAffected = new List<KeyValuePair<GameObject, Gem>>();
-
-        for (int i = 0; i < numberOfGems; i++) {
-            var range = Enumerable.Range(0, 4).Where(i => !exclude.Contains(i));
-            var random = new System.Random();
-            int index = random.Next(0, 4 - exclude.Count);
-            var gemToUpdate = range.ElementAt(index);
-
-            var currentGem = relicController.gemObjects[gemToUpdate];
-            var newSymbol = includeSymbolsAndNums ? getUniqueRandomAlphaNumericSymbolInput() : includeNums ? getUniqueRandomAlphaNumericInput() : getUniqueRandomAlphaInput();
-
-            relicController.gemDictionary[currentGem].symbol = newSymbol;
-            relicController.currentSymbols[gemToUpdate] = newSymbol;
-
-            gemsAffected.Add(relicController.gemDictionary.ElementAt(gemToUpdate));
-            exclude.Add(gemToUpdate);
-        }
-
-        foreach (var gem in gemsAffected) {
-            relicController.updateGem(gem);
         }
     }
 
@@ -221,6 +316,31 @@ public class DifficultyController : MonoBehaviour {
         return exclusiveSymbols.ToArray()[index];
     }
 
+    private void gemShift(int numberOfGems, bool includeNums, bool includeSymbolsAndNums) {
+        var exclude = new HashSet<int>();
+        var gemsAffected = new List<KeyValuePair<GameObject, Gem>>();
+
+        for (int i = 0; i < numberOfGems; i++) {
+            var range = Enumerable.Range(0, 4).Where(i => !exclude.Contains(i));
+            var random = new System.Random();
+            int index = random.Next(0, 4 - exclude.Count);
+            var gemToUpdate = range.ElementAt(index);
+
+            var currentGem = relicController.gemObjects[gemToUpdate];
+            var newSymbol = includeSymbolsAndNums ? getUniqueRandomAlphaNumericSymbolInput() : includeNums ? getUniqueRandomAlphaNumericInput() : getUniqueRandomAlphaInput();
+
+            relicController.gemDictionary[currentGem].symbol = newSymbol;
+            relicController.currentSymbols[gemToUpdate] = newSymbol;
+
+            gemsAffected.Add(relicController.gemDictionary.ElementAt(gemToUpdate));
+            exclude.Add(gemToUpdate);
+        }
+
+        foreach (var gem in gemsAffected) {
+            relicController.updateGem(gem);
+        }
+    }
+
     // Percentage is a number from 0 to 10 that will be compared against a random generated number of the same range
     // It will define how frequently the color shift will be executed. For example:
     // If percentage is 20, 20 percent of the time the color shift will happen. 
@@ -244,6 +364,10 @@ public class DifficultyController : MonoBehaviour {
                 }
             }
 
+        }
+
+        foreach (var gem in relicController.gemDictionary) {
+            relicController.updateGem(gem);
         }
     }
 

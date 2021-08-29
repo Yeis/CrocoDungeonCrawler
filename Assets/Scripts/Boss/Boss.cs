@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Boss : MonoBehaviour
-{
+public class Boss : MonoBehaviour {
 
     public int healthPoints = 3;
     private Animator animator;
@@ -13,15 +12,13 @@ public class Boss : MonoBehaviour
     private float attackPosDifference = 0.17f;
 
     // Start is called before the first frame update
-    void Start()
-    {
-        animator= GetComponent<Animator>();
+    void Start() {
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
+    void Update() {
+
     }
 
     public void Dying() {
@@ -47,18 +44,16 @@ public class Boss : MonoBehaviour
     }
 
     public void Attack() {
-        // transform.position = new Vector3(transform.position.x - attackPosDifference, transform.position.y, transform.position.z);
         animator.SetTrigger("Attack");
     }
 
     public void Point() {
-        // transform.position = new Vector3(transform.position.x - attackPosDifference, transform.position.y, transform.position.z);
         animator.SetTrigger("Point");
     }
 
     public void Weakness() {
         isOnWeakness = !isOnWeakness;
-        animator.SetBool("Weakness", isOnWeakness );
+        animator.SetBool("Weakness", isOnWeakness);
     }
 
     public void Victory(){

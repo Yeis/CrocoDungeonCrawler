@@ -10,10 +10,15 @@ public class TextScript : MonoBehaviour {
 
     public GameObject dialogUI;
     public TextMeshProUGUI textDisplay;
-    private string[] easyDialogs = Directory.GetFiles("Assets/Assets/Texts/EasyTexts", "*.txt");
-    private string[] mediumDialogs = Directory.GetFiles("Assets/Assets/Texts/MediumTexts", "*.txt");
-    private string[] postCombatDialogs = Directory.GetFiles("Assets/Assets/Texts/PostCombatTexts", "*.txt");
-    private string[] specialDialogs = Directory.GetFiles("Assets/Assets/Texts/SpecialTexts", "*.txt");
+    // private string[] easyDialogs = Directory.GetFiles("Assets/Assets/Texts/EasyTexts", "*.txt");
+    // private string[] mediumDialogs = Directory.GetFiles("Assets/Assets/Texts/MediumTexts", "*.txt");
+    // private string[] postCombatDialogs = Directory.GetFiles("Assets/Assets/Texts/PostCombatTexts", "*.txt");
+    // private string[] specialDialogs = Directory.GetFiles("Assets/Assets/Texts/SpecialTexts", "*.txt");
+
+    private string[] easyDialogs = Resources.Load<TextAsset>("Texts/EasyTexts").text.Split(new string[] {"\\n"}, System.StringSplitOptions.None);
+    private string[] mediumDialogs = Resources.Load<TextAsset>("Texts/MediumTexts").text.Split(new string[] {"\\n"}, System.StringSplitOptions.None);
+    private string[] postCombatDialogs = Resources.Load<TextAsset>("Texts/PostCombatTexts").text.Split(new string[] {"\\n"}, System.StringSplitOptions.None);
+    private string[] specialDialogs = Resources.Load<TextAsset>("Texts/SpecialTexts").text.Split(new string[] {"\\n"}, System.StringSplitOptions.None);
     private List<string> sentences = new List<string>();
     private int index;
     public float textSpeed = 0.02f;
@@ -36,8 +41,16 @@ public class TextScript : MonoBehaviour {
     public GameObject roomDifficultyManagerObject;
     private RoomDifficultyManager roomDifficultyManager;
     public RoomType roomType;
+    public GameObject eventRoomPotion;
+
+    //Player logic
+
+    public GameObject player;
+
+    private Player playerController;
 
     void Awake() {
+        playerController = player.GetComponent<Player>();
         mapController = mapGameLogic.GetComponent<MapGameLogic>();
         roomDifficultyManager = roomDifficultyManagerObject.GetComponent<RoomDifficultyManager>();
 
@@ -50,7 +63,12 @@ public class TextScript : MonoBehaviour {
     }
 
     void Start() {
-        readTextFile("Assets/Assets/Texts/SpecialTexts/initRoomText.txt");
+        string[] easyDialogs = Resources.Load<TextAsset>("Texts/EasyTexts").text.Split(new string[] {"\\n"}, System.StringSplitOptions.None);
+        string[] mediumDialogs = Resources.Load<TextAsset>("Texts/MediumTexts").text.Split(new string[] {"\\n"}, System.StringSplitOptions.None);
+        string[] postCombatDialogs = Resources.Load<TextAsset>("Texts/PostCombatTexts").text.Split(new string[] {"\\n"}, System.StringSplitOptions.None);
+        string[] specialDialogs = Resources.Load<TextAsset>("Texts/SpecialTexts").text.Split(new string[] {"\\n"}, System.StringSplitOptions.None);
+        // readTextFile("Assets/Assets/Texts/SpecialTexts/initRoomText.txt");
+        readRandomFrom(easyDialogs);
 
         source = GetComponent<AudioSource>();
         StartCoroutine(Type());
@@ -109,6 +127,7 @@ public class TextScript : MonoBehaviour {
     }
 
     public void NextRoom() {
+        eventRoomPotion.SetActive(false);
         postCombatStatus = false;
         northButton.SetActive(false);
         eastButton.SetActive(false);
@@ -116,6 +135,9 @@ public class TextScript : MonoBehaviour {
         southButton.SetActive(false);
         textDisplay.text = "";
         index = 0;
+
+        // DEBUG!!!!
+        mapController.characterPositionNode.setInBossRoom();
 
         if (mapController.characterPositionNode.characterVisited && !mapController.characterPositionNode.isBossInRoom) {
             sentences.Clear();
@@ -126,7 +148,7 @@ public class TextScript : MonoBehaviour {
             sentences.Clear();
             //TODO: check if room is open or closed
 
-            if(roomDifficultyManager.roomCounter >= 2){
+            if (roomDifficultyManager.isReadyForBossRoom()) {
                 readTextFile("Assets/Assets/Texts/SpecialTexts/bossRoomOpenText.txt");
                 StartCoroutine(Type());
             } else {
@@ -135,7 +157,7 @@ public class TextScript : MonoBehaviour {
                 StartCoroutine(Type());
             }
 
-            
+
         } else {
             switch (roomDifficultyManager.difficultyLevel) {
                 case RoomType.easyRoom:
@@ -155,6 +177,8 @@ public class TextScript : MonoBehaviour {
                     readTextFile("Assets/Assets/Texts/SpecialTexts/eventRoomText.txt");
                     postCombatStatus = true;
                     StartCoroutine(Type());
+                    eventRoomPotion.SetActive(true);
+                    playerController.AddHealth(100 - playerController.healthPoints);
                     return;
 
                 default:
@@ -168,6 +192,7 @@ public class TextScript : MonoBehaviour {
 
     private void readRandomFrom(string[] dialogList) {
         int randy = Random.Range(0, 5);
+        index = 0;
         sentences.Clear();
         readTextFile(dialogList[randy]);
     }
