@@ -14,11 +14,11 @@ GameObject:
   - component: {fileID: 1727703470}
   m_Layer: 0
   m_Name: CrocoBoss
-  m_TagString: Untagged
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7406181519254555081
 Transform:
   m_ObjectHideFlags: 0
