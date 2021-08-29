@@ -35,7 +35,7 @@ public class Enemy : MonoBehaviour {
 
     public void KillCrocodile(){
         anim.SetTrigger("Dead");
-        // audioController.PlayCrocoDyingClip();
+        gameObject.tag = "DyingEnemy";
         isMoving = false;
     }
 

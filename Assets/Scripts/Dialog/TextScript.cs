@@ -10,10 +10,15 @@ public class TextScript : MonoBehaviour {
 
     public GameObject dialogUI;
     public TextMeshProUGUI textDisplay;
-    private string[] easyDialogs = Directory.GetFiles("Assets/Assets/Texts/EasyTexts", "*.txt");
-    private string[] mediumDialogs = Directory.GetFiles("Assets/Assets/Texts/MediumTexts", "*.txt");
-    private string[] postCombatDialogs = Directory.GetFiles("Assets/Assets/Texts/PostCombatTexts", "*.txt");
-    private string[] specialDialogs = Directory.GetFiles("Assets/Assets/Texts/SpecialTexts", "*.txt");
+    // private string[] easyDialogs = Directory.GetFiles("Assets/Assets/Texts/EasyTexts", "*.txt");
+    // private string[] mediumDialogs = Directory.GetFiles("Assets/Assets/Texts/MediumTexts", "*.txt");
+    // private string[] postCombatDialogs = Directory.GetFiles("Assets/Assets/Texts/PostCombatTexts", "*.txt");
+    // private string[] specialDialogs = Directory.GetFiles("Assets/Assets/Texts/SpecialTexts", "*.txt");
+
+    private string[] easyDialogs = Resources.Load<TextAsset>("Texts/EasyTexts").text.Split(new string[] {"\\n"}, System.StringSplitOptions.None);
+    private string[] mediumDialogs = Resources.Load<TextAsset>("Texts/MediumTexts").text.Split(new string[] {"\\n"}, System.StringSplitOptions.None);
+    private string[] postCombatDialogs = Resources.Load<TextAsset>("Texts/PostCombatTexts").text.Split(new string[] {"\\n"}, System.StringSplitOptions.None);
+    private string[] specialDialogs = Resources.Load<TextAsset>("Texts/SpecialTexts").text.Split(new string[] {"\\n"}, System.StringSplitOptions.None);
     private List<string> sentences = new List<string>();
     private int index;
     public float textSpeed = 0.02f;
@@ -58,7 +63,12 @@ public class TextScript : MonoBehaviour {
     }
 
     void Start() {
-        readTextFile("Assets/Assets/Texts/SpecialTexts/initRoomText.txt");
+        string[] easyDialogs = Resources.Load<TextAsset>("Texts/EasyTexts").text.Split(new string[] {"\\n"}, System.StringSplitOptions.None);
+        string[] mediumDialogs = Resources.Load<TextAsset>("Texts/MediumTexts").text.Split(new string[] {"\\n"}, System.StringSplitOptions.None);
+        string[] postCombatDialogs = Resources.Load<TextAsset>("Texts/PostCombatTexts").text.Split(new string[] {"\\n"}, System.StringSplitOptions.None);
+        string[] specialDialogs = Resources.Load<TextAsset>("Texts/SpecialTexts").text.Split(new string[] {"\\n"}, System.StringSplitOptions.None);
+        // readTextFile("Assets/Assets/Texts/SpecialTexts/initRoomText.txt");
+        readRandomFrom(easyDialogs);
 
         source = GetComponent<AudioSource>();
         StartCoroutine(Type());
@@ -182,6 +192,7 @@ public class TextScript : MonoBehaviour {
 
     private void readRandomFrom(string[] dialogList) {
         int randy = Random.Range(0, 5);
+        index = 0;
         sentences.Clear();
         readTextFile(dialogList[randy]);
     }
