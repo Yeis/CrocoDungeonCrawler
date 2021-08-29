@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour {
-    public float healthPoints = 100;
+    public int healthPoints = 100;
     public string gameScene;
     public GameObject hpMask;
     public Sprite lockSprite;
@@ -56,9 +56,9 @@ public class Player : MonoBehaviour {
         }
     }
 
-    public void AddHealth(int healthPoints) {
-        this.healthPoints = this.healthPoints + healthPoints;
-        hpMask.transform.localPosition = new Vector3(Mathf.Lerp(0.1284f,0.66f, healthPoints/ 100), hpMask.transform.localPosition.y, hpMask.transform.localPosition.z);
+    public void AddHealth(int healthAdded) {
+        this.healthPoints = this.healthPoints + healthAdded;
+        hpMask.transform.localPosition = new Vector3(Mathf.Lerp(0.1284f,0.66f, healthPoints/ 100f), hpMask.transform.localPosition.y, hpMask.transform.localPosition.z);
     }
     
     public void GameOver()
