@@ -24,12 +24,6 @@ public class Player : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         LockEnemy();
-
-        if (this.healthPoints == 0)
-        {
-            GameOver();
-
-        }
     }
 
     private void LockEnemy() {
@@ -55,6 +49,11 @@ public class Player : MonoBehaviour {
         animator.SetTrigger("TakingDamage");
         audioController.PlayCrocoAttackClip();
         hpMask.transform.localPosition = new Vector3(Mathf.Lerp(0.1284f,0.66f, healthPoints/ 100f), hpMask.transform.localPosition.y, hpMask.transform.localPosition.z);
+        if (this.healthPoints == 0)
+        {
+            GameOver();
+
+        }
     }
 
     public void AddHealth(int healthPoints) {
