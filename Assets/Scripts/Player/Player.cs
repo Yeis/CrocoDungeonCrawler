@@ -46,6 +46,7 @@ public class Player : MonoBehaviour {
 
     public void TakeDamage(int damage) {
         this.healthPoints = this.healthPoints - damage;
+        audioController.PlayCrocoAttackClip();
         animator.SetTrigger("TakingDamage");
         hpMask.transform.localPosition = new Vector3(Mathf.Lerp(0.1284f,0.66f, healthPoints/ 100f), hpMask.transform.localPosition.y, hpMask.transform.localPosition.z);
         if (this.healthPoints == 0)

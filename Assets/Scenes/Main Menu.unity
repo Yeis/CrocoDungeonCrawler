@@ -178,22 +178,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioController
       objectReference: {fileID: 0}
-    - target: {fileID: 7741232820238463511, guid: dcd7ababef94eb944965e4df06bfa2f5, type: 3}
-      propertyPath: continueClip
-      value: 
-      objectReference: {fileID: 8300000, guid: a5baed58d8469e942926ab691b86062a, type: 3}
-    - target: {fileID: 7741232820238463511, guid: dcd7ababef94eb944965e4df06bfa2f5, type: 3}
-      propertyPath: brokenRelicClip
-      value: 
-      objectReference: {fileID: 8300000, guid: c5231fddcf540f94aa1109234013a955, type: 3}
-    - target: {fileID: 7741232820238463511, guid: dcd7ababef94eb944965e4df06bfa2f5, type: 3}
-      propertyPath: clickButtonClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 6705d88cd1d290c469c495545d4e6ba4, type: 3}
-    - target: {fileID: 7741232820238463511, guid: dcd7ababef94eb944965e4df06bfa2f5, type: 3}
-      propertyPath: winEncounterClip
-      value: 
-      objectReference: {fileID: 8300000, guid: a3d4450c8c46a8d46b9a671340259b1e, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dcd7ababef94eb944965e4df06bfa2f5, type: 3}
 --- !u!114 &142187367 stripped
