@@ -2,16 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour {
-    public float healthPoints = 100;
+    public int healthPoints = 100;
+    public string gameScene;
     public GameObject hpMask;
     public Sprite lockSprite;
+    public AudioController audioController;
     public GameObject lockedEnemy;
     private Animator animator;
+    private bool isAlive;
+
 
     // Start is called before the first frame update
     void Start() {
+        
         animator = GetComponent<Animator>();
     }
 
@@ -40,15 +46,28 @@ public class Player : MonoBehaviour {
 
     public void TakeDamage(int damage) {
         this.healthPoints = this.healthPoints - damage;
-        hpMask.transform.localPosition = new Vector3(Mathf.Lerp(0.1284f, 0.66f, healthPoints / 100f), hpMask.transform.localPosition.y, hpMask.transform.localPosition.z);
+        animator.SetTrigger("TakingDamage");
+        audioController.PlayCrocoAttackClip();
+        hpMask.transform.localPosition = new Vector3(Mathf.Lerp(0.1284f,0.66f, healthPoints/ 100f), hpMask.transform.localPosition.y, hpMask.transform.localPosition.z);
+        if (this.healthPoints == 0)
+        {
+            GameOver();
+
+        }
     }
 
-    public void AddHealth(int healthPoints) {
-        this.healthPoints = this.healthPoints + healthPoints;
-        hpMask.transform.localPosition = new Vector3(Mathf.Lerp(0.1284f, 0.66f, healthPoints / 100), hpMask.transform.localPosition.y, hpMask.transform.localPosition.z);
+    public void AddHealth(int healthAdded) {
+        this.healthPoints = this.healthPoints + healthAdded;
+        hpMask.transform.localPosition = new Vector3(Mathf.Lerp(0.1284f,0.66f, healthPoints/ 100f), hpMask.transform.localPosition.y, hpMask.transform.localPosition.z);
+    }
+    
+    public void GameOver()
+    {
+        SceneManager.LoadScene(gameScene);
     }
 
     public void Attack(GemColor attackColor) {
+        audioController.PlayPlayerAttackClip();
         switch (attackColor) {
             case GemColor.blue:
                 animator.SetTrigger("AttackBlue");
@@ -63,9 +82,8 @@ public class Player : MonoBehaviour {
                 animator.SetTrigger("AttackPink");
                 break;
         }
-
         if (lockedEnemy != null) {
-            Destroy(lockedEnemy);
+            lockedEnemy.GetComponent<Enemy>().KillCrocodile();
             lockedEnemy = null;
         };
     }

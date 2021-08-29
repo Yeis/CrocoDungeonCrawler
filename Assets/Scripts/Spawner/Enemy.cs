@@ -9,14 +9,15 @@ public class Enemy : MonoBehaviour {
     public bool isAttacking = false;
     public int damage = 10;
     public float slide = 0.0037f;
-
     public Animator anim;
+    private AudioController audioController;
 
     public bool hasAttack = false;
     // Start is called before the first frame update
     void Start() {
         isMoving = true;
         anim = GetComponent<Animator>();
+        audioController = GameObject.FindGameObjectWithTag("AudioController").GetComponent<AudioController>();
     }
 
     // Update is called once per frame
@@ -30,7 +31,16 @@ public class Enemy : MonoBehaviour {
             anim.SetBool("isAttacking", true);
             StartCoroutine("Attack");
         } 
+    }
 
+    public void KillCrocodile(){
+        anim.SetTrigger("Dead");
+        // audioController.PlayCrocoDyingClip();
+        isMoving = false;
+    }
+
+    public void DestroyCrocodile(){
+        Destroy(gameObject);
     }
 
     private IEnumerator Attack() {
@@ -40,8 +50,7 @@ public class Enemy : MonoBehaviour {
         isAttacking = false;
     }
     
-
-    void OnBecameInvisible() {
+    void OnBecameInvisible() {  
         Destroy(gameObject);
     }
 }

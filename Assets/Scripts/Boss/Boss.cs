@@ -20,9 +20,21 @@ public class Boss : MonoBehaviour {
 
     }
 
+    public void Dying() {
+        animator.SetTrigger("Dead");
+    }
+
+    public void Dead() {
+        Destroy(gameObject);
+    }
+
     public void TakeDamage() {
         healthPoints--;
-        animator.SetTrigger("Damage");
+        if(healthPoints <= 0) {
+            Dying();
+        } else {
+     animator.SetTrigger("Damage");  
+        }
     }
 
     public void Chuckle() {

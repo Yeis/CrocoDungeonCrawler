@@ -36,8 +36,16 @@ public class TextScript : MonoBehaviour {
     public GameObject roomDifficultyManagerObject;
     private RoomDifficultyManager roomDifficultyManager;
     public RoomType roomType;
+    public GameObject eventRoomPotion;
+
+    //Player logic
+
+    public GameObject player;
+
+    private Player playerController;
 
     void Awake() {
+        playerController = player.GetComponent<Player>();
         mapController = mapGameLogic.GetComponent<MapGameLogic>();
         roomDifficultyManager = roomDifficultyManagerObject.GetComponent<RoomDifficultyManager>();
 
@@ -109,6 +117,7 @@ public class TextScript : MonoBehaviour {
     }
 
     public void NextRoom() {
+        eventRoomPotion.SetActive(false);
         postCombatStatus = false;
         northButton.SetActive(false);
         eastButton.SetActive(false);
@@ -158,6 +167,8 @@ public class TextScript : MonoBehaviour {
                     readTextFile("Assets/Assets/Texts/SpecialTexts/eventRoomText.txt");
                     postCombatStatus = true;
                     StartCoroutine(Type());
+                    eventRoomPotion.SetActive(true);
+                    playerController.AddHealth(100 - playerController.healthPoints);
                     return;
 
                 default:

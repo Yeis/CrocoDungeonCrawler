@@ -16,6 +16,7 @@ public class InputController : MonoBehaviour {
     private RelicController relicController;
     private DifficultyController difficultyController;
     private Player player;
+    // private Enemy enem;
     private bool isInCombat = false;
     public bool isBossVulnerable = false;
     public KeyValuePair<GameObject, Gem> targetedVulnerableGem;
@@ -30,6 +31,7 @@ public class InputController : MonoBehaviour {
         relicController = relic.GetComponent<RelicController>();
         difficultyController = difficulty.GetComponent<DifficultyController>();
         player = playerObject.GetComponent<Player>();
+        // enem = enemy.GetComponent<Enemy>();
     }
 
     void SymbolInteraction(InputControl control, bool isPressing) {

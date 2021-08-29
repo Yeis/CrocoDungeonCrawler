@@ -1,3 +1,1 @@
-ESTO ES UN EVENTO TE GANASTE LA LOTERIA
-FELICIDADES YUPI
-AHORA VE Y COMPRA OTRO MELATE
+You find an old health potion laying on the ground. Hp restored.
