@@ -37,7 +37,6 @@ public class TransitionController : MonoBehaviour {
         textController = textObject.GetComponent<TextScript>();
     }
 
-    // TODO: agregar dificultad como parametro 
     public void startEncounter(RoomType roomType) {
         var requiredCrocos = 0;
         var roomDifficulty = RoomDifficulty.inactive;
@@ -61,14 +60,14 @@ public class TransitionController : MonoBehaviour {
                 break;
         }
 
-        spawner.startEncounter(maxNumberOfCrocoSpawn);
+        spawner.startEncounter(maxNumberOfCrocoSpawn, roomDifficulty == RoomDifficulty.hard);
         relicController.setUpForCombat();
         difficultyController.startEncounter(requiredCrocos, roomDifficulty);
         inputController.setIsInCombat(true);
 
-        crocoCounterObject.SetActive(true);
-        crocoCounterText.gameObject.SetActive(true);
-        remainingCrocoText.gameObject.SetActive(true);
+        crocoCounterObject.SetActive(roomDifficulty != RoomDifficulty.hard);
+        crocoCounterText.gameObject.SetActive(roomDifficulty != RoomDifficulty.hard);
+        remainingCrocoText.gameObject.SetActive(roomDifficulty != RoomDifficulty.hard);
         hpBar.SetActive(true);
         hpLabel.gameObject.SetActive(true);
     }
