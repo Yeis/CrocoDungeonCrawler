@@ -448,6 +448,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioTrack
       objectReference: {fileID: 0}
+    - target: {fileID: 6406533243532186685, guid: 38adc1ffa2d188a4dbf27eab8a0e0d47, type: 3}
+      propertyPath: m_TagString
+      value: AudioSurvivor
+      objectReference: {fileID: 0}
+    - target: {fileID: 6406533243532186686, guid: 38adc1ffa2d188a4dbf27eab8a0e0d47, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6406533243532186687, guid: 38adc1ffa2d188a4dbf27eab8a0e0d47, type: 3}
       propertyPath: m_RootOrder
       value: 3

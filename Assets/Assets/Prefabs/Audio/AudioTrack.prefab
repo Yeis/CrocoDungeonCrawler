@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6406533243532186687}
   - component: {fileID: 6406533243532186686}
+  - component: {fileID: 712645823}
   m_Layer: 0
   m_Name: AudioTrack
   m_TagString: Untagged
@@ -127,3 +128,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &712645823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6406533243532186685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c34f36a284cd9c418fbe86421b8b67e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameOverClip: {fileID: 8300000, guid: 9e8ba35dc53793543b56dc45549f6532, type: 3}
+  mainTrackClip: {fileID: 8300000, guid: 76999345b29ce044e81e36212a516c39, type: 3}
+  victoryClip: {fileID: 8300000, guid: 8441a862af0796547a242b0e254be279, type: 3}
+  bossBatleClip: {fileID: 8300000, guid: 391fcb66c71264746b97898e8d06134d, type: 3}

@@ -8,6 +8,13 @@ public class LevelLoader : MonoBehaviour
     public Animator transition;
     public float transitionTime = 2.5f;
     public string GameScene;
+    public AudioSurvivor audioSurvivor;
+
+    void Start() {
+        audioSurvivor = GameObject.FindGameObjectWithTag("AudioSurvivor").GetComponent<AudioSurvivor>();
+        audioSurvivor.SelectSong();
+    }
+
     public void CouroutineStart()
     {
         StartCoroutine("LoadLevel");

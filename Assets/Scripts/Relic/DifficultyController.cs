@@ -35,6 +35,7 @@ public class DifficultyController : MonoBehaviour {
     public GameObject hardBossWaveObject;
     public GameObject inputObject;
     public GameObject spawnerObject;
+    public AudioSurvivor audioSurvivor;
 
     private InputController inputController;
     private int shiftCounter = 0;
@@ -68,6 +69,10 @@ public class DifficultyController : MonoBehaviour {
         hardDifficultyLimit = Random.Range(hardMinRange, hardMaxRange + 1);
     }
 
+    void Start() {
+        audioSurvivor = GameObject.FindGameObjectWithTag("AudioSurvivor").GetComponent<AudioSurvivor>();
+    }
+
     public void startEncounter(int requiredCrocos, RoomDifficulty difficulty) {
         requiredNumberOfCrocos = requiredCrocos;
         roomDifficulty = difficulty;
@@ -91,6 +96,7 @@ public class DifficultyController : MonoBehaviour {
 
                 // ACTIVATE BOSS BATTLE
                 bossObject.SetActive(true);
+                audioSurvivor.SelectSong();
                 isInBossEncounter = true;
                 break;
         }
@@ -220,6 +226,8 @@ public class DifficultyController : MonoBehaviour {
     public void attackVulnerabilityGem() {
         updateGem(vulnerabilityGems.ElementAt(vulnerabilityGemCounter), true);
         Boss boss = GameObject.FindGameObjectWithTag("Boss").GetComponent<Boss>();
+
+        
         vulnerabilityGemCounter += 1;
         switch (spawnerController.currentBossWave) {
             case BossWave.easyWave:
