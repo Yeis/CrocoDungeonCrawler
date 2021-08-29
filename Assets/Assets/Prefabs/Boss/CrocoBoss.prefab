@@ -117,3 +117,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthPoints: 3
+  gameScene: VictoryScreen

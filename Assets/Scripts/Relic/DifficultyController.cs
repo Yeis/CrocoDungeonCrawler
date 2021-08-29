@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class DifficultyController : MonoBehaviour {
 
@@ -19,6 +20,7 @@ public class DifficultyController : MonoBehaviour {
     public int penaltyDelayEasy = 3;
     public int penaltyDelayMedium = 4;
     public int penaltyDelayHard = 5;
+    public string GameScene = "VictoryScreen";
 
     public GameObject relic;
     public TMP_Text crocoCounterText;
@@ -144,6 +146,10 @@ public class DifficultyController : MonoBehaviour {
         }
     }
 
+    public void Victory(){
+        SceneManager.LoadScene(GameScene);
+    }
+
     public void penalizeGem(KeyValuePair<GameObject, Gem> gemPair) {
         var penaltyTime = 0;
         switch (roomDifficulty) {
@@ -237,8 +243,12 @@ public class DifficultyController : MonoBehaviour {
                 break;
             case BossWave.hardWave:
                 if (vulnerabilityGemCounter >= 5) {
+
+                    Victory();
+
                     boss.TakeDamage();
                     print("we did it boys");
+
                     hideVulnerabilityCombo();
                     return;
                 }
