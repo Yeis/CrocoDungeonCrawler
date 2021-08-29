@@ -11,10 +11,12 @@ public class InputController : MonoBehaviour {
     public GameObject relic;
     public GameObject difficulty;
     public GameObject playerObject;
+    // public GameObject enemy;
 
     private RelicController relicController;
     private DifficultyController difficultyController;
     private Player player;
+    // private Enemy enem;
     private bool isInCombat = false;
 
     void Awake() {
@@ -25,6 +27,7 @@ public class InputController : MonoBehaviour {
         relicController = relic.GetComponent<RelicController>();
         difficultyController = difficulty.GetComponent<DifficultyController>();
         player = playerObject.GetComponent<Player>();
+        // enem = enemy.GetComponent<Enemy>();
     }
 
     void SymbolInteraction(InputControl control, bool isPressing) {

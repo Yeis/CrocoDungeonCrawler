@@ -9,6 +9,7 @@ public class Player : MonoBehaviour {
     public Sprite lockSprite;
     public GameObject lockedEnemy;
     private Animator animator;
+    // public Enemy ene;
 
     // Start is called before the first frame update
     void Start() {
@@ -63,9 +64,8 @@ public class Player : MonoBehaviour {
                 animator.SetTrigger("AttackPink");
                 break;
         }
-
         if (lockedEnemy != null) {
-            Destroy(lockedEnemy);
+            lockedEnemy.GetComponent<Enemy>().KillCrocodile();
             lockedEnemy = null;
         };
     }
