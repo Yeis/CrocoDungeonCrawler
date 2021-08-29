@@ -10,6 +10,7 @@ public class AudioController : MonoBehaviour
     public AudioClip crocoAttackClip;
     public AudioClip crocoDyingClip;
     public AudioClip continueClip;
+    public AudioClip startEncounterClip;
     public AudioClip pickItemClip;
     public AudioClip brokenRelicClip;
     public AudioClip clickButtonClip;
@@ -42,7 +43,7 @@ public class AudioController : MonoBehaviour
     public void PlayPickItemClip() {
         audioSource.PlayOneShot(pickItemClip, 0.5f);
     }
-///
+
     public void PlayContinueClip() {
         audioSource.PlayOneShot(continueClip, 0.5f);
     }
@@ -57,5 +58,9 @@ public class AudioController : MonoBehaviour
 
     public void PlayWinEncounterClip() {
         audioSource.PlayOneShot(winEncounterClip, 0.5f);
+    }
+
+    public void PlayStartEncounterClip() {
+        audioSource.PlayOneShot(startEncounterClip, 0.5f);
     }
 }
