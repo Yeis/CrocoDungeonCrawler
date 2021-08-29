@@ -19,6 +19,7 @@ public class InputController : MonoBehaviour {
     // private Enemy enem;
     private bool isInCombat = false;
 
+
     void Awake() {
         controls = new RelicInputs();
         controls.Relic.SymbolSelect.performed += ctx => SymbolInteraction(ctx.control, true);
@@ -34,21 +35,28 @@ public class InputController : MonoBehaviour {
         if (isInCombat) {
             try {
                 var gemPair = relicController.gemDictionary.Where(x => control == x.Value.symbol).First();
+                if (gemPair.Value.isPenalized) {
+                    return;
+                }
+
                 var lockedEnemy = player.lockedEnemy.GetComponent<Enemy>();
                 var isMistake = false;
 
                 if (isPressing && lockedEnemy.color == gemPair.Value.gemColor) {
                     player.Attack(gemPair.Value.gemColor);
-                    difficultyController.killCroco();
+                    difficultyController.killCroco(gemPair);
                 } else if (isPressing) {
                     isMistake = true;
-                    print("horaDeLaPenalizacion");
+                    difficultyController.penalizeGem(gemPair);
                 }
 
                 relicController.gemInteraction(gemPair, isPressing, isMistake);
             } catch {
                 if (isPressing) {
-                    print("horaDeLaPenalizacion");
+                    int randomIndex = Random.Range(0, relicController.gemDictionary.Count);
+
+                    KeyValuePair<GameObject, Gem> randomGem = relicController.gemDictionary.ElementAt(randomIndex);
+                    difficultyController.penalizeGem(randomGem);
                 }
             }
 

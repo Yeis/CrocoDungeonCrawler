@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using System.Linq;
 
 public class RelicController : MonoBehaviour {
     public Dictionary<GameObject, Gem> gemDictionary = new Dictionary<GameObject, Gem>();
@@ -51,16 +52,24 @@ public class RelicController : MonoBehaviour {
     }
 
     void Start() {
-        updateGems();
+        foreach (var gemPair in gemDictionary) {
+            updateGem(gemPair);
+        }
     }
 
     public void setUpForCombat() {
-        gems[0].symbol = keyboard.wKey;
-        gems[1].symbol = keyboard.aKey;
-        gems[2].symbol = keyboard.sKey;
-        gems[3].symbol = keyboard.dKey;
+        currentSymbols[0] = keyboard.wKey;
+        currentSymbols[1] = keyboard.aKey;
+        currentSymbols[2] = keyboard.sKey;
+        currentSymbols[3] = keyboard.dKey;
 
-        updateGems();
+        for (int i = 0; i < 4; i++) {
+            gems[i].symbol = currentSymbols[i];
+        }
+
+        foreach (var gemPair in gemDictionary) {
+            updateGem(gemPair);
+        }
     }
 
     public void setUpForDialog() {
@@ -86,7 +95,9 @@ public class RelicController : MonoBehaviour {
             gemPair.Key.GetComponent<SpriteRenderer>().sprite = gemSprites[((int)gemColor)];
         }
 
-        updateGems();
+        foreach (var gemPair in gemDictionary) {
+            updateGem(gemPair);
+        }
     }
 
     public void gemInteraction(KeyValuePair<GameObject, Gem> gemPair, bool isPressing, bool isMistake) {
@@ -109,30 +120,40 @@ public class RelicController : MonoBehaviour {
         gemPair.Key.GetComponent<SpriteRenderer>().sprite = gemSprites[((int)gemSelected)];
     }
 
-    public void updateGems() {
-        foreach (var gemPair in gemDictionary) {
-            TMP_Text gemLabel;
-            switch (gemPair.Value.direction) {
-                case GemDirection.north:
-                    gemLabel = northGemText;
-                    break;
-                case GemDirection.west:
-                    gemLabel = westGemText;
-                    break;
-                case GemDirection.south:
-                    gemLabel = southGemText;
-                    break;
-                case GemDirection.east:
-                    gemLabel = eastGemText;
-                    break;
-                default:
-                    // should never happen
-                    gemLabel = northGemText;
-                    break;
-            }
-
-            gemLabel.text = gemPair.Value.symbol == keyboard.oem1Key ? "" : gemPair.Value.symbol.displayName;
-            gemPair.Key.GetComponent<SpriteRenderer>().sprite = gemSprites[((int)gemPair.Value.gemColor)];
+    public void updateGem(KeyValuePair<GameObject, Gem> gemPair) {
+        TMP_Text gemLabel;
+        switch (gemPair.Value.direction) {
+            case GemDirection.north:
+                gemLabel = northGemText;
+                break;
+            case GemDirection.west:
+                gemLabel = westGemText;
+                break;
+            case GemDirection.south:
+                gemLabel = southGemText;
+                break;
+            case GemDirection.east:
+                gemLabel = eastGemText;
+                break;
+            default:
+                // should never happen
+                gemLabel = northGemText;
+                break;
         }
+
+        gemLabel.text = gemPair.Value.symbol == keyboard.oem1Key ? "" : gemPair.Value.symbol.displayName;
+        gemPair.Key.GetComponent<SpriteRenderer>().sprite = gemSprites[((int)gemPair.Value.gemColor)];
     }
+
+    public IEnumerator penalizeGem(KeyValuePair<GameObject, Gem> gemPair, int penalizeTimeInSeconds) {
+        var originalSprite = gemPair.Key.GetComponent<SpriteRenderer>().sprite;
+
+        gemPair.Key.GetComponent<SpriteRenderer>().sprite = gemSprites[((int)GemColor.disabled)];
+        gemPair.Value.isPenalized = true;
+        yield return new WaitForSeconds(penalizeTimeInSeconds);
+
+        gemPair.Key.GetComponent<SpriteRenderer>().sprite = originalSprite;
+        gemPair.Value.isPenalized = false;
+    }
+
 }

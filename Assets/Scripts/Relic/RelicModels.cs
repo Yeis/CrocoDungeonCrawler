@@ -7,6 +7,7 @@ public class Gem {
     public InputControl symbol;
     public GemColor gemColor;
     public GemDirection direction;
+    public bool isPenalized = false;
 
     public Gem(InputControl symbol, GemColor gemColor, GemDirection direction) {
         this.symbol = symbol;
@@ -24,7 +25,8 @@ public enum GemColor {
     orange = 5,
     orangeSelected = 6,
     pink = 7,
-    pinkSelected = 8
+    pinkSelected = 8,
+    unknown = 9
 }
 
 public enum GemDirection {

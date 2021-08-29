@@ -15,6 +15,10 @@ public class DifficultyController : MonoBehaviour {
     public int hardMaxRange = 6;
     public int mediumColorShiftPercentage = 10;
     public int hardColorShiftPercentage = 20;
+    public int penaltyDelayTutorial = 3;
+    public int penaltyDelayEasy = 3;
+    public int penaltyDelayMedium = 4;
+    public int penaltyDelayHard = 5;
 
     public GameObject relic;
     public TMP_Text crocoCounterText;
@@ -47,7 +51,7 @@ public class DifficultyController : MonoBehaviour {
         requiredNumberOfCrocos = requiredCrocos;
         roomDifficulty = difficulty;
 
-        switch(roomDifficulty) {
+        switch (roomDifficulty) {
             case RoomDifficulty.veryEasy:
             case RoomDifficulty.easy:
                 easyBackground.SetActive(true);
@@ -70,7 +74,7 @@ public class DifficultyController : MonoBehaviour {
         requiredNumberOfCrocosText.text = requiredNumberOfCrocos.ToString("00");
     }
 
-    public void killCroco() {
+    public void killCroco(KeyValuePair<GameObject, Gem> gemPair) {
         crocoCounter += 1;
         crocoCounterText.text = crocoCounter.ToString("00");
 
@@ -113,7 +117,27 @@ public class DifficultyController : MonoBehaviour {
 
             default: break;
         }
-        relicController.updateGems();
+    }
+
+    public void penalizeGem(KeyValuePair<GameObject, Gem> gemPair) {
+        var penaltyTime = 0;
+        switch (roomDifficulty) {
+            case RoomDifficulty.veryEasy:
+                penaltyTime = penaltyDelayTutorial;
+                break;
+            case RoomDifficulty.easy:
+                penaltyTime = penaltyDelayEasy;
+                break;
+            case RoomDifficulty.medium:
+                penaltyTime = penaltyDelayMedium;
+                break;
+            case RoomDifficulty.hard:
+                penaltyTime = penaltyDelayHard;
+                break;
+            default: break;
+        }
+
+        StartCoroutine(relicController.penalizeGem(gemPair, penaltyTime));
     }
 
     public void triggerGameOver() {
@@ -139,6 +163,7 @@ public class DifficultyController : MonoBehaviour {
 
     private void gemShift(int numberOfGems, bool includeNums, bool includeSymbolsAndNums) {
         var exclude = new HashSet<int>();
+        var gemsAffected = new List<KeyValuePair<GameObject, Gem>>();
 
         for (int i = 0; i < numberOfGems; i++) {
             var range = Enumerable.Range(0, 4).Where(i => !exclude.Contains(i));
@@ -152,7 +177,12 @@ public class DifficultyController : MonoBehaviour {
             relicController.gemDictionary[currentGem].symbol = newSymbol;
             relicController.currentSymbols[gemToUpdate] = newSymbol;
 
+            gemsAffected.Add(relicController.gemDictionary.ElementAt(gemToUpdate));
             exclude.Add(gemToUpdate);
+        }
+
+        foreach (var gem in gemsAffected) {
+            relicController.updateGem(gem);
         }
     }
 
@@ -195,18 +225,25 @@ public class DifficultyController : MonoBehaviour {
     // It will define how frequently the color shift will be executed. For example:
     // If percentage is 20, 20 percent of the time the color shift will happen. 
     private void colorShift(int percentage) {
-        var probabilityRange = Random.Range(0, 10);
 
-        if (probabilityRange > 9 - (percentage / 10)) {
-            List<GemColor> gemColorList = new List<GemColor>() { GemColor.blue, GemColor.green, GemColor.orange, GemColor.pink };
-            var random = new System.Random();
-            var randomizedGemColorList = gemColorList.OrderBy(item => random.Next());
+        // Do not colorShift while ANY gem is penalized 
+        var penalizedGem = relicController.gemDictionary.Where(x => x.Value.isPenalized).FirstOrDefault();
+        // If there is absolutely no penalized gems...
+        if (penalizedGem.Key != null) {
+            var probabilityRange = Random.Range(0, 10);
 
-            var gemObjectCounter = 0;
-            foreach (var gemColor in randomizedGemColorList) {
-                relicController.gemDictionary[relicController.gemObjects[gemObjectCounter]].gemColor = gemColor;
-                gemObjectCounter += 1;
+            if (probabilityRange > 9 - (percentage / 10)) {
+                List<GemColor> gemColorList = new List<GemColor>() { GemColor.blue, GemColor.green, GemColor.orange, GemColor.pink };
+                var random = new System.Random();
+                var randomizedGemColorList = gemColorList.OrderBy(item => random.Next());
+
+                var gemObjectCounter = 0;
+                foreach (var gemColor in randomizedGemColorList) {
+                    relicController.gemDictionary[relicController.gemObjects[gemObjectCounter]].gemColor = gemColor;
+                    gemObjectCounter += 1;
+                }
             }
+
         }
     }
 
