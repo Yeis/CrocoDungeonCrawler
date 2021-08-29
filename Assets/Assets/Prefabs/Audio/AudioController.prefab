@@ -48,11 +48,12 @@ MonoBehaviour:
   playerTakingDamageClip: {fileID: 8300000, guid: 0905fb964ddafce4f9edeb9fe2a70fa1, type: 3}
   crocoAttackClip: {fileID: 8300000, guid: 94847e5a738ee764aa2bbcffe3ae6ea2, type: 3}
   crocoDyingClip: {fileID: 8300000, guid: b29abad1ad06d2c438fd61f50810bc9f, type: 3}
-  continueClip: {fileID: 0}
+  continueClip: {fileID: 8300000, guid: 7f6db7ac789832b41a24b61bfcc658e5, type: 3}
+  startEncounterClip: {fileID: 8300000, guid: a5baed58d8469e942926ab691b86062a, type: 3}
   pickItemClip: {fileID: 8300000, guid: fe0a57b1ecc414145873ecb4001118c1, type: 3}
-  brokenRelicClip: {fileID: 0}
-  clickButtonClip: {fileID: 0}
-  winEncounterClip: {fileID: 0}
+  brokenRelicClip: {fileID: 8300000, guid: c5231fddcf540f94aa1109234013a955, type: 3}
+  clickButtonClip: {fileID: 8300000, guid: 6705d88cd1d290c469c495545d4e6ba4, type: 3}
+  winEncounterClip: {fileID: 8300000, guid: a3d4450c8c46a8d46b9a671340259b1e, type: 3}
 --- !u!82 &2202803987891137974
 AudioSource:
   m_ObjectHideFlags: 0
