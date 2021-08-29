@@ -183,13 +183,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e0b807eac1d7cc4aacf489ce9178db6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.001
+  speed: 0.004
   color: 7
   isMoving: 0
-  hasAttack: 0
   isAttacking: 0
-  newMarker: {fileID: 21300000, guid: 578e0ca744e14604abef33a8cee35e3d, type: 3}
+  damage: 10
+  slide: 0.0037
   anim: {fileID: 0}
+  hasAttack: 0
 --- !u!61 &8095801202097003586
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -366,22 +366,22 @@ public class DifficultyController : MonoBehaviour {
         // Do not colorShift while ANY gem is penalized 
         var penalizedGem = relicController.gemDictionary.Where(x => x.Value.isPenalized).FirstOrDefault();
         // If there is absolutely no penalized gems...
-        if (penalizedGem.Key != null) {
-            var probabilityRange = Random.Range(0, 10);
+        // if (penalizedGem.Key != null) {
+        var probabilityRange = Random.Range(0, 10);
 
-            if (probabilityRange > 9 - (percentage / 10)) {
-                List<GemColor> gemColorList = new List<GemColor>() { GemColor.blue, GemColor.green, GemColor.orange, GemColor.pink };
-                var random = new System.Random();
-                var randomizedGemColorList = gemColorList.OrderBy(item => random.Next());
+        if (probabilityRange > 9 - (percentage / 10)) {
+            List<GemColor> gemColorList = new List<GemColor>() { GemColor.blue, GemColor.green, GemColor.orange, GemColor.pink };
+            var random = new System.Random();
+            var randomizedGemColorList = gemColorList.OrderBy(item => random.Next());
 
-                var gemObjectCounter = 0;
-                foreach (var gemColor in randomizedGemColorList) {
-                    relicController.gemDictionary[relicController.gemObjects[gemObjectCounter]].gemColor = gemColor;
-                    gemObjectCounter += 1;
-                }
+            var gemObjectCounter = 0;
+            foreach (var gemColor in randomizedGemColorList) {
+                relicController.gemDictionary[relicController.gemObjects[gemObjectCounter]].gemColor = gemColor;
+                gemObjectCounter += 1;
             }
-
         }
+
+        // }
 
         foreach (var gem in relicController.gemDictionary) {
             relicController.updateGem(gem);

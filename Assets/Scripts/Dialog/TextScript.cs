@@ -10,11 +10,44 @@ public class TextScript : MonoBehaviour {
 
     public GameObject dialogUI;
     public TextMeshProUGUI textDisplay;
-    private string[] easyDialogs = Directory.GetFiles("Assets/Assets/Texts/EasyTexts", "*.txt");
-    private string[] mediumDialogs = Directory.GetFiles("Assets/Assets/Texts/MediumTexts", "*.txt");
-    private string[] postCombatDialogs = Directory.GetFiles("Assets/Assets/Texts/PostCombatTexts", "*.txt");
-    private string[] specialDialogs = Directory.GetFiles("Assets/Assets/Texts/SpecialTexts", "*.txt");
 
+    private static string[] easyDialog1 = { "You can feel a chaotic force getting closer.", "A strong presence, similar to the one emanating from your relic", "You hear steps coming close.", "There's more of them." };
+    private static string[] easyDialog2 = { "You don't really know why you press on forward", "Your relic starts acting strange, as if something's coming close.", "You hear steps coming close.", "There's more of them." };
+    private static string[] easyDialog3 = { "You can feel a chaotic force getting closer.", "A strong presence, similar to the one emanating from your relic", "You don't even realize before it's too late.", "There's more of them." };
+
+    private string[][] easyDialogs = { easyDialog1, easyDialog2, easyDialog3 };
+
+    private static string[] mediumDialog1 = { "You realize they will never stop coming.", "It seems you're not the only one allured by the relic.", "You prepare for battle." };
+    private static string[] mediumDialog2 = { "Your relic grows stronger, but something's wrong", "Its strength seems affected by something near.", "Prepare for another fight." };
+    private static string[] mediumDialog3 = { "Its getting harder and harder to remain determined.", "But the relic's call pulls you forward.", "Satisfy its wishes, and great rewards will come." };
+    private static string[] mediumDialog4 = { "You feel watched.", "It seems you've gathered the attention of a mysterious force.", "You hold the relic and prepare for combat" };
+    private static string[] mediumDialog5 = { "You hear a distant laughter.", "With it, you feel a strong presence worthy of a whole kingdom.", "But what is royalty, for curious adventurer?" };
+
+    private string[][] mediumDialogs = { mediumDialog1, mediumDialog2, mediumDialog3, mediumDialog4, mediumDialog5 };
+
+    private static string[] postCombatDialog1 = { "You wipe off your sweat from your forehead, and press on." };
+    private static string[] postCombatDialog2 = { "There's no time for panicking, you must continue forward." };
+    private static string[] postCombatDialog3 = { "You can feel the relic getting more unstable." };
+    private static string[] postCombatDialog4 = { "You look behind you, and then forward. The relic's call continues." };
+    private static string[] postCombatDialog5 = { "As your foes flee, you can feel the relic getting stronger." };
+    private static string[] postCombatDialog6 = { "You supress your fear with this last victory, and press on." };
+    private static string[] postCombatDialog7 = { "As the last soldier falls, you grasp the relic and feel its power." };
+    private static string[] postCombatDialog8 = { "You hear grunts beyond the cave's corridors, but continue forward." };
+    private static string[] postCombatDialog9 = { "Without stutter, you continue on deeper into the cave." };
+    private static string[] postCombatDialog10 = { "As you step onward, you feel the relic's power growing stronger." };
+
+    private string[][] postCombatDialogs = { postCombatDialog1, postCombatDialog2, postCombatDialog3, postCombatDialog4, postCombatDialog5, postCombatDialog6, postCombatDialog7, postCombatDialog8, postCombatDialog9, postCombatDialog10 };
+
+    private static string[] bossCloseDialog = { "You're not ready to access this room. You must defeat more enemies." };
+    private static string[] bossOpenDialog = { "You\'ve proven yourself strong enough.", "You can feel the relic\'s call beyond this last room.", "You gather your remaining strength and press forward one last time." };
+    private static string[] eventRoomDialog = { "You find an old health potion laying on the ground. Hp restored." };
+    private static string[] initRoomDialog = { "The relic's call has ordered you into this dark cave.", "As you hold it, you pay attention at its 4 gems.", "Four symbols appear in its crystals.", "Replicate these runes to embrace the relic's strength.", "You hear whispers, voices of past challengers.", "Before you can collect your thoughts, you see them.", "An army worthy of a mad king." };
+    private static string[] visitedRoomDialog = { "You've already visited this room." };
+
+    private string[][] specialDialogs = { bossCloseDialog, bossOpenDialog, eventRoomDialog, initRoomDialog, visitedRoomDialog };
+
+
+    //private string[] specialDialogs = Directory.GetFiles("Assets/Assets/Texts/SpecialTexts", "*.txt");
     private List<string> sentences = new List<string>();
     private int index;
     public float textSpeed = 0.02f;
@@ -59,24 +92,13 @@ public class TextScript : MonoBehaviour {
     }
 
     void Start() {
-        readTextFile("Assets/Assets/Texts/SpecialTexts/initRoomText.txt");
+        readTextFile(specialDialogs[3]);
+
         source = GetComponent<AudioSource>();
         StartCoroutine(Type());
     }
 
     void Update() {
-        // if(!postCombatStatus){
-        //     if(textDisplay.text == sentences[index]) {
-        //         if(index == sentences.Count - 1) {
-        //             startCombatButton.SetActive(true);
-        //         } else {
-        //             continueButton.SetActive(true);
-        //         }
-        //     }
-        // } else {
-
-        // }
-
         if (textDisplay.text == sentences[index]) {
             if (postCombatStatus) {
                 northButton.SetActive(mapController.characterPositionNode.topRoom != null);
@@ -91,15 +113,10 @@ public class TextScript : MonoBehaviour {
         }
     }
 
-    private void readTextFile(string file_path) {
-        StreamReader input_stream = new StreamReader(file_path);
-
-        while (!input_stream.EndOfStream) {
-            string input_line = input_stream.ReadLine();
-            sentences.Add(input_line);
+    private void readTextFile(string[] textArray) {
+        foreach (var line in textArray) {
+            sentences.Add(line);
         }
-
-        input_stream.Close();
     }
 
     public void NextSentence() {
@@ -126,23 +143,18 @@ public class TextScript : MonoBehaviour {
         textDisplay.text = "";
         index = 0;
 
-        // DEBUG!!!!
-        mapController.characterPositionNode.setInBossRoom();
-
         if (mapController.characterPositionNode.characterVisited && !mapController.characterPositionNode.isBossInRoom) {
             sentences.Clear();
-            readTextFile("Assets/Assets/Texts/SpecialTexts/visitedRoomDialog.txt");
+            readTextFile(specialDialogs[4]);
             postCombatStatus = true;
             StartCoroutine(Type());
         } else if (mapController.characterPositionNode.isBossInRoom) {
             sentences.Clear();
-            //TODO: check if room is open or closed
-
-            if (roomDifficultyManager.isReadyForBossRoom()) {
-                readTextFile("Assets/Assets/Texts/SpecialTexts/bossRoomOpenText.txt");
+            if (roomDifficultyManager.roomCounter >= 2) {
+                readTextFile(specialDialogs[1]);
                 StartCoroutine(Type());
             } else {
-                readTextFile("Assets/Assets/Texts/SpecialTexts/bossRoomClosedText.txt");
+                readTextFile(specialDialogs[0]);
                 postCombatStatus = true;
                 StartCoroutine(Type());
             }
@@ -164,7 +176,7 @@ public class TextScript : MonoBehaviour {
 
                 case RoomType.eventRoom:
                     sentences.Clear();
-                    readTextFile("Assets/Assets/Texts/SpecialTexts/eventRoomText.txt");
+                    readTextFile(specialDialogs[2]);
                     postCombatStatus = true;
                     StartCoroutine(Type());
                     eventRoomPotion.SetActive(true);
@@ -175,14 +187,10 @@ public class TextScript : MonoBehaviour {
                     return;
             }
         }
-
-        //startCombatButton.SetActive(true);
-
     }
 
-    private void readRandomFrom(string[] dialogList) {
-        int randy = Random.Range(0, 5);
-        index = 0;
+    private void readRandomFrom(string[][] dialogList) {
+        int randy = Random.Range(0, dialogList.Length);
         sentences.Clear();
         readTextFile(dialogList[randy]);
     }
@@ -193,10 +201,6 @@ public class TextScript : MonoBehaviour {
     }
 
     public void prepCloseUI() {
-        // northButton.SetActive(mapController.characterPositionNode.topRoom != null);
-        // eastButton.SetActive(mapController.characterPositionNode.rightRoom != null);
-        // westButton.SetActive(mapController.characterPositionNode.leftRoom != null);
-        // southButton.SetActive(mapController.characterPositionNode.bottomRoom != null);
         startCombatButton.SetActive(false);
         dialogUI.SetActive(false);
     }

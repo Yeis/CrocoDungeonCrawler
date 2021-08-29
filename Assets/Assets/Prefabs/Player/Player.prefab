@@ -46,8 +46,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthPoints: 100
+  gameScene: GameOver
   hpMask: {fileID: 0}
   lockSprite: {fileID: 21300000, guid: c1e673d291dc07c4e9c617c0926d8463, type: 3}
+  audioController: {fileID: 0}
   lockedEnemy: {fileID: 0}
 --- !u!212 &7205523933118227525
 SpriteRenderer:

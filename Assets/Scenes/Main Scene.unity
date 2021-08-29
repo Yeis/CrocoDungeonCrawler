@@ -277,7 +277,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 7804332900916d342b8407b223f8b39b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1349,6 +1349,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1240623271}
     - target: {fileID: 4202408091744223979, guid: 732572b172e9f93459deb4d558dec59e, type: 3}
+      propertyPath: hardColorShiftPercentage
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4202408091744223979, guid: 732572b172e9f93459deb4d558dec59e, type: 3}
+      propertyPath: mediumColorShiftPercentage
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4202408091744223979, guid: 732572b172e9f93459deb4d558dec59e, type: 3}
       propertyPath: requiredNumberOfCrocosText
       value: 
       objectReference: {fileID: 406271017}
@@ -1519,15 +1527,15 @@ PrefabInstance:
       objectReference: {fileID: 406271017}
     - target: {fileID: 1198111609459545032, guid: 970ee8de814253b48b022b4b79778e0c, type: 3}
       propertyPath: requiredCrocosEasy
-      value: 1
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1198111609459545032, guid: 970ee8de814253b48b022b4b79778e0c, type: 3}
       propertyPath: requiredCrocosMedium
-      value: 1
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 1198111609459545032, guid: 970ee8de814253b48b022b4b79778e0c, type: 3}
       propertyPath: requiredCrocosTutorial
-      value: 1
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 1198111609459545033, guid: 970ee8de814253b48b022b4b79778e0c, type: 3}
       propertyPath: m_Name
@@ -2572,6 +2580,10 @@ PrefabInstance:
       propertyPath: mapGameLogic
       value: 
       objectReference: {fileID: 262077064}
+    - target: {fileID: 8325844525208189440, guid: 70e7423c77256364cac2a6fffb6d4530, type: 3}
+      propertyPath: requiredRoomsToFightBoss
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8325844525208189441, guid: 70e7423c77256364cac2a6fffb6d4530, type: 3}
       propertyPath: m_RootOrder
       value: 16
@@ -2776,7 +2788,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1436676388}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.39947492, z: 0}
+  m_LocalPosition: {x: 0, y: 0.3995512, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1424048608}
@@ -3892,7 +3904,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1849509936476209310, guid: 84bc24796d88e9346ba14e2e951e249c, type: 3}
       propertyPath: orthographic size
-      value: 1.19625
+      value: 1.1958706
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 84bc24796d88e9346ba14e2e951e249c, type: 3}
@@ -5655,7 +5667,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.14062499, y: 0.24000001}
   m_AnchorMax: {x: 0.85625005, y: 0.89000005}
-  m_AnchoredPosition: {x: 0, y: -0.30000305}
+  m_AnchoredPosition: {x: 0, y: -0.2999878}
   m_SizeDelta: {x: 1, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3147984182020980465
@@ -5877,6 +5889,10 @@ PrefabInstance:
     - target: {fileID: 4680113526211975942, guid: 37c68d0713a6be3458bf3b1abe1eccc0, type: 3}
       propertyPath: waves.Array.size
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4680113526211975942, guid: 37c68d0713a6be3458bf3b1abe1eccc0, type: 3}
+      propertyPath: firstBossWaveSize
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4680113526211975942, guid: 37c68d0713a6be3458bf3b1abe1eccc0, type: 3}
       propertyPath: waves.Array.data[1].waveName

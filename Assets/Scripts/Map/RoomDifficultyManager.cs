@@ -60,11 +60,6 @@ public class RoomDifficultyManager : MonoBehaviour {
             }
         }
 
-        // DEBUG
-        for (int i = 0; i < difficultyArray.Count; i++) {
-            difficultyArray[i] = RoomType.bossRoom;
-        }
-
         return difficultyArray;
     }
 

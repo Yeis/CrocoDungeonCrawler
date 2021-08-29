@@ -17,7 +17,7 @@ public class Player : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        
+
         animator = GetComponent<Animator>();
     }
 
@@ -29,7 +29,7 @@ public class Player : MonoBehaviour {
     private void LockEnemy() {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         if ((enemies.Length > 0 && lockedEnemy == null) || (lockedEnemy != null && lockedEnemy.tag != "Enemy")) {
-            if(lockedEnemy != null) lockedEnemy.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = null;
+            if (lockedEnemy != null) lockedEnemy.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = null;
             lockedEnemy = enemies[0];
             lockedEnemy.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = lockSprite;
         }
@@ -48,9 +48,8 @@ public class Player : MonoBehaviour {
         this.healthPoints = this.healthPoints - damage;
         audioController.PlayCrocoAttackClip();
         animator.SetTrigger("TakingDamage");
-        hpMask.transform.localPosition = new Vector3(Mathf.Lerp(0.1284f,0.66f, healthPoints/ 100f), hpMask.transform.localPosition.y, hpMask.transform.localPosition.z);
-        if (this.healthPoints == 0)
-        {
+        hpMask.transform.localPosition = new Vector3(Mathf.Lerp(0.1284f, 0.66f, healthPoints / 100f), hpMask.transform.localPosition.y, hpMask.transform.localPosition.z);
+        if (this.healthPoints == 0) {
             GameOver();
 
         }
@@ -58,11 +57,10 @@ public class Player : MonoBehaviour {
 
     public void AddHealth(int healthAdded) {
         this.healthPoints = this.healthPoints + healthAdded;
-        hpMask.transform.localPosition = new Vector3(Mathf.Lerp(0.1284f,0.66f, healthPoints/ 100f), hpMask.transform.localPosition.y, hpMask.transform.localPosition.z);
+        hpMask.transform.localPosition = new Vector3(Mathf.Lerp(0.1284f, 0.66f, healthPoints / 100f), hpMask.transform.localPosition.y, hpMask.transform.localPosition.z);
     }
-    
-    public void GameOver()
-    {
+
+    public void GameOver() {
         SceneManager.LoadScene(gameScene);
     }
 
