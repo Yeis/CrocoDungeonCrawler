@@ -2,23 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour {
     public float healthPoints = 100;
+    public string gameScene;
     public GameObject hpMask;
     public Sprite lockSprite;
     public GameObject lockedEnemy;
     private Animator animator;
-    // public Enemy ene;
+    private bool isAlive;
+
 
     // Start is called before the first frame update
     void Start() {
+        
         animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update() {
         LockEnemy();
+
+        if (this.healthPoints == 0)
+        {
+            GameOver();
+
+        }
     }
 
     private void LockEnemy() {
@@ -47,6 +57,11 @@ public class Player : MonoBehaviour {
     public void AddHealth(int healthPoints) {
         this.healthPoints = this.healthPoints + healthPoints;
         hpMask.transform.localPosition = new Vector3(Mathf.Lerp(0.1284f,0.66f, healthPoints/ 100), hpMask.transform.localPosition.y, hpMask.transform.localPosition.z);
+    }
+    
+    public void GameOver()
+    {
+        SceneManager.LoadScene(gameScene);
     }
 
     public void Attack(GemColor attackColor) {

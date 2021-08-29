@@ -2822,6 +2822,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level Loader
       objectReference: {fileID: 0}
+    - target: {fileID: 5298205948172889628, guid: 5094107e4d7535940980304ee61736e4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5942240285362987501, guid: 5094107e4d7535940980304ee61736e4, type: 3}
       propertyPath: m_BlockingMask.m_Bits
       value: 2147483647
