@@ -34,7 +34,7 @@ public class Player : MonoBehaviour {
 
     private void LockEnemy() {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        if ((enemies.Length > 0 && lockedEnemy == null) ||(lockedEnemy != null && lockedEnemy.tag != "Enemy")) {
+        if ((enemies.Length > 0 && lockedEnemy == null) || (lockedEnemy != null && lockedEnemy.tag != "Enemy")) {
             if(lockedEnemy != null) lockedEnemy.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = null;
             lockedEnemy = enemies[0];
             lockedEnemy.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = lockSprite;
@@ -53,7 +53,6 @@ public class Player : MonoBehaviour {
     public void TakeDamage(int damage) {
         this.healthPoints = this.healthPoints - damage;
         animator.SetTrigger("TakingDamage");
-        audioController.PlayCrocoAttackClip();
         hpMask.transform.localPosition = new Vector3(Mathf.Lerp(0.1284f,0.66f, healthPoints/ 100f), hpMask.transform.localPosition.y, hpMask.transform.localPosition.z);
     }
 
@@ -84,6 +83,7 @@ public class Player : MonoBehaviour {
                 break;
         }
         if (lockedEnemy != null) {
+            lockedEnemy.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = null;
             lockedEnemy.GetComponent<Enemy>().KillCrocodile();
             lockedEnemy = null;
         };

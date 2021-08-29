@@ -1336,6 +1336,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4380532529307314812, guid: 1e4394eef5aa6e747b137a9a98a461bf, type: 3}
   m_PrefabInstance: {fileID: 4380532529780557107}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &758206235 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6144855369348947267, guid: dcd7ababef94eb944965e4df06bfa2f5, type: 3}
+  m_PrefabInstance: {fileID: 2202803987891137972}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &776730069
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1962,6 +1967,10 @@ PrefabInstance:
       propertyPath: slider
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7205523933118227524, guid: 82e1df62834bb9f4f926c166eb0c7d60, type: 3}
+      propertyPath: lockedEnemy
+      value: 
+      objectReference: {fileID: 758206235}
     - target: {fileID: 7205523933118227524, guid: 82e1df62834bb9f4f926c166eb0c7d60, type: 3}
       propertyPath: audioController
       value: 
@@ -5089,7 +5098,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1903941470411405219, guid: dcd7ababef94eb944965e4df06bfa2f5, type: 3}
       propertyPath: m_RootOrder
-      value: 24
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 1903941470411405219, guid: dcd7ababef94eb944965e4df06bfa2f5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5142,7 +5151,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7741232820238463511, guid: dcd7ababef94eb944965e4df06bfa2f5, type: 3}
   m_PrefabInstance: {fileID: 2202803987891137972}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 758206235}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc1b6351760258c4f9e88642a40c2e81, type: 3}
@@ -5539,7 +5548,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6406533243532186687, guid: 38adc1ffa2d188a4dbf27eab8a0e0d47, type: 3}
       propertyPath: m_RootOrder
-      value: 25
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 6406533243532186687, guid: 38adc1ffa2d188a4dbf27eab8a0e0d47, type: 3}
       propertyPath: m_LocalPosition.x
