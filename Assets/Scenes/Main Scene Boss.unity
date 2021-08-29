@@ -716,6 +716,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1347295313}
+  anim: {fileID: 0}
 --- !u!50 &319298793
 Rigidbody2D:
   serializedVersion: 4
@@ -2690,10 +2691,6 @@ PrefabInstance:
       propertyPath: hpMask
       value: 
       objectReference: {fileID: 754642767}
-    - target: {fileID: 7205523933118227524, guid: 82e1df62834bb9f4f926c166eb0c7d60, type: 3}
-      propertyPath: slider
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 7205523933118227526, guid: 82e1df62834bb9f4f926c166eb0c7d60, type: 3}
       propertyPath: m_Name
       value: Player
@@ -6612,10 +6609,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2966250269030101005, guid: 9fabef21a0d6e9046a71b4b22fffd014, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: -1645035983183103499, guid: 5d162779b2eb319448e2a03845fbbaf2, type: 3}
     - target: {fileID: 4123391276089801802, guid: 9fabef21a0d6e9046a71b4b22fffd014, type: 3}
       propertyPath: m_Name
       value: CrocoBoss
