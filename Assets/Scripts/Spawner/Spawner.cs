@@ -87,7 +87,8 @@ public class Spawner : MonoBehaviour {
     public void restartCurrentWave() {
         currentWave.noOfEnemies = firstBossWaveSize;
         canSpawn = true;
-        bossController.Point();
+        bossController.Chuckle();
+        bossController.Attack();
         bossIsVulnerable = false;
     }
 
@@ -124,7 +125,6 @@ public class Spawner : MonoBehaviour {
 
         currentWave.noOfEnemies = firstBossWaveSize;
         canSpawn = true;
-        bossController.TakeDamage();
         bossIsVulnerable = false;
 
     }

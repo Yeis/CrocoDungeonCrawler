@@ -213,12 +213,12 @@ public class DifficultyController : MonoBehaviour {
 
     public void attackVulnerabilityGem() {
         updateGem(vulnerabilityGems.ElementAt(vulnerabilityGemCounter), true);
-
+        Boss boss = GameObject.FindGameObjectWithTag("Boss").GetComponent<Boss>();
         vulnerabilityGemCounter += 1;
-
         switch (spawnerController.currentBossWave) {
             case BossWave.easyWave:
                 if (vulnerabilityGemCounter >= 3) {
+                    boss.TakeDamage();
                     spawnerController.advanceBossWave();
                     hideVulnerabilityCombo();
                     return;
@@ -227,6 +227,7 @@ public class DifficultyController : MonoBehaviour {
 
             case BossWave.mediumWave:
                 if (vulnerabilityGemCounter >= 4) {
+                    boss.TakeDamage();
                     spawnerController.advanceBossWave();
                     hideVulnerabilityCombo();
                     return;
@@ -236,6 +237,7 @@ public class DifficultyController : MonoBehaviour {
                 break;
             case BossWave.hardWave:
                 if (vulnerabilityGemCounter >= 5) {
+                    boss.TakeDamage();
                     print("we did it boys");
                     hideVulnerabilityCombo();
                     return;
