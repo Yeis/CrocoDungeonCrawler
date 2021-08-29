@@ -12,6 +12,7 @@ TagManager:
   - PostAttackEnemy
   - AudioController
   - DyingEnemy
+  - Boss
   layers:
   - Default
   - TransparentFX

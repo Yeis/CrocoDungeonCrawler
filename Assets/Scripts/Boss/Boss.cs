@@ -33,7 +33,7 @@ public class Boss : MonoBehaviour {
         if(healthPoints <= 0) {
             Dying();
         } else {
-     animator.SetTrigger("Damage");  
+            animator.SetTrigger("Damage");  
         }
     }
 
