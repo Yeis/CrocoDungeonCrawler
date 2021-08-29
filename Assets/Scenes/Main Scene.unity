@@ -3178,10 +3178,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2966250269030101005, guid: 9fabef21a0d6e9046a71b4b22fffd014, type: 3}
-      propertyPath: m_SortingOrder
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 4123391276089801802, guid: 9fabef21a0d6e9046a71b4b22fffd014, type: 3}
       propertyPath: m_Name
       value: CrocoBoss
@@ -6008,7 +6004,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4680113526312393933, guid: 37c68d0713a6be3458bf3b1abe1eccc0, type: 3}
       propertyPath: spriteLayer
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 37c68d0713a6be3458bf3b1abe1eccc0, type: 3}

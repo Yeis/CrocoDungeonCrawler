@@ -8,7 +8,7 @@ public class Boss : MonoBehaviour {
     public int healthPoints = 3;
     private Animator animator;
     private bool isOnWeakness = false;
-    public string gameScene;
+    public string gameScene = "VictoryScreen";
     private float attackPosDifference = 0.17f;
 
     // Start is called before the first frame update

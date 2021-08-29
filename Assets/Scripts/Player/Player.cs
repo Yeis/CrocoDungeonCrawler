@@ -65,6 +65,10 @@ public class Player : MonoBehaviour {
         SceneManager.LoadScene(gameScene);
     }
 
+    public void Attack() {
+        audioController.PlayPlayerAttackClip();
+        animator.SetTrigger("AttackBlue");
+    }
     public void Attack(GemColor attackColor) {
         audioController.PlayPlayerAttackClip();
         switch (attackColor) {
