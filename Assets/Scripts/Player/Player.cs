@@ -9,6 +9,7 @@ public class Player : MonoBehaviour {
     public string gameScene;
     public GameObject hpMask;
     public Sprite lockSprite;
+    public AudioController audioController;
     public GameObject lockedEnemy;
     private Animator animator;
     private bool isAlive;
@@ -52,6 +53,7 @@ public class Player : MonoBehaviour {
     public void TakeDamage(int damage) {
         this.healthPoints = this.healthPoints - damage;
         animator.SetTrigger("TakingDamage");
+        audioController.PlayCrocoAttackClip();
         hpMask.transform.localPosition = new Vector3(Mathf.Lerp(0.1284f,0.66f, healthPoints/ 100f), hpMask.transform.localPosition.y, hpMask.transform.localPosition.z);
     }
 
@@ -66,6 +68,7 @@ public class Player : MonoBehaviour {
     }
 
     public void Attack(GemColor attackColor) {
+        audioController.PlayPlayerAttackClip();
         switch (attackColor) {
             case GemColor.blue:
                 animator.SetTrigger("AttackBlue");
