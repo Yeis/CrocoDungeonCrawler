@@ -20,7 +20,6 @@ public class DifficultyController : MonoBehaviour {
     public int penaltyDelayEasy = 3;
     public int penaltyDelayMedium = 4;
     public int penaltyDelayHard = 5;
-    public string GameScene = "VictoryScreen";
 
     public GameObject relic;
     public TMP_Text crocoCounterText;
@@ -152,9 +151,6 @@ public class DifficultyController : MonoBehaviour {
         }
     }
 
-    public void Victory(){
-        SceneManager.LoadScene(GameScene);
-    }
 
     public void penalizeGem(KeyValuePair<GameObject, Gem> gemPair) {
         var penaltyTime = 0;
@@ -226,12 +222,14 @@ public class DifficultyController : MonoBehaviour {
     public void attackVulnerabilityGem() {
         updateGem(vulnerabilityGems.ElementAt(vulnerabilityGemCounter), true);
         Boss boss = GameObject.FindGameObjectWithTag("Boss").GetComponent<Boss>();
+        Player player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
 
-        
+
         vulnerabilityGemCounter += 1;
         switch (spawnerController.currentBossWave) {
             case BossWave.easyWave:
                 if (vulnerabilityGemCounter >= 3) {
+                    player.Attack();
                     boss.TakeDamage();
                     spawnerController.advanceBossWave();
                     hideVulnerabilityCombo();
@@ -241,6 +239,7 @@ public class DifficultyController : MonoBehaviour {
 
             case BossWave.mediumWave:
                 if (vulnerabilityGemCounter >= 4) {
+                    player.Attack();
                     boss.TakeDamage();
                     spawnerController.advanceBossWave();
                     hideVulnerabilityCombo();
@@ -251,9 +250,7 @@ public class DifficultyController : MonoBehaviour {
                 break;
             case BossWave.hardWave:
                 if (vulnerabilityGemCounter >= 5) {
-
-                    Victory();
-
+                    player.Attack();
                     boss.TakeDamage();
                     print("we did it boys");
 
