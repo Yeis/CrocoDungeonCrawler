@@ -1963,6 +1963,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7205523933118227524, guid: 82e1df62834bb9f4f926c166eb0c7d60, type: 3}
+      propertyPath: gameScene
+      value: GameOver
+      objectReference: {fileID: 0}
+    - target: {fileID: 7205523933118227524, guid: 82e1df62834bb9f4f926c166eb0c7d60, type: 3}
       propertyPath: audioController
       value: 
       objectReference: {fileID: 2202803987891137975}
