@@ -34,6 +34,7 @@ public class DifficultyController : MonoBehaviour {
     public GameObject hardBossWaveObject;
     public GameObject inputObject;
     public GameObject spawnerObject;
+    public GameObject playerObject;
     // public GameObject audioTrackObject;
 
     private InputController inputController;
@@ -54,9 +55,11 @@ public class DifficultyController : MonoBehaviour {
     private GameObject bossComboObject;
     private Spawner spawnerController;
     private AudioSurvivor audioSurvivor;
+    private Player playerController;
+    private Boss bossController;
 
-
-    public Gem targetedGem;
+    public TMP_Text vulneGemCounterText;
+    public TMP_Text bossWaveText;
 
     void Awake() {
         spawnerController = spawnerObject.GetComponent<Spawner>();
@@ -68,7 +71,11 @@ public class DifficultyController : MonoBehaviour {
         mediumDifficultyLimit = Random.Range(mediumMinRange, mediumMaxRange + 1);
         hardDifficultyLimit = Random.Range(hardMinRange, hardMaxRange + 1);
         audioSurvivor = AudioSurvivor.Instance;
-        // audioSurvivor = audioTrackObject.GetComponent<AudioSurvivor>();
+        playerController = playerObject.GetComponent<Player>();
+        bossController = bossObject.GetComponent<Boss>();
+
+        vulneGemCounterText.text = vulnerabilityGemCounter.ToString();
+        bossWaveText.text = spawnerController.currentBossWave.ToString();
     }
 
     public void startEncounter(int requiredCrocos, RoomDifficulty difficulty) {
@@ -102,6 +109,10 @@ public class DifficultyController : MonoBehaviour {
 
         crocoCounterText.text = crocoCounter.ToString("00");
         requiredNumberOfCrocosText.text = requiredNumberOfCrocos.ToString("00");
+
+        vulneGemCounterText.text = vulnerabilityGemCounter.ToString();
+        bossWaveText.text = spawnerController.currentBossWave.ToString();
+
     }
 
     public void killCroco(KeyValuePair<GameObject, Gem> gemPair) {
@@ -175,6 +186,8 @@ public class DifficultyController : MonoBehaviour {
 
     public void displayBossComboSequence(BossWave bossWave) {
         inputController.isBossVulnerable = true;
+        bossWaveText.text = spawnerController.currentBossWave.ToString();
+
 
         bossComboObject = easyBossWaveObject;
         switch (bossWave) {
@@ -221,16 +234,19 @@ public class DifficultyController : MonoBehaviour {
 
     public void attackVulnerabilityGem() {
         updateGem(vulnerabilityGems.ElementAt(vulnerabilityGemCounter), true);
-        Boss boss = GameObject.FindGameObjectWithTag("Boss").GetComponent<Boss>();
-        Player player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-
 
         vulnerabilityGemCounter += 1;
+        vulneGemCounterText.text = vulnerabilityGemCounter.ToString();
+
+        print("Third stage, counter = " + vulnerabilityGemCounter);
         switch (spawnerController.currentBossWave) {
             case BossWave.easyWave:
                 if (vulnerabilityGemCounter >= 3) {
-                    player.Attack();
-                    boss.TakeDamage();
+                    print("fourth stage");
+                    playerController.Attack();
+                    bossController.TakeDamage();
+
+                    print("fifth stage");
                     spawnerController.advanceBossWave();
                     hideVulnerabilityCombo();
                     return;
@@ -239,8 +255,9 @@ public class DifficultyController : MonoBehaviour {
 
             case BossWave.mediumWave:
                 if (vulnerabilityGemCounter >= 4) {
-                    player.Attack();
-                    boss.TakeDamage();
+                    playerController.Attack();
+                    bossController.TakeDamage();
+
                     spawnerController.advanceBossWave();
                     hideVulnerabilityCombo();
                     return;
@@ -250,19 +267,17 @@ public class DifficultyController : MonoBehaviour {
                 break;
             case BossWave.hardWave:
                 if (vulnerabilityGemCounter >= 5) {
-                    player.Attack();
-                    boss.TakeDamage();
-                    print("we did it boys");
+                    playerController.Attack();
+                    bossController.TakeDamage();
 
                     hideVulnerabilityCombo();
                     return;
                 }
-
                 break;
         }
 
-        inputController.targetedVulnerableGem = vulnerabilityGems.ElementAt(vulnerabilityGemCounter);
 
+        inputController.targetedVulnerableGem = vulnerabilityGems.ElementAt(vulnerabilityGemCounter);
     }
 
     public void hideVulnerabilityCombo() {

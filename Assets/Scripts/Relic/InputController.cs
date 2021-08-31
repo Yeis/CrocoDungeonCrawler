@@ -21,6 +21,8 @@ public class InputController : MonoBehaviour {
     public bool isBossVulnerable = false;
     public KeyValuePair<GameObject, Gem> targetedVulnerableGem;
     private Spawner spawnerController;
+    public TMP_Text inputCrashCounterText;
+    private int inputCrashCounter = 0;
 
     void Awake() {
         controls = new RelicInputs();
@@ -31,27 +33,44 @@ public class InputController : MonoBehaviour {
         relicController = relic.GetComponent<RelicController>();
         difficultyController = difficulty.GetComponent<DifficultyController>();
         player = playerObject.GetComponent<Player>();
-        // enem = enemy.GetComponent<Enemy>();
+        inputCrashCounterText.text = inputCrashCounter.ToString();
     }
 
     void SymbolInteraction(InputControl control, bool isPressing) {
         if (isInCombat) {
+            var gemPair = new KeyValuePair<GameObject, Gem>();
             try {
-                var gemPair = relicController.gemDictionary.Where(x => control == x.Value.symbol).First();
-                if (gemPair.Value.isPenalized) {
-                    return;
-                }
-                var isMistake = false;
+                gemPair = relicController.gemDictionary.Where(x => control == x.Value.symbol).First();
+            } catch {
+                if (isPressing && !isBossVulnerable) {
+                    int randomIndex = Random.Range(0, relicController.gemDictionary.Count);
 
-                // Boss Vulnerable logic 
-                if (isBossVulnerable && isPressing) {
-                    if (targetedVulnerableGem.Value.gemColor == gemPair.Value.gemColor) {
-                        difficultyController.attackVulnerabilityGem();
-                    } else {
-                        spawnerController.restartCurrentWave();
-                        difficultyController.hideVulnerabilityCombo();
-                    }
+                    KeyValuePair<GameObject, Gem> randomGem = relicController.gemDictionary.ElementAt(randomIndex);
+                    difficultyController.penalizeGem(randomGem);
+                }
+                inputCrashCounter += 1;
+                inputCrashCounterText.text = inputCrashCounter.ToString();
+                return;
+            }
+
+            if (gemPair.Value.isPenalized) {
+                return;
+            }
+            var isMistake = false;
+
+            // Boss Vulnerable logic 
+            if (isBossVulnerable && isPressing) {
+                print("First Stage. targeted color = " + targetedVulnerableGem.Value.gemColor.ToString());
+                print("gemPair color = " + gemPair.Value.gemColor.ToString());
+                if (targetedVulnerableGem.Value.gemColor == gemPair.Value.gemColor) {
+                    print("Second stage");
+                    difficultyController.attackVulnerabilityGem();
                 } else {
+                    spawnerController.restartCurrentWave();
+                    difficultyController.hideVulnerabilityCombo();
+                }
+            } else {
+                if (player.lockedEnemy != null) {
                     var lockedEnemy = player.lockedEnemy.GetComponent<Enemy>();
 
                     if (isPressing && lockedEnemy.color == gemPair.Value.gemColor) {
@@ -62,15 +81,8 @@ public class InputController : MonoBehaviour {
                         difficultyController.penalizeGem(gemPair);
                     }
                 }
-                relicController.gemInteraction(gemPair, isPressing, isMistake);
-            } catch {
-                if (isPressing && !isBossVulnerable) {
-                    int randomIndex = Random.Range(0, relicController.gemDictionary.Count);
-
-                    KeyValuePair<GameObject, Gem> randomGem = relicController.gemDictionary.ElementAt(randomIndex);
-                    difficultyController.penalizeGem(randomGem);
-                }
             }
+            relicController.gemInteraction(gemPair, isPressing, isMistake);
 
         }
     }

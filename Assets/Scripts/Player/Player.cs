@@ -30,8 +30,10 @@ public class Player : MonoBehaviour {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         if ((enemies.Length > 0 && lockedEnemy == null) || (lockedEnemy != null && lockedEnemy.tag != "Enemy")) {
             if (lockedEnemy != null) lockedEnemy.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = null;
-            lockedEnemy = enemies[0];
-            lockedEnemy.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = lockSprite;
+            if (enemies.Length > 0) {
+                lockedEnemy = enemies[0];
+                lockedEnemy.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = lockSprite;
+            }
         }
 
         foreach (GameObject enemy in enemies) {
@@ -68,6 +70,7 @@ public class Player : MonoBehaviour {
         audioController.PlayPlayerAttackClip();
         animator.SetTrigger("AttackBlue");
     }
+
     public void Attack(GemColor attackColor) {
         audioController.PlayPlayerAttackClip();
         switch (attackColor) {

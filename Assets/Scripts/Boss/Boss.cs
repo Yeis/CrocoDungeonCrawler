@@ -32,10 +32,10 @@ public class Boss : MonoBehaviour {
 
     public void TakeDamage() {
         healthPoints--;
-        if(healthPoints <= 0) {
+        if (healthPoints <= 0) {
             Dying();
         } else {
-            animator.SetTrigger("Damage");  
+            animator.SetTrigger("Damage");
         }
     }
 
@@ -56,7 +56,7 @@ public class Boss : MonoBehaviour {
         animator.SetBool("Weakness", isOnWeakness);
     }
 
-    public void Victory(){
+    public void Victory() {
         SceneManager.LoadScene(gameScene);
     }
 
