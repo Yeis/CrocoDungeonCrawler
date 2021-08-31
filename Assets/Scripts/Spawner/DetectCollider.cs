@@ -15,8 +15,8 @@ public class DetectCollider : MonoBehaviour
         if(other.gameObject.tag == "Enemy") 
         {
            Enemy enemy = other.gameObject.GetComponent<Enemy>();
-           enemy.isAttacking = true;
            other.gameObject.tag = "PostAttackEnemy";
+           enemy.Attack();
            player.TakeDamage(enemy.damage);
         }
     }
@@ -27,7 +27,6 @@ public class DetectCollider : MonoBehaviour
         {
            Enemy enemy = other.gameObject.GetComponent<Enemy>();
            enemy.isAttacking = false;
-           enemy.anim.SetBool("isAttacking", false);
         }
     }
 }

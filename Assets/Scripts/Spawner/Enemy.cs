@@ -23,13 +23,12 @@ public class Enemy : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         if (isMoving) {
-            gameObject.transform.position = new Vector3(gameObject.transform.position.x - speed, gameObject.transform.position.y, gameObject.transform.position.z);
+            
+            gameObject.transform.position = new Vector3(gameObject.transform.position.x - speed * Time.deltaTime , gameObject.transform.position.y, gameObject.transform.position.z);
         }
 
         if(isAttacking){
-            gameObject.transform.position = new Vector3(gameObject.transform.position.x - slide, gameObject.transform.position.y, gameObject.transform.position.z);
-            anim.SetBool("isAttacking", true);
-            StartCoroutine("Attack");
+            gameObject.transform.position = new Vector3(gameObject.transform.position.x - slide * Time.deltaTime, gameObject.transform.position.y, gameObject.transform.position.z);
         } 
     }
 
@@ -43,9 +42,15 @@ public class Enemy : MonoBehaviour {
         Destroy(gameObject);
     }
 
-    private IEnumerator Attack() {
+    public void Attack() {
         isMoving = false;
-        yield return new WaitForSeconds(1.0f);
+        anim.SetTrigger("Attack");
+        isAttacking = true;
+
+    }
+
+    public void FinishAttack()
+    {
         isMoving = true;
         isAttacking = false;
     }
