@@ -323,7 +323,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.30400002, y: 0.938}
   m_AnchorMax: {x: 0.36887747, y: 0.98200005}
-  m_AnchoredPosition: {x: 1.0614929, y: -0.7899933}
+  m_AnchoredPosition: {x: 1.0614929, y: -0.789978}
   m_SizeDelta: {x: -0.1407013, y: 0.0079956055}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &147746051
@@ -373,7 +373,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 21.15
+  m_fontSize: 24.65
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1380,7 +1380,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20.6
+  m_fontSize: 24.8
   m_fontSizeBase: 18.18
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1588,6 +1588,10 @@ PrefabInstance:
       propertyPath: bossWaveText
       value: 
       objectReference: {fileID: 833757097}
+    - target: {fileID: 4202408091744223979, guid: 732572b172e9f93459deb4d558dec59e, type: 3}
+      propertyPath: playerObject
+      value: 
+      objectReference: {fileID: 1347295311}
     - target: {fileID: 4202408091744223979, guid: 732572b172e9f93459deb4d558dec59e, type: 3}
       propertyPath: transitioner
       value: 
@@ -2030,7 +2034,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20.8
+  m_fontSize: 24.3
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2691,7 +2695,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 21
+  m_fontSize: 24.25
   m_fontSizeBase: 18.18
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2825,7 +2829,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 21.4
+  m_fontSize: 24.65
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3661,7 +3665,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18.25
+  m_fontSize: 21.3
   m_fontSizeBase: 18.18
   m_fontWeight: 400
   m_enableAutoSizing: 1
