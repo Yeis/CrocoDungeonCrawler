@@ -21,7 +21,7 @@ public class TextScript : MonoBehaviour {
     private static string[] mediumDialog2 = { "Your relic grows stronger, but something's wrong", "Its strength seems affected by something near.", "Prepare for another fight." };
     private static string[] mediumDialog3 = { "Its getting harder and harder to remain determined.", "But the relic's call pulls you forward.", "Satisfy its wishes, and great rewards will come." };
     private static string[] mediumDialog4 = { "You feel watched.", "It seems you've gathered the attention of a mysterious force.", "You hold the relic and prepare for combat" };
-    private static string[] mediumDialog5 = { "You hear a distant laughter.", "With it, you feel a strong presence worthy of a whole kingdom.", "But what is royalty, for curious adventurer?" };
+    private static string[] mediumDialog5 = { "You hear a distant laughter.", "With it, you feel a strong presence worthy of a whole kingdom.", "But what is royalty, for a curious adventurer?" };
 
     private string[][] mediumDialogs = { mediumDialog1, mediumDialog2, mediumDialog3, mediumDialog4, mediumDialog5 };
 

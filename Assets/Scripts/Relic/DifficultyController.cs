@@ -34,7 +34,7 @@ public class DifficultyController : MonoBehaviour {
     public GameObject hardBossWaveObject;
     public GameObject inputObject;
     public GameObject spawnerObject;
-    public AudioSurvivor audioSurvivor;
+    // public GameObject audioTrackObject;
 
     private InputController inputController;
     private int shiftCounter = 0;
@@ -53,6 +53,7 @@ public class DifficultyController : MonoBehaviour {
     private int vulnerabilityGemCounter = 0;
     private GameObject bossComboObject;
     private Spawner spawnerController;
+    private AudioSurvivor audioSurvivor;
 
 
     public Gem targetedGem;
@@ -66,15 +67,14 @@ public class DifficultyController : MonoBehaviour {
         easyDifficultyLimit = Random.Range(easyMinRange, easyMaxRange + 1);
         mediumDifficultyLimit = Random.Range(mediumMinRange, mediumMaxRange + 1);
         hardDifficultyLimit = Random.Range(hardMinRange, hardMaxRange + 1);
-    }
-
-    void Start() {
-        audioSurvivor = GameObject.FindGameObjectWithTag("AudioSurvivor").GetComponent<AudioSurvivor>();
+        audioSurvivor = AudioSurvivor.Instance;
+        // audioSurvivor = audioTrackObject.GetComponent<AudioSurvivor>();
     }
 
     public void startEncounter(int requiredCrocos, RoomDifficulty difficulty) {
         requiredNumberOfCrocos = requiredCrocos;
         roomDifficulty = difficulty;
+        shiftCounter = 0;
 
         switch (roomDifficulty) {
             case RoomDifficulty.veryEasy:
@@ -95,8 +95,8 @@ public class DifficultyController : MonoBehaviour {
 
                 // ACTIVATE BOSS BATTLE
                 bossObject.SetActive(true);
-                audioSurvivor.SelectSong();
                 isInBossEncounter = true;
+                audioSurvivor.PlayBossMusic();
                 break;
         }
 
@@ -124,14 +124,14 @@ public class DifficultyController : MonoBehaviour {
                 }
                 break;
             case RoomDifficulty.easy:
-                if (shiftCounter == easyDifficultyLimit) {
+                if (shiftCounter >= easyDifficultyLimit) {
                     gemShift(Random.Range(1, 3), false, false);
                     shiftCounter = 0;
                     easyDifficultyLimit = Random.Range(easyMinRange, easyMaxRange + 1);
                 }
                 break;
             case RoomDifficulty.medium:
-                if (shiftCounter == mediumDifficultyLimit) {
+                if (shiftCounter >= mediumDifficultyLimit) {
                     gemShift(Random.Range(1, 4), true, false);
                     colorShift(mediumColorShiftPercentage);
                     shiftCounter = 0;
@@ -139,7 +139,7 @@ public class DifficultyController : MonoBehaviour {
                 }
                 break;
             case RoomDifficulty.hard:
-                if (shiftCounter == hardDifficultyLimit) {
+                if (shiftCounter >= hardDifficultyLimit) {
                     gemShift(Random.Range(1, 4), true, true);
                     colorShift(hardColorShiftPercentage);
                     shiftCounter = 0;
