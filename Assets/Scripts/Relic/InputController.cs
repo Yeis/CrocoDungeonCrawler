@@ -21,8 +21,6 @@ public class InputController : MonoBehaviour {
     public bool isBossVulnerable = false;
     public KeyValuePair<GameObject, Gem> targetedVulnerableGem;
     private Spawner spawnerController;
-    public TMP_Text inputCrashCounterText;
-    private int inputCrashCounter = 0;
 
     void Awake() {
         controls = new RelicInputs();
@@ -33,7 +31,6 @@ public class InputController : MonoBehaviour {
         relicController = relic.GetComponent<RelicController>();
         difficultyController = difficulty.GetComponent<DifficultyController>();
         player = playerObject.GetComponent<Player>();
-        inputCrashCounterText.text = inputCrashCounter.ToString();
     }
 
     void SymbolInteraction(InputControl control, bool isPressing) {
@@ -48,8 +45,6 @@ public class InputController : MonoBehaviour {
                     KeyValuePair<GameObject, Gem> randomGem = relicController.gemDictionary.ElementAt(randomIndex);
                     difficultyController.penalizeGem(randomGem);
                 }
-                inputCrashCounter += 1;
-                inputCrashCounterText.text = inputCrashCounter.ToString();
                 return;
             }
 
@@ -60,10 +55,7 @@ public class InputController : MonoBehaviour {
 
             // Boss Vulnerable logic 
             if (isBossVulnerable && isPressing) {
-                print("First Stage. targeted color = " + targetedVulnerableGem.Value.gemColor.ToString());
-                print("gemPair color = " + gemPair.Value.gemColor.ToString());
                 if (targetedVulnerableGem.Value.gemColor == gemPair.Value.gemColor) {
-                    print("Second stage");
                     difficultyController.attackVulnerabilityGem();
                 } else {
                     spawnerController.restartCurrentWave();

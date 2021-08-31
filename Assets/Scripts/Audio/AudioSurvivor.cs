@@ -25,7 +25,6 @@ public class AudioSurvivor : MonoBehaviour {
         audioSource = GetComponent<AudioSource>();
         SelectSong();
         if (instance != null & instance != this) {
-            print("we killin ourselves rn");
             Destroy(this.gameObject);
             return;
         } else {

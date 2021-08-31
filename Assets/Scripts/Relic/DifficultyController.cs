@@ -58,9 +58,6 @@ public class DifficultyController : MonoBehaviour {
     private Player playerController;
     private Boss bossController;
 
-    public TMP_Text vulneGemCounterText;
-    public TMP_Text bossWaveText;
-
     void Awake() {
         spawnerController = spawnerObject.GetComponent<Spawner>();
         relicController = relic.GetComponent<RelicController>();
@@ -73,9 +70,6 @@ public class DifficultyController : MonoBehaviour {
         audioSurvivor = AudioSurvivor.Instance;
         playerController = playerObject.GetComponent<Player>();
         bossController = bossObject.GetComponent<Boss>();
-
-        vulneGemCounterText.text = vulnerabilityGemCounter.ToString();
-        bossWaveText.text = spawnerController.currentBossWave.ToString();
     }
 
     public void startEncounter(int requiredCrocos, RoomDifficulty difficulty) {
@@ -109,10 +103,6 @@ public class DifficultyController : MonoBehaviour {
 
         crocoCounterText.text = crocoCounter.ToString("00");
         requiredNumberOfCrocosText.text = requiredNumberOfCrocos.ToString("00");
-
-        vulneGemCounterText.text = vulnerabilityGemCounter.ToString();
-        bossWaveText.text = spawnerController.currentBossWave.ToString();
-
     }
 
     public void killCroco(KeyValuePair<GameObject, Gem> gemPair) {
@@ -186,8 +176,6 @@ public class DifficultyController : MonoBehaviour {
 
     public void displayBossComboSequence(BossWave bossWave) {
         inputController.isBossVulnerable = true;
-        bossWaveText.text = spawnerController.currentBossWave.ToString();
-
 
         bossComboObject = easyBossWaveObject;
         switch (bossWave) {
@@ -236,17 +224,12 @@ public class DifficultyController : MonoBehaviour {
         updateGem(vulnerabilityGems.ElementAt(vulnerabilityGemCounter), true);
 
         vulnerabilityGemCounter += 1;
-        vulneGemCounterText.text = vulnerabilityGemCounter.ToString();
 
-        print("Third stage, counter = " + vulnerabilityGemCounter);
         switch (spawnerController.currentBossWave) {
             case BossWave.easyWave:
                 if (vulnerabilityGemCounter >= 3) {
-                    print("fourth stage");
                     playerController.Attack();
                     bossController.TakeDamage();
-
-                    print("fifth stage");
                     spawnerController.advanceBossWave();
                     hideVulnerabilityCombo();
                     return;

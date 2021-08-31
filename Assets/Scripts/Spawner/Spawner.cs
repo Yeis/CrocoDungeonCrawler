@@ -114,7 +114,6 @@ public class Spawner : MonoBehaviour {
     }
 
     public void advanceBossWave() {
-        print("SIXTH STAGE");
         switch (currentBossWave) {
             case BossWave.easyWave:
                 currentBossWave = BossWave.mediumWave;
